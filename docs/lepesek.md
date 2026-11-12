@@ -11,7 +11,7 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 5. Megállás kézifék behúzása nélkül – így lazításkor és bontáskor a lánc tehermentesül, nem feszül.
 
 ## 2. Lánc lazítása, nyitása
-6. Zárókupak (porvédő kupak) kitekerése a kupaklazítóval, balra (le), hogy engedje a menetet.
+6. Zárókupak (porvédő kupak) kitekerése a kupaklazítóval, balra (le), hogy engedje a menetet. A kupak nem jön le, a helyén marad.
 7. A feszítő összehúzása a láncfeszítő/lazító kulccsal + toldattal, végállásig → a lánc laza.
 8. Szélső (külső és belső) összekötő elemek csavarjai ki, 32-es dugókulccsal (szükség esetén kalapács / csavarlazító + drótkefe).
 9. Külső szélső összekötő leütése belülről kifelé, kalapáccsal és rövid pajszerrel. A pajszert tartó kesztyűben, figyeljen a félreütésre.
@@ -44,7 +44,7 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 30. Sík betonplaccon gyorsítás 30–40 km/h-ra, majd satufék.
 31. Hátramenetben kígyózás (jobbra–balra) kb. 100 m-en.
 32. Előre egyenesen, megállás, hátramenet, majd 1-es fokozatból üresbe tett váltóval kigurítás, amíg megáll → a láncok tehermentesülnek.
-33. Feszességmérés: a lövegcső gázelvezetőjének magasságában lévő láncvezető görgőtől hátrafelé 13 külső összekötő, rájuk madzag C-kapcsokkal; a 7. összekötő csavarjának teteje és a madzag közti távolság idomszerrel. **6–8 mm megfelel**; 6 alatt lazítani, 8 felett feszíteni (zárókupak ki, majd vissza), utána a menet és a mérés újra.
+33. Feszességmérés: a lövegcső gázelvezetőjének magasságában lévő láncvezető görgőtől hátrafelé 13 külső összekötő, rájuk madzag C-kapcsokkal; a 7. összekötő csavarjának teteje és a madzag közti távolság idomszerrel. **6–8 mm megfelel**; 6 alatt lazítani, 8 felett feszíteni (zárókupak kitekerve, majd vissza), utána a menet és a mérés újra.
 34. Egyik oldal kész – a másik oldal ugyanígy.
 
 ## Nyomatékok
