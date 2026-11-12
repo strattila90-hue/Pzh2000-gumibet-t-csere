@@ -405,9 +405,9 @@ try{done=new Set(JSON.parse(localStorage.getItem('pzh2done')||'[]'))}catch(e){}
 const saveDone=()=>{try{localStorage.setItem('pzh2done',JSON.stringify([...done]));localStorage.setItem('pzh2step',i)}catch(e){}};
 function pickVoice(){try{const v=speechSynthesis.getVoices();hu=bestVoice();const m=document.getElementById('vmsg');if(m)m.textContent=hu?'':'Nincs magyar felolvasó hang ezen a telefonon: Beállítások → Szövegfelolvasás → Google → Magyar. Addig olvasd a szöveget.'}catch(e){}}
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
-const split=t=>t.match(/[^.!?]+[.!?]+|[^.!?]+$/g).map(x=>x.trim()).filter(Boolean);
+const split=t=>t.replace(/(\d)\./g,'$1\u2024').match(/[^.!?]+[.!?]+|[^.!?]+$/g).map(x=>x.trim().replace(/\u2024/g,'.')).filter(Boolean);
 let spk=0;
-function speak(t,spans){if(!voiceOn||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const my=++spk;const ss=split(t);
+function speak(t,spans,pre){if(!voiceOn||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const my=++spk;const ss=split(t);if(pre)ss[0]=pre+' '+ss[0];
  ss.forEach((x,k)=>{const u=new SpeechSynthesisUtterance(x);u.lang='hu-HU';if(hu)u.voice=hu;u.rate=VS.rate;u.pitch=VS.pitch;u.volume=1;
   u.onstart=()=>{if(my!==spk||!spans)return;spans.forEach((e,j)=>{if(e){e.classList.toggle('on',j===k);e.classList.toggle('past',j<k)}})};
   u.onend=()=>{if(my!==spk||!spans)return;if(k===ss.length-1)spans.forEach(e=>{if(e){e.classList.remove('on');e.classList.remove('past')}})};
@@ -490,7 +490,7 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
  $('dn').onclick=()=>{if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
   const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
   setTimeout(()=>{ov.remove();last?finish():go(i+1)},900)};
- window.scrollTo(0,0);fitText();speak((i+1)+'. lépés. '+s.v,[null].concat(SP()));}
+ window.scrollTo(0,0);fitText();speak(s.v,SP(),(i+1)+'. lépés:');}
 function finish(){app.innerHTML=`<div class="page"><h1 class="ht">Egyik oldal kész!</h1><p class="lead">A másik oldalon ugyanez, a zárókupaktól (6. lépés) kezdve.</p><button class="cta" id="o">Másik oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
  fit();speak('Egyik oldal kész. A másik oldalon ugyanez, a zárókupaktól kezdve.');$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();go(5)};$('h').onclick=home;}
 let sx=null;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});document.addEventListener('touchend',e=>{if(sx===null||i<0)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>80){dx<0?(i<STEPS.length-1&&go(i+1)):(i>0&&go(i-1))}sx=null});
