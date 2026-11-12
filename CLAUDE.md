@@ -16,6 +16,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 - Sorrend: zárókupak ki → feszítő összehúzása → … → lánc fent, feszítés → zárókupak vissza (kézzel) → menetpróba (30–40 km/h + satufék, hátramenet kígyózva ~100 m, kigurítás üresben) → feszességmérés (13 külső összekötő, 7.-nél, 6–8 mm). Az „ülepítés” szót NE használd.
 - Oldalanként 95 tag, 190 betét (94 tagnál 188), 2,5 kg/db. Lánc megfordításához 15–18 fő.
 - Zárókupak = porvédő kupak.
+- Kéziféket nem húzzuk be: azért, hogy lazításkor/bontáskor a lánc tehermentesüljön, ne feszüljön.
 
 ## Nyitott kérdések
 - Oktatási dián 52 Nm áll az összekötőkre, a felhasználó 550 Nm-et mond → TM-ből tisztázni.

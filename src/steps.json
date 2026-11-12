@@ -25,8 +25,8 @@
  },
  {
   "t": "Kéziféket NEM behúzni",
-  "v": "Harcjárművezető! Állítsd meg a járművet. A kéziféket nem húzod be. Ok: a láncmunkához a járműnek gördülnie kell.",
-  "n": "A harcjárművezető úgy állítsa meg az eszközt, hogy NE húzza be a kéziféket.",
+  "v": "Harcjárművezető! Állítsd meg a járművet. A kéziféket nem húzod be. Ok: amikor lazítjuk és oldjuk a láncot, a lánc tehermentesüljön, ne feszüljön.",
+  "n": "A kéziféket NE húzd be: lazításkor és bontáskor a lánc így tehermentesül, nem feszül.",
   "w": ""
  },
  {

@@ -8,7 +8,7 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 3. Szerszámok előkészítése, hatékonyan elhelyezve.
 4. A jármű elhelyezése: mindkét oldalon férjen el a felnyitott oldalsó szoknya, és maradjon hely a segítőknek.
    - Kevés emberrel lassabb módszer: a lánc a helyén marad, hátul egyesével kiütik a betéteket, a géppel előregurulva haladnak végig.
-5. Megállás kézifék behúzása nélkül.
+5. Megállás kézifék behúzása nélkül – így lazításkor és bontáskor a lánc tehermentesül, nem feszül.
 
 ## 2. Lánc lazítása, nyitása
 6. Zárókupak (porvédő kupak) kitekerése a kupaklazítóval, balra (le), hogy engedje a menetet.

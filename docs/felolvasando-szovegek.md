@@ -21,7 +21,7 @@ Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
 
 ## 05. Kéziféket NEM behúzni
 
-5. lépés. Harcjárművezető! Állítsd meg a járművet. A kéziféket nem húzod be. Ok: a láncmunkához a járműnek gördülnie kell.
+5. lépés. Harcjárművezető! Állítsd meg a járművet. A kéziféket nem húzod be. Ok: amikor lazítjuk és oldjuk a láncot, a lánc tehermentesüljön, ne feszüljön.
 
 ## 06. Zárókupak kitekerése
 
