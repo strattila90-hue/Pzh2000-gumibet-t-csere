@@ -8,6 +8,8 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 - `src/app.js` – UI-logika (kezdőlap, eligazítás, alapismeretek, lépéslista, lépés nézet, Kész gomb + pipa + hang, idővonal 5 szakasszal, localStorage-ben a haladás). `__STEPS__` helyére a build illeszti a JSON-t.
 - `src/style.css` – fehér, letisztult (IKEA-szerű) stílus.
 - `src/draw.js`, `src/scenes.js` – izometrikus SVG rajzmotor és jelenetek. **Jelenleg nincs megjelenítve** (a felhasználó kérésére csak szöveg van), de megtartva.
+- Megosztás nézet `shareView()`: QR (`src/qr.svg`, a Pages címre), link megosztás, app-fájl küldése (Web Share files → Bluetooth/Quick Share), offline állapot. Wake Lock lépés nézetben.
+- Fix felolvasott szövegek (eligazítás, befejezés, próba): `src/voice.json`.
 - Nyomtatható nézet: `printView()` / `index.html#nyomtat`; a PDF: `google-chrome --headless --print-to-pdf=docs/oktatoanyag.pdf "file://…/index.html#nyomtat"`.
 - `build.py` → `index.html`. `sw.js` offline cache (VERSION-t növelni kiadáskor).
 
@@ -24,7 +26,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 ## Nyitott kérdések
 - Oktatási dián 52 Nm áll az összekötőkre, a felhasználó 550 Nm-et mond → TM-ből tisztázni.
 - Középső összekötő csavar kulcsmérete (24?).
-- Saját hangfájlok (`docs/felolvasando-szovegek.md` alapján) – az app még a böngésző beszédszintézisét használja (katonás beállítás: pitch 0.78, rate 0.97, férfihang előnyben, kezdőlapon állítható).
+- Hangfájlok: `tools/gen_audio.py` (edge-tts, hu-HU-TamasNeural) → `audio/<fnv-hash>-<n>.mp3` + `audio/manifest.json`; GitHub Action `hang.yml` gyártja. Az app `speak()` először ezt játssza (mondatonként, kiemeléssel), különben gépi hang (pitch 0.78, rate 0.97). A `split()` és `fnv()` a Pythonban és JS-ben azonos kell maradjon! Ellenőrizni, hogy az Action lefutott-e.
 
 ## Stílus
 Magyar nyelv, rövid, határozott, gyakorlatias. A felhasználó iteratívan dolgozik, gyors visszajelzést ad.

@@ -10,8 +10,18 @@ function pickVoice(){try{const v=speechSynthesis.getVoices();hu=bestVoice();cons
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
 const split=t=>t.replace(/(\d)\./g,'$1\u2024').match(/[^.!?]+[.!?]+|[^.!?]+$/g).map(x=>x.trim().replace(/\u2024/g,'.')).filter(Boolean);
 let spk=0;
-function speak(t,spans,pre){if(!voiceOn||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const my=++spk;const ss=split(t);if(pre)ss[0]=pre+' '+ss[0];
- ss.forEach((x,k)=>{const u=new SpeechSynthesisUtterance(x);u.lang='hu-HU';if(hu)u.voice=hu;u.rate=VS.rate;u.pitch=VS.pitch;u.volume=1;
+const VX=__VOICE__;
+const fnv=s=>{let h=0x811c9dc5;for(const c of s){h^=c.codePointAt(0);h=Math.imul(h,0x01000193)>>>0}return h.toString(16).padStart(8,'0')};
+let AUD=null,curA=null;fetch('audio/manifest.json').then(r=>r.ok?r.json():null).then(j=>{AUD=j}).catch(()=>{});
+let useFiles=true;try{useFiles=localStorage.getItem('pzh2files')!=='0'}catch(e){}
+function hush(){spk++;try{speechSynthesis.cancel()}catch(e){}if(curA){try{curA.pause()}catch(e){}curA=null}}
+function playFiles(key,n,spans,my,t,pre){let k=0;const mark=j=>{if(!spans)return;spans.forEach((e,x)=>{if(e){e.classList.toggle('on',x===j);e.classList.toggle('past',x<j)}})};
+ const fb=()=>{curA=null;if(my===spk)ttsSpeak(t,spans,pre,k)};
+ const next=()=>{if(my!==spk)return;if(k>=n){spans&&spans.forEach(e=>{if(e){e.classList.remove('on');e.classList.remove('past')}});return}const au=new Audio('audio/'+key+'-'+k+'.mp3');curA=au;mark(k);au.onended=()=>{k++;setTimeout(next,260)};au.onerror=fb;au.play().catch(fb)};next()}
+function speak(t,spans,pre){if(!voiceOn)return;hush();const full=(pre?pre+' ':'')+t,key=fnv(full);
+ if(useFiles&&AUD&&AUD[key]){playFiles(key,AUD[key],spans,spk,t,pre);return}ttsSpeak(t,spans,pre,0)}
+function ttsSpeak(t,spans,pre,from){if(!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const my=spk;const ss=split(t);if(pre)ss[0]=pre+' '+ss[0];
+ ss.forEach((x,k)=>{if(k<(from||0))return;const u=new SpeechSynthesisUtterance(x);u.lang='hu-HU';if(hu)u.voice=hu;u.rate=VS.rate;u.pitch=VS.pitch;u.volume=1;
   u.onstart=()=>{if(my!==spk||!spans)return;spans.forEach((e,j)=>{if(e){e.classList.toggle('on',j===k);e.classList.toggle('past',j<k)}})};
   u.onend=()=>{if(my!==spk||!spans)return;if(k===ss.length-1)spans.forEach(e=>{if(e){e.classList.remove('on');e.classList.remove('past')}})};
   speechSynthesis.speak(u);if(k<ss.length-1){const p=new SpeechSynthesisUtterance(' ');p.lang='hu-HU';p.volume=0;p.rate=0.6;speechSynthesis.speak(p)}})}catch(e){}}
@@ -19,9 +29,9 @@ let VS={rate:0.97,pitch:0.78,name:''};try{Object.assign(VS,JSON.parse(localStora
 const huVoices=()=>{try{return speechSynthesis.getVoices().filter(x=>/^hu/i.test(x.lang))}catch(e){return[]}};
 function bestVoice(){const v=huVoices();if(VS.name){const f=v.find(x=>x.name===VS.name);if(f)return f}const rank=x=>(/natural|neural|online/i.test(x.name)?4:0)+(/tamás|tamas|male|férfi/i.test(x.name)?3:0)+(/google/i.test(x.name)?2:0)+(x.localService?0:1);v.sort((a,b)=>rank(b)-rank(a));return v[0]||null}
 function voicePanel(){const v=huVoices();return `<div class="vp"><b>Hang beállítása</b>${v.length?`<select id="vsel">${v.map(x=>`<option ${hu&&x.name===hu.name?'selected':''}>${x.name}</option>`).join('')}</select>`:''}
-<label>Hangmagasság <input type="range" id="vpi" min="0.5" max="1.2" step="0.05" value="${VS.pitch}"></label><label>Tempó <input type="range" id="vra" min="0.7" max="1.3" step="0.05" value="${VS.rate}"></label><button class="sec" id="vtest">Próba</button></div>`}
+<label>Hangmagasság <input type="range" id="vpi" min="0.5" max="1.2" step="0.05" value="${VS.pitch}"></label><label>Tempó <input type="range" id="vra" min="0.7" max="1.3" step="0.05" value="${VS.rate}"></label><label class="chk"><input type="checkbox" id="vfile" ${useFiles?'checked':''}> Élethű hang (hangfájlok, ha vannak)</label><div class="vmsg" id="vfs"></div><button class="sec" id="vtest">Próba</button><p class="hint">Bluetooth hangszóró vagy fülhallgató: párosítsd a telefonnal, és az app hangja automatikusan azon szól.</p></div>`}
 function bindVoice(){const sv=()=>{try{localStorage.setItem('pzh2voice',JSON.stringify(VS))}catch(e){}};const s=$('vsel');if(s)s.onchange=e=>{VS.name=e.target.value;hu=bestVoice();sv()};
- $('vpi').oninput=e=>{VS.pitch=+e.target.value;sv()};$('vra').oninput=e=>{VS.rate=+e.target.value;sv()};$('vtest').onclick=()=>{voiceOn=true;speak('Figyelem! Középső összekötő csavarja: ki. A közelben senki és semmi! Jelezzetek egymásnak!')}}
+ $('vpi').oninput=e=>{VS.pitch=+e.target.value;sv()};$('vra').oninput=e=>{VS.rate=+e.target.value;sv()};const vf=$('vfile');if(vf)vf.onchange=e=>{useFiles=e.target.checked;try{localStorage.setItem('pzh2files',useFiles?'1':'0')}catch(x){}};const vfs=$('vfs');if(vfs)vfs.textContent=AUD&&Object.keys(AUD).filter(k=>k!=='_').length?'Élethű hangfájlok elérhetők.':'Hangfájlok még nincsenek – a telefon gépi hangja szól.';$('vtest').onclick=()=>{voiceOn=true;speak(VX.test)}}
 function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;let lo=16,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px'}
 addEventListener('resize',fitText);
 let ac=null;function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[[523,0],[784,0.11]].forEach(([f,t])=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(0.35,ac.currentTime+t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+t+0.2);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.22)})}catch(e){}try{navigator.vibrate&&navigator.vibrate(70)}catch(e){}}
@@ -30,17 +40,18 @@ const $=id=>document.getElementById(id);
 function fit(){document.querySelectorAll('.pic svg').forEach(sv=>{try{const b=sv.getBBox(),p=14;let w=b.width+p*2,h=b.height+p*2,x=b.x-p,y=b.y-p;const r=4/3;if(w/h<r){x-=(h*r-w)/2;w=h*r}else{y-=(w/r-h)/2;h=w/r}sv.setAttribute('viewBox',`${x} ${y} ${w} ${h}`)}catch(e){}})}
 function timeline(cur){return `<div class="tl" id="tlb">${PH.map((p,k)=>{let n=0;for(let j=p.a;j<=p.b;j++)if(done.has(j))n++;const tot=p.b-p.a+1,c=k===phOf(cur)?'cur':n===tot?'ok':'';
  return `<div class="ph ${c}" style="flex:${tot}"><div class="pf"><i style="width:${n/tot*100}%"></i>${k===phOf(cur)?`<b style="left:${(cur-p.a+0.5)/tot*100}%"></b>`:''}</div><span>${k+1}</span></div>`}).join('')}</div>`}
-function home(){i=-1;let last=-1;try{last=+(localStorage.getItem('pzh2step')??-1)}catch(e){}
+function home(){i=-1;hush();let last=-1;try{last=+(localStorage.getItem('pzh2step')??-1)}catch(e){}
  app.innerHTML=`<div class="home"> <div class="kick">PzH2000 · futómű</div><h1 class="ht">Gumibetét csere</h1>
  <p class="lead">${STEPS.length} lépés · hang · szerszámlista. Egyik oldal, majd a másik ugyanígy.</p>
  <button class="cta" id="b1">Eligazítás és indulás</button>
  ${last>=0&&last<STEPS.length&&done.size?`<button class="sec" id="b2">Folytatás: ${last+1}. lépés · ${done.size} kész</button>`:''}
  <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Lépések</button></div>
  <button class="sec" id="b5">Nyomtatható oktatóanyag</button>
+ <button class="sec" id="b6">QR-kód · Megosztás · Offline</button><div class="ost" id="ost0"></div>
  <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>${voicePanel()}
  <p class="foot">Összeállította: Strasszer szkv. · Az értékeket a TM alapján ellenőrizd.</p></div>`;
  pickVoice();fit();
- $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
+ $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('b6').onclick=shareView;offlineStatus($('ost0'));$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
 function brief(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
  <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>
@@ -48,7 +59,7 @@ function brief(){i=-1;
  <div class="warn"><i>!</i><div><b>Kesztyű kötelező.</b> Tiszta, egyértelmű parancsok. Hangosan szóljatok egymásnak. A lánc fordításához 15–18 fő kell.</div></div>
  <button class="cta" id="go">Indulás</button></div>`;
  fit();$('bk').onclick=home;$('go').onclick=()=>{done.clear();saveDone();go(0)};window.scrollTo(0,0);
- speak('Üdvözlöm az állományt! A mai feladat a PzH kétezer lánc gumibetéteinek cseréje, mindkét oldalon. Oldalanként százkilencven gumibetét. Öt szakasz: előkészítés, a lánc lazítása és nyitása, betétcsere, visszaszerelés, végül feszítés és ellenőrzés. Kesztyű kötelező, figyeljetek egymásra.');}
+ speak(VX.brief);}
 function know(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Alapismeretek</div><h1 class="ht">Lánctalp és feszítő</h1>
  <h2>A lánctalp tag</h2>
@@ -76,6 +87,28 @@ function printView(){i=-1;const d=new Date().toLocaleDateString('hu-HU');
  <section class="sig"><h2>Végrehajtás</h2><table><tr><td>Jármű:</td><td></td></tr><tr><td>Dátum:</td><td></td></tr><tr><td>Oldal:</td><td>☐ bal &nbsp; ☐ jobb</td></tr><tr><td>Cserélt betétek száma:</td><td></td></tr><tr><td>Mért feszesség (mm):</td><td></td></tr><tr><td>Végrehajtotta:</td><td></td></tr><tr><td>Ellenőrizte:</td><td></td></tr></table></section>
  <p class="foot">Oktatási segédanyag. Az értékeket és eljárásokat a hatályos TM alapján ellenőrizd.</p></div>`;
  $('bk').onclick=home;$('pp').onclick=()=>{try{window.print()}catch(e){}};window.scrollTo(0,0);}
+
+const QR=`__QR__`;
+const APPURL='https://strattila90-hue.github.io/Pzh2000-gumibet-t-csere/';
+function shareView(){i=-1;hush();
+ app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Megosztás</div><h1 class="ht">Add tovább!</h1>
+ <p class="lead">Olvastasd be a kódot a másik telefon kamerájával.</p><div class="qrbox">${QR}</div><p class="url">${APPURL}</p>
+ <button class="cta" id="sl">Link megosztása</button>
+ <h2>Internet nélkül – Bluetooth</h2><p>Az egész app egyetlen fájl. Elküldheted Bluetooth-on vagy Quick Share-rel a másik telefonra; ott Chrome-mal megnyitva internet nélkül is működik (a gépi hanggal).</p>
+ <button class="sec" id="sf">App-fájl küldése (Bluetooth / Quick Share)</button><a class="sec dl" href="index.html" download="PzH2000-gumibetet-csere.html">App-fájl letöltése</a>
+ <div class="vmsg" id="smsg"></div>
+ <h2>Offline állapot</h2><p id="ost">Ellenőrzés…</p></div>`;
+ $('bk').onclick=home;
+ $('sl').onclick=async()=>{try{if(navigator.share){await navigator.share({title:'PzH2000 gumibetét csere',text:'Lépésről lépésre, hangbemondással',url:APPURL});return}}catch(e){if(e.name==='AbortError')return}try{await navigator.clipboard.writeText(APPURL);$('smsg').textContent='A link a vágólapon.'}catch(e){$('smsg').textContent=APPURL}};
+ $('sf').onclick=async()=>{try{let html;try{html=await (await fetch('index.html')).text()}catch(x){html='<!DOCTYPE html>\n'+document.documentElement.outerHTML}
+  const f=new File([html],'PzH2000-gumibetet-csere.html',{type:'text/html'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'PzH2000 gumibetét csere'});return}
+  $('smsg').textContent='Ez a böngésző nem tud fájlt megosztani. Használd a Letöltés gombot, majd a Fájlkezelőből küldd el Bluetooth-on.'}catch(e){if(e.name!=='AbortError')$('smsg').textContent='Nem sikerült: '+e.message}};
+ offlineStatus($('ost'));window.scrollTo(0,0);}
+async function offlineStatus(el){if(!el)return;try{const ctl=navigator.serviceWorker&&navigator.serviceWorker.controller;let n=0;if(ctl&&window.caches){for(const k of await caches.keys()){const c=await caches.open(k);n+=(await c.keys()).filter(r=>/\.mp3$/.test(r.url)).length}}
+ el.innerHTML=ctl?`<b style="color:#1F8A3B">✓ Offline használatra kész.</b>${n?` Hangfájlok tárolva: ${n} db.`:''}`:'Offline használathoz: nyisd meg egyszer interneten a QR-kód címét, és tedd ki a kezdőképernyőre.'}catch(e){el.textContent=''}}
+let wl=null;async function wake(){try{if('wakeLock' in navigator&&!wl){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>wl=null)}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&i>=0)wake()});
 function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
  $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
@@ -88,13 +121,13 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
  fit();
  $('bk').onclick=home;$('tlb').onclick=list;
  $('pv').onclick=()=>i===0?home():go(i-1);
- const SP=()=>[...document.querySelectorAll('#lv span')];$('rp').onclick=()=>speak(s.v,SP());
- $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)try{speechSynthesis.cancel()}catch(x){}};
+ const SP=()=>[...document.querySelectorAll('#lv span')];$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
+ $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)hush()};
  $('dn').onclick=()=>{if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
   const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
   setTimeout(()=>{ov.remove();last?finish():go(i+1)},900)};
- window.scrollTo(0,0);fitText();speak(s.v,SP(),(i+1)+'. lépés:');}
+ window.scrollTo(0,0);fitText();wake();speak(s.v,SP(),(i+1)+'. lépés:');}
 function finish(){app.innerHTML=`<div class="page"><h1 class="ht">Egyik oldal kész!</h1><p class="lead">A másik oldalon ugyanez, a zárókupaktól (6. lépés) kezdve.</p><div class="warn"><i>!</i><div><b>A feszítő iránya a másik oldalon fordított!</b> Menetirány szerint jobb oldalon lefelé, bal oldalon felfelé lazít.</div></div><button class="cta" id="o">Másik oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
- fit();speak('Egyik oldal kész. A másik oldalon ugyanez, a zárókupaktól kezdve. Figyelem: a feszítő iránya ott fordított!');$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();go(5)};$('h').onclick=home;}
+ fit();speak(VX.finish);$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();go(5)};$('h').onclick=home;}
 let sx=null;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});document.addEventListener('touchend',e=>{if(sx===null||i<0)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>80){dx<0?(i<STEPS.length-1&&go(i+1)):(i>0&&go(i-1))}sx=null});
 location.hash==='#nyomtat'?printView():home();

@@ -19,6 +19,18 @@ Nyomtatható plakát: `qr/qr-plakat.pdf` (A4, leírással). Kép: `qr/qr.png`. C
 - **Alapismeretek** – lánctalp tag, gumibetét, cserekritériumok, feszítő görgő pár.
 - **Nyomtatható oktatóanyag** – teljes anyag A4-re (szerszámlista, nyomatékok, 34 lépés jelölőnégyzettel, alapismeretek, végrehajtási lap). Közvetlen link: `…/#nyomtat`. Kész PDF: `docs/oktatoanyag.pdf`.
 
+## Élethű hang (hangfájlok)
+Az app alapból a telefon gépi hangját használja. Élethű, katonás férfihanghoz neurális hangfájlok készülnek (Microsoft **hu-HU-TamasNeural**, ingyenes `edge-tts`):
+- **Automatikusan:** a `.github/workflows/hang.yml` minden szövegváltozásnál legyártja őket (Actions fül → *Hangfájlok gyártása* → *Run workflow* kézzel is indítható).
+- **Kézzel (PC-n):** `pip install edge-tts` → `python3 tools/gen_audio.py` → `python3 build.py` → commit.
+- Mondatonként külön fájl, így a felolvasott mondat ki van emelve. Ha nincs fájl, a gépi hang szól.
+- Más hang: `python3 tools/gen_audio.py --voice hu-HU-NoemiNeural --rate -4% --pitch -6Hz`.
+
+## Megosztás, offline, Bluetooth
+- Appon belül: **QR-kód · Megosztás · Offline** – QR-kód, link megosztás, az app-fájl küldése Bluetooth-on / Quick Share-rel (a fogadó telefonon Chrome-mal megnyitva net nélkül fut, gépi hanggal).
+- Bluetooth hangszóró/fülhallgató: párosítás után az app hangja automatikusan azon szól.
+- Lépés nézetben a képernyő nem alszik el (Wake Lock).
+
 ## Fájlok
 | Fájl | Szerep |
 |---|---|

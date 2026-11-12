@@ -3,7 +3,7 @@
 import json,os
 d=os.path.dirname(os.path.abspath(__file__));r=lambda p:open(os.path.join(d,p),encoding='utf-8').read()
 steps=json.loads(r('src/steps.json'))
-app=r('src/app.js').replace('__STEPS__',json.dumps(steps,ensure_ascii=False))
+app=r('src/app.js').replace('__STEPS__',json.dumps(steps,ensure_ascii=False)).replace('__VOICE__',json.dumps(json.loads(r('src/voice.json')),ensure_ascii=False)).replace('__QR__',r('src/qr.svg'))
 head='''<!DOCTYPE html>
 <html lang="hu">
 <head>

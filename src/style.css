@@ -91,3 +91,8 @@ button{font:inherit;cursor:pointer;color:inherit}
  .pr{padding:0;font-size:11pt}.ph1 h1{font-size:22pt}.pr h2{font-size:14pt;break-after:avoid}.phs{break-before:auto}
  .pn{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pr th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+.qrbox{width:min(78vw,320px);margin:6px auto;border:3px solid #1b1b1b;border-radius:18px;padding:10px;background:#fff}.qrbox svg{display:block;width:100%;height:auto}
+.url{text-align:center;font-size:13px;color:#555;word-break:break-all;margin:0 0 8px}
+.dl{display:flex;align-items:center;justify-content:center;text-decoration:none;color:#1b1b1b}
+.hint{font-size:13px;color:#555;margin:0}.ost{font-size:14px}
