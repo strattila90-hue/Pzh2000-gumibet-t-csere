@@ -11,11 +11,17 @@ if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pick
 const split=t=>t.match(/[^.!?]+[.!?]+|[^.!?]+$/g).map(x=>x.trim()).filter(Boolean);
 let spk=0;
 function speak(t,spans){if(!voiceOn||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const my=++spk;const ss=split(t);
- ss.forEach((x,k)=>{const u=new SpeechSynthesisUtterance(x);u.lang='hu-HU';if(hu)u.voice=hu;u.rate=0.9;u.pitch=0.95;u.volume=1;
+ ss.forEach((x,k)=>{const u=new SpeechSynthesisUtterance(x);u.lang='hu-HU';if(hu)u.voice=hu;u.rate=VS.rate;u.pitch=VS.pitch;u.volume=1;
   u.onstart=()=>{if(my!==spk||!spans)return;spans.forEach((e,j)=>{if(e){e.classList.toggle('on',j===k);e.classList.toggle('past',j<k)}})};
   u.onend=()=>{if(my!==spk||!spans)return;if(k===ss.length-1)spans.forEach(e=>{if(e){e.classList.remove('on');e.classList.remove('past')}})};
-  speechSynthesis.speak(u)})}catch(e){}}
-function bestVoice(){try{const v=speechSynthesis.getVoices().filter(x=>/^hu/i.test(x.lang));const rank=x=>(/natural|neural|online/i.test(x.name)?4:0)+(/google/i.test(x.name)?3:0)+(/tamás|tamas/i.test(x.name)?1:0)+(x.localService?0:1);v.sort((a,b)=>rank(b)-rank(a));return v[0]||null}catch(e){return null}}
+  speechSynthesis.speak(u);if(k<ss.length-1){const p=new SpeechSynthesisUtterance(' ');p.lang='hu-HU';p.volume=0;p.rate=0.6;speechSynthesis.speak(p)}})}catch(e){}}
+let VS={rate:0.97,pitch:0.78,name:''};try{Object.assign(VS,JSON.parse(localStorage.getItem('pzh2voice')||'{}'))}catch(e){}
+const huVoices=()=>{try{return speechSynthesis.getVoices().filter(x=>/^hu/i.test(x.lang))}catch(e){return[]}};
+function bestVoice(){const v=huVoices();if(VS.name){const f=v.find(x=>x.name===VS.name);if(f)return f}const rank=x=>(/natural|neural|online/i.test(x.name)?4:0)+(/tamás|tamas|male|férfi/i.test(x.name)?3:0)+(/google/i.test(x.name)?2:0)+(x.localService?0:1);v.sort((a,b)=>rank(b)-rank(a));return v[0]||null}
+function voicePanel(){const v=huVoices();return `<div class="vp"><b>Hang beállítása</b>${v.length?`<select id="vsel">${v.map(x=>`<option ${hu&&x.name===hu.name?'selected':''}>${x.name}</option>`).join('')}</select>`:''}
+<label>Hangmagasság <input type="range" id="vpi" min="0.5" max="1.2" step="0.05" value="${VS.pitch}"></label><label>Tempó <input type="range" id="vra" min="0.7" max="1.3" step="0.05" value="${VS.rate}"></label><button class="sec" id="vtest">Próba</button></div>`}
+function bindVoice(){const sv=()=>{try{localStorage.setItem('pzh2voice',JSON.stringify(VS))}catch(e){}};const s=$('vsel');if(s)s.onchange=e=>{VS.name=e.target.value;hu=bestVoice();sv()};
+ $('vpi').oninput=e=>{VS.pitch=+e.target.value;sv()};$('vra').oninput=e=>{VS.rate=+e.target.value;sv()};$('vtest').onclick=()=>{voiceOn=true;speak('Figyelem! Középső összekötő csavarja: ki. A közelben senki és semmi! Jelezzetek egymásnak!')}}
 function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;let lo=16,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px'}
 addEventListener('resize',fitText);
 let ac=null;function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[[523,0],[784,0.11]].forEach(([f,t])=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(0.35,ac.currentTime+t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+t+0.2);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.22)})}catch(e){}try{navigator.vibrate&&navigator.vibrate(70)}catch(e){}}
@@ -30,10 +36,10 @@ function home(){i=-1;let last=-1;try{last=+(localStorage.getItem('pzh2step')??-1
  <button class="cta" id="b1">Eligazítás és indulás</button>
  ${last>=0&&last<STEPS.length&&done.size?`<button class="sec" id="b2">Folytatás: ${last+1}. lépés · ${done.size} kész</button>`:''}
  <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Lépések</button></div>
- <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>
+ <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>${voicePanel()}
  <p class="foot">Összeállította: Strasszer szkv. · Az értékeket a TM alapján ellenőrizd.</p></div>`;
  pickVoice();fit();
- $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('vc').onchange=e=>voiceOn=e.target.checked;}
+ $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
 function brief(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
  <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>

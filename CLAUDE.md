@@ -20,7 +20,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 ## Nyitott kérdések
 - Oktatási dián 52 Nm áll az összekötőkre, a felhasználó 550 Nm-et mond → TM-ből tisztázni.
 - Középső összekötő csavar kulcsmérete (24?).
-- Saját hangfájlok (`docs/felolvasando-szovegek.md` alapján) – az app még a böngésző beszédszintézisét használja.
+- Saját hangfájlok (`docs/felolvasando-szovegek.md` alapján) – az app még a böngésző beszédszintézisét használja (katonás beállítás: pitch 0.78, rate 0.97, férfihang előnyben, kezdőlapon állítható).
 
 ## Stílus
 Magyar nyelv, rövid, határozott, gyakorlatias. A felhasználó iteratívan dolgozik, gyors visszajelzést ad.
