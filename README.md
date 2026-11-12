@@ -14,6 +14,7 @@ Lépésről lépésre vezető, **offline is működő** webes alkalmazás (PWA) 
 - **Eligazítás** – az állomány köszöntése, a feladat és az 5 szakasz.
 - **34 lépés** – oktató jellegű szöveg, mondatonkénti kiemeléssel felolvasva.
 - **Alapismeretek** – lánctalp tag, gumibetét, cserekritériumok, feszítő görgő pár.
+- **Nyomtatható oktatóanyag** – teljes anyag A4-re (szerszámlista, nyomatékok, 34 lépés jelölőnégyzettel, alapismeretek, végrehajtási lap). Közvetlen link: `…/#nyomtat`. Kész PDF: `docs/oktatoanyag.pdf`.
 
 ## Fájlok
 | Fájl | Szerep |
