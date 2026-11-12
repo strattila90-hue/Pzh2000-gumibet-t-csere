@@ -1,5 +1,5 @@
 // Offline gyorsítótár. Új verzió kiadásakor növeld a VERSION számot!
-const VERSION='v7';
+const VERSION='v8';
 const FILES=['./','./index.html','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png','./docs/oktatoanyag.pdf'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==VERSION).map(x=>caches.delete(x)))));self.clients.claim()});

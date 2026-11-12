@@ -11,8 +11,8 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 5. Megállás kézifék behúzása nélkül – így lazításkor és bontáskor a lánc tehermentesül, nem feszül.
 
 ## 2. Lánc lazítása, nyitása
-6. Zárókupak (porvédő kupak) kitekerése a kupaklazítóval, balra (le), hogy engedje a menetet. A kupak nem jön le, a helyén marad.
-7. A feszítő összehúzása a láncfeszítő/lazító kulccsal + toldattal, végállásig → a lánc laza.
+6. Zárókupak (porvédő kupak) kitekerése a kupaklazítóval: jobbra szorít, balra lazít. A kupak nem jön le, a helyén marad.
+7. A feszítő összehúzása a láncfeszítő/lazító kulccsal + toldattal, végállásig → a lánc laza. Irány menetirány szerint: **jobb oldalon lefelé, bal oldalon felfelé lazít** (oldalanként ellentétes!).
 8. Szélső (külső és belső) összekötő elemek csavarjai ki, 32-es dugókulccsal (szükség esetén kalapács / csavarlazító + drótkefe).
 9. Külső szélső összekötő leütése belülről kifelé, kalapáccsal és rövid pajszerrel. A pajszert tartó kesztyűben, figyeljen a félreütésre.
 10. Középső összekötő csavarja ki. **VESZÉLY:** feszülhet, elváláskor nagy energia szabadul fel – a hatósugárban senki és semmi!
@@ -39,8 +39,8 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 27. Csavarok nyomatékra (550 Nm).
 
 ## 5. Feszítés, ellenőrzés (betétcsere után minden esetben kötelező)
-28. Lánc visszafeszítése a láncfeszítő kulccsal.
-29. Zárókupak visszatekerése (kézzel is elég) – védi a menetet.
+28. Lánc visszafeszítése a láncfeszítő kulccsal: jobb oldalon felfelé, bal oldalon lefelé.
+29. Zárókupak visszatekerése jobbra (kézzel is elég) – védi a menetet.
 30. Sík betonplaccon gyorsítás 30–40 km/h-ra, majd satufék.
 31. Hátramenetben kígyózás (jobbra–balra) kb. 100 m-en.
 32. Előre egyenesen, megállás, hátramenet, majd 1-es fokozatból üresbe tett váltóval kigurítás, amíg megáll → a láncok tehermentesülnek.

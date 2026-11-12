@@ -25,11 +25,11 @@ Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
 
 ## 06. Zárókupak kitekerése
 
-6. lépés: Lánc lazítása. Irány a jármű hátulja, a feszítő görgő. A feszítő berendezés végén van a zárókupak. Kupaklazítóval tekerd ki: balra, lefelé, hogy engedje a menetet. A kupak nem jön le, a helyén marad. Szerepe: a menetet védi.
+6. lépés: Lánc lazítása. Irány a jármű hátulja, a feszítő görgő. A feszítő berendezés végén van a zárókupak. Kupaklazítóval tekerd ki. A kupak normál menetes: jobbra szorít, balra lazít. Tekerd balra, hogy engedje a menetet. A kupak nem jön le, a helyén marad.
 
 ## 07. Feszítő összehúzása
 
-7. lépés: Feszítő összehúzása. Láncfeszítő kulcs, toldattal. Tekerd a feszítő csavart, végállásig. A görgő előre mozdul, a lánc meglazul. Laza lánc nélkül nincs nyitás.
+7. lépés: Feszítő összehúzása. Láncfeszítő kulcs, toldattal. Figyelj, ez nem úgy működik, mint a kupak! Menetirány szerinti jobb oldalon: lefelé lazít. Bal oldalon: felfelé lazít. Tekerd végállásig. A görgő előre mozdul, a lánc meglazul.
 
 ## 08. Oldalsó összekötők csavarjai ki
 
@@ -113,11 +113,11 @@ Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
 
 ## 28. Lánc visszafeszítése
 
-28. lépés: Lánc visszafeszítése. Láncfeszítő kulcs, toldattal. Tekerd a feszítő csavart, amíg a lánc feszes.
+28. lépés: Lánc visszafeszítése. Láncfeszítő kulcs, toldattal. A feszítés iránya a lazítással ellentétes. Menetirány szerinti jobb oldalon: felfelé feszít. Bal oldalon: lefelé feszít. Tekerd, amíg a lánc feszes.
 
 ## 29. Zárókupak visszatekerése
 
-29. lépés: Zárókupak vissza: tekerd vissza. Kézzel is elég. Ne hagyd ki: ez védi a menetet a portól és a sártól.
+29. lépés: Zárókupak vissza. Tekerd jobbra: jobbra szorít. Kézzel is elég. Ne hagyd ki: ez védi a menetet a portól és a sártól.
 
 ## 30. Gyorsítás, satufék
 
@@ -137,4 +137,4 @@ Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
 
 ## 34. Egyik oldal kész!
 
-34. lépés: Egyik oldal: kész. Jó munka! A másik oldalon ugyanez, a zárókupak kitekerésétől.
+34. lépés: Egyik oldal: kész. Jó munka! A másik oldalon ugyanez, a zárókupak kitekerésétől. Figyelem: a másik oldalon a feszítő iránya fordított!

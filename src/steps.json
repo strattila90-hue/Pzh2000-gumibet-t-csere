@@ -31,15 +31,15 @@
  },
  {
   "t": "Zárókupak kitekerése",
-  "v": "Lánc lazítása. Irány a jármű hátulja, a feszítő görgő. A feszítő berendezés végén van a zárókupak. Kupaklazítóval tekerd ki: balra, lefelé, hogy engedje a menetet. A kupak nem jön le, a helyén marad. Szerepe: a menetet védi.",
-  "n": "Kupaklazítóval balra (lefelé) kitekerni, hogy engedje a menetet. A kupak a helyén marad, nem kell leszedni.",
+  "v": "Lánc lazítása. Irány a jármű hátulja, a feszítő görgő. A feszítő berendezés végén van a zárókupak. Kupaklazítóval tekerd ki. A kupak normál menetes: jobbra szorít, balra lazít. Tekerd balra, hogy engedje a menetet. A kupak nem jön le, a helyén marad.",
+  "n": "Kupak: jobbra szorít, balra lazít. Balra kitekerni, hogy engedje a menetet. A kupak a helyén marad, nem kell leszedni.",
   "w": ""
  },
  {
   "t": "Feszítő összehúzása",
-  "v": "Feszítő összehúzása. Láncfeszítő kulcs, toldattal. Tekerd a feszítő csavart, végállásig. A görgő előre mozdul, a lánc meglazul. Laza lánc nélkül nincs nyitás.",
-  "n": "Feszítő csavar: láncfeszítő/lazító kulcs + toldat, végállásig. A lánc lazul, nyitható.",
-  "w": ""
+  "v": "Feszítő összehúzása. Láncfeszítő kulcs, toldattal. Figyelj, ez nem úgy működik, mint a kupak! Menetirány szerinti jobb oldalon: lefelé lazít. Bal oldalon: felfelé lazít. Tekerd végállásig. A görgő előre mozdul, a lánc meglazul.",
+  "n": "Lazítás iránya (menetirány szerint): JOBB oldal → LEFELÉ, BAL oldal → FELFELÉ. Végállásig.",
+  "w": "A feszítő iránya oldalanként ellentétes! Jobb oldalon lefelé, bal oldalon felfelé lazít."
  },
  {
   "t": "Oldalsó összekötők csavarjai ki",
@@ -163,14 +163,14 @@
  },
  {
   "t": "Lánc visszafeszítése",
-  "v": "Lánc visszafeszítése. Láncfeszítő kulcs, toldattal. Tekerd a feszítő csavart, amíg a lánc feszes.",
-  "n": "Láncfeszítő/lazító kulcs + toldat.",
+  "v": "Lánc visszafeszítése. Láncfeszítő kulcs, toldattal. A feszítés iránya a lazítással ellentétes. Menetirány szerinti jobb oldalon: felfelé feszít. Bal oldalon: lefelé feszít. Tekerd, amíg a lánc feszes.",
+  "n": "Feszítés iránya (menetirány szerint): JOBB oldal → FELFELÉ, BAL oldal → LEFELÉ.",
   "w": ""
  },
  {
   "t": "Zárókupak visszatekerése",
-  "v": "Zárókupak vissza: tekerd vissza. Kézzel is elég. Ne hagyd ki: ez védi a menetet a portól és a sártól.",
-  "n": "Kézzel is elég. A menetet védi a szennyeződéstől.",
+  "v": "Zárókupak vissza. Tekerd jobbra: jobbra szorít. Kézzel is elég. Ne hagyd ki: ez védi a menetet a portól és a sártól.",
+  "n": "Jobbra szorít. Kézzel is elég. A menetet védi a szennyeződéstől.",
   "w": ""
  },
  {
@@ -194,13 +194,13 @@
  {
   "t": "Feszességmérés",
   "v": "Feszességmérés. Betétcsere után: kötelező! A lövegcső gázelvezetőjének magasságában lévő láncvezető görgőtől hátrafelé számolj tizenhárom külső összekötőt. Rájuk a madzag, C-kapcsokkal. A hetedik összekötő csavarjának teteje és a madzag között mérsz, idomszerrel. Hat és nyolc milliméter között: megfelel. Hat alatt: lazítani. Nyolc felett: feszíteni.",
-  "n": "Minden betétcsere után KÖTELEZŐ! 13 külső összekötő, madzag + C-kapcsok, mérés idomszerrel a 7.-nél. 6–8 mm megfelel. 6 alatt lazíts, 8 felett feszíts (zárókupak kitekerve, utána vissza), és ismételd a menetet és a mérést.",
+  "n": "Minden betétcsere után KÖTELEZŐ! 13 külső összekötő, madzag + C-kapcsok, mérés idomszerrel a 7.-nél. 6–8 mm megfelel. 6 alatt lazíts, 8 felett feszíts (kupak balra ki, feszítő oldal szerinti irányban, kupak jobbra vissza), és ismételd a menetet és a mérést.",
   "w": ""
  },
  {
   "t": "Egyik oldal kész!",
-  "v": "Egyik oldal: kész. Jó munka! A másik oldalon ugyanez, a zárókupak kitekerésétől.",
-  "n": "Másik oldal: ugyanez, a zárókupaktól (6. lépés) kezdve.",
+  "v": "Egyik oldal: kész. Jó munka! A másik oldalon ugyanez, a zárókupak kitekerésétől. Figyelem: a másik oldalon a feszítő iránya fordított!",
+  "n": "Másik oldal: ugyanez, a zárókupaktól (6. lépés). A feszítő iránya ott fordított!",
   "w": ""
  }
 ]
