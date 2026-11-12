@@ -31,6 +31,13 @@ Az app alapból a telefon gépi hangját használja. Élethű, katonás férfiha
 - Bluetooth hangszóró/fülhallgató: párosítás után az app hangja automatikusan azon szól.
 - Lépés nézetben a képernyő nem alszik el (Wake Lock).
 
+## Munka közben
+- **Betétszámláló** (14. és 19. lépés): nagy +1 gomb kesztyűben is, rezgés, x / 190 (94 tagnál 188).
+- **Szerszám-kipipálás** (3. lépés), **forgásirány-jelző** oldal szerint (7. és 28. lépés), **feszességmérő** (33. lépés: mm gomb → megfelel / lazíts / feszíts, hanggal).
+- **Munkanapló**: oldalanként automatikusan rögzül (dátum, oldal, kiszedett/beütött betét, mért mm, idő); a nyomtatható anyagba is bekerül.
+- **Bluetooth fülhallgató gombjai**: következő szám = Kész → következő lépés, előző = vissza, lejátszás = ismétlés (élethű hangnál).
+- **Éjszakai mód**, a kijelző nem alszik el.
+
 ## Fájlok
 | Fájl | Szerep |
 |---|---|

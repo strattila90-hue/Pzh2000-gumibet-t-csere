@@ -108,6 +108,25 @@ button{font:inherit;cursor:pointer;color:inherit}
 .url{text-align:center;font-size:13px;color:#555;word-break:break-all;margin:0 0 8px}
 .dl{display:flex;align-items:center;justify-content:center;text-decoration:none;color:#1b1b1b}
 .hint{font-size:13px;color:#555;margin:0}.ost{font-size:14px}
+
+.wg{margin:4px 14px 6px;border:2.5px solid #1b1b1b;border-radius:16px;padding:8px 10px;background:#fff}
+.cl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:15px}.cl span{font-size:15px;font-weight:800}.cl em{font-style:normal;font-size:30px;font-weight:900}
+.cbar{height:10px;border-radius:5px;background:#e3e1da;margin:6px 0;overflow:hidden}.cbar i{display:block;height:100%;background:#1F8A3B;transition:width .2s}
+.cbt{display:grid;grid-template-columns:70px 1fr;gap:8px}.cbt .sm{height:64px;border-radius:14px;border:2.5px solid #1b1b1b;background:#fff;font-size:20px;font-weight:900}
+.plus{height:64px;border:0;border-radius:14px;background:#F07D16;color:#fff;font-size:30px;font-weight:900}.plus:active{transform:scale(.97)}
+.mm{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:6px}.mm button{height:50px;border-radius:12px;border:2.5px solid #1b1b1b;background:#fff;font-size:20px;font-weight:900}.mm button.on{background:#1b1b1b;color:#fff}
+.mr{margin-top:6px;font-size:17px;font-weight:900}.good{color:#1F8A3B}.bad{color:#D62A1E}
+.tch{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;max-height:34vh;overflow:auto}.tch button{border:2px solid #1b1b1b;border-radius:18px;background:#fff;padding:6px 10px;font-size:14px;font-weight:800;text-align:left}.tch button.on{background:#1F8A3B;color:#fff;border-color:#1F8A3B}.tch small{font-weight:600;opacity:.75}
+.dir .arrow{font-size:24px;font-weight:800;margin-top:4px}.dir .arrow b{font-size:30px;color:#F07D16}
+.chip{border:2px solid #1b1b1b;border-radius:16px;background:#fff;padding:4px 10px;font-size:13px;font-weight:800}
+.lg{border:2px solid #e3e1da;border-radius:12px;padding:10px;font-size:15px;line-height:1.45;margin:4px 0}
+html.night body,html.night #app,html.night .dock{background:#0e0e0e;color:#f2f2f2}
+html.night .sec,html.night .x,html.night .vb,html.night .dock .sm,html.night .wg,html.night .chip,html.night .tool,html.night .tch button,html.night .mm button,html.night .cbt .sm,html.night .qrbox{background:#1c1c1c;color:#f2f2f2;border-color:#f2f2f2}
+html.night .cta,html.night .dock .big{background:#F07D16;color:#000}
+html.night .warn{background:#2a2200;border-color:#FFD21F;color:#fff}
+html.night .lv span.on{background:#F07D16;color:#000;box-shadow:0 0 0 3px #F07D16}html.night .lv span.past{color:#777}
+html.night .mm button.on{background:#F07D16;color:#000}html.night .pf{background:#333}html.night .li b{background:#222}
+html.night .dock{background:linear-gradient(rgba(14,14,14,0),#0e0e0e 22%)}
 </style>
 </head>
 <body>
@@ -434,7 +453,7 @@ function voicePanel(){const v=huVoices();return `<div class="vp"><b>Hang beáll�
 <label>Hangmagasság <input type="range" id="vpi" min="0.5" max="1.2" step="0.05" value="${VS.pitch}"></label><label>Tempó <input type="range" id="vra" min="0.7" max="1.3" step="0.05" value="${VS.rate}"></label><label class="chk"><input type="checkbox" id="vfile" ${useFiles?'checked':''}> Élethű hang (hangfájlok, ha vannak)</label><div class="vmsg" id="vfs"></div><button class="sec" id="vtest">Próba</button><p class="hint">Bluetooth hangszóró vagy fülhallgató: párosítsd a telefonnal, és az app hangja automatikusan azon szól.</p></div>`}
 function bindVoice(){const sv=()=>{try{localStorage.setItem('pzh2voice',JSON.stringify(VS))}catch(e){}};const s=$('vsel');if(s)s.onchange=e=>{VS.name=e.target.value;hu=bestVoice();sv()};
  $('vpi').oninput=e=>{VS.pitch=+e.target.value;sv()};$('vra').oninput=e=>{VS.rate=+e.target.value;sv()};const vf=$('vfile');if(vf)vf.onchange=e=>{useFiles=e.target.checked;try{localStorage.setItem('pzh2files',useFiles?'1':'0')}catch(x){}};const vfs=$('vfs');if(vfs)vfs.textContent=AUD&&Object.keys(AUD).filter(k=>k!=='_').length?'Élethű hangfájlok elérhetők.':'Hangfájlok még nincsenek – a telefon gépi hangja szól.';$('vtest').onclick=()=>{voiceOn=true;speak(VX.test)}}
-function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;let lo=16,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px'}
+function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;let lo=14,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px';w.style.overflowY=p.scrollHeight>w.clientHeight+2?'auto':'hidden'}
 addEventListener('resize',fitText);
 let ac=null;function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[[523,0],[784,0.11]].forEach(([f,t])=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(0.35,ac.currentTime+t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+t+0.2);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.22)})}catch(e){}try{navigator.vibrate&&navigator.vibrate(70)}catch(e){}}
 const app=document.getElementById('app');
@@ -449,18 +468,19 @@ function home(){i=-1;hush();let last=-1;try{last=+(localStorage.getItem('pzh2ste
  ${last>=0&&last<STEPS.length&&done.size?`<button class="sec" id="b2">Folytatás: ${last+1}. lépés · ${done.size} kész</button>`:''}
  <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Lépések</button></div>
  <button class="sec" id="b5">Nyomtatható oktatóanyag</button>
+ <div class="two"><button class="sec" id="b7">Munkanapló</button><button class="sec" id="b8">${document.documentElement.classList.contains('night')?'Nappali mód':'Éjszakai mód'}</button></div>
  <button class="sec" id="b6">QR-kód · Megosztás · Offline</button><div class="ost" id="ost0"></div>
  <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>${voicePanel()}
  <p class="foot">Összeállította: Strasszer szkv. · Az értékeket a TM alapján ellenőrizd.</p></div>`;
  pickVoice();fit();
- $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('b6').onclick=shareView;offlineStatus($('ost0'));$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
+ $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('b6').onclick=shareView;$('b7').onclick=logView;$('b8').onclick=()=>{setNight(!document.documentElement.classList.contains('night'));home()};offlineStatus($('ost0'));$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
 function brief(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
  <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>
  <div class="route">${PH.map((p,k)=>`<div class="stop"><div class="dot">${k+1}</div><div class="st"><b>${p.t}</b><span>${p.d}</span><em>${p.a+1}–${p.b+1}. lépés</em></div></div>`).join('')}</div>
  <div class="warn"><i>!</i><div><b>Kesztyű kötelező.</b> Tiszta, egyértelmű parancsok. Hangosan szóljatok egymásnak. A lánc fordításához 15–18 fő kell.</div></div>
  <button class="cta" id="go">Indulás</button></div>`;
- fit();$('bk').onclick=home;$('go').onclick=()=>{done.clear();saveDone();go(0)};window.scrollTo(0,0);
+ fit();$('bk').onclick=home;$('go').onclick=()=>{done.clear();saveDone();WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();go(0)};window.scrollTo(0,0);
  speak(VX.brief);}
 function know(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Alapismeretek</div><h1 class="ht">Lánctalp és feszítő</h1>
@@ -487,6 +507,7 @@ function printView(){i=-1;const d=new Date().toLocaleDateString('hu-HU');
  <p class="pw">⚠ A lánctalp nem lehet zsíros, olajos! Tisztítás benzinnel vagy hígítóval – kenőanyag tilos.</p>
  <h3>A feszítő görgő pár</h3><ol><li>Zárókupak (porvédő kupak)</li><li>Feszítő csavar</li><li>Feszítő berendezés</li><li>Feszítő görgő pár</li></ol><p>Láncfeszesség-ellenőrzés: minden 1. TK-nál, hosszabb igénybevételnél (gyakorlat) pár naponta.</p></section>
  <section class="sig"><h2>Végrehajtás</h2><table><tr><td>Jármű:</td><td></td></tr><tr><td>Dátum:</td><td></td></tr><tr><td>Oldal:</td><td>☐ bal &nbsp; ☐ jobb</td></tr><tr><td>Cserélt betétek száma:</td><td></td></tr><tr><td>Mért feszesség (mm):</td><td></td></tr><tr><td>Végrehajtotta:</td><td></td></tr><tr><td>Ellenőrizte:</td><td></td></tr></table></section>
+ ${LOG.length?`<section><h2>Munkanapló</h2><table><tr><th>Dátum</th><th>Oldal</th><th>Ki/Be</th><th>mm</th><th>perc</th></tr>${LOG.map(r=>`<tr><td>${r.d}</td><td>${r.side}</td><td>${r.ki}/${r.be}</td><td>${r.mm??'–'}</td><td>${r.min}</td></tr>`).join('')}</table></section>`:''}
  <p class="foot">Oktatási segédanyag. Az értékeket és eljárásokat a hatályos TM alapján ellenőrizd.</p></div>`;
  $('bk').onclick=home;$('pp').onclick=()=>{try{window.print()}catch(e){}};window.scrollTo(0,0);}
 
@@ -511,16 +532,54 @@ async function offlineStatus(el){if(!el)return;try{const ctl=navigator.serviceWo
  el.innerHTML=ctl?`<b style="color:#1F8A3B">✓ Offline használatra kész.</b>${n?` Hangfájlok tárolva: ${n} db.`:''}`:'Offline használathoz: nyisd meg egyszer interneten a QR-kód címét, és tedd ki a kezdőképernyőre.'}catch(e){el.textContent=''}}
 let wl=null;async function wake(){try{if('wakeLock' in navigator&&!wl){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>wl=null)}}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&i>=0)wake()});
+
+// ===== MUNKA ÁLLAPOT, NAPLÓ, ESZKÖZÖK =====
+let WK={side:'jobb',tags:95,ki:0,be:0,mm:null,tools:{},start:null};try{Object.assign(WK,JSON.parse(localStorage.getItem('pzh2work')||'{}'))}catch(e){}
+const saveW=()=>{try{localStorage.setItem('pzh2work',JSON.stringify(WK))}catch(e){}};
+const target=()=>WK.tags*2;
+let LOG=[];try{LOG=JSON.parse(localStorage.getItem('pzh2log')||'[]')}catch(e){}
+const saveLog=()=>{try{localStorage.setItem('pzh2log',JSON.stringify(LOG))}catch(e){}};
+const dirTxt=(side,feszit)=>{const le=(side==='jobb')!==!!feszit;return le?'LEFELÉ':'FELFELÉ'};
+function tick(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.setValueAtTime(0.25,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+0.08);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+0.09)}catch(e){}try{navigator.vibrate&&navigator.vibrate(35)}catch(e){}}
+function counterW(key,label){const v=WK[key],t=target(),pc=Math.min(100,v/t*100);
+ return `<div class="wg cnt"><div class="cl"><b>${label}</b><span><em id="cv">${v}</em> / ${t}</span></div><div class="cbar"><i id="cb" style="width:${pc}%"></i></div>
+ <div class="cbt"><button class="sm" id="cm">−1</button><button class="plus" id="cp">+1</button></div></div>`}
+function bindCounter(key){const upd=()=>{$('cv').textContent=WK[key];$('cb').style.width=Math.min(100,WK[key]/target()*100)+'%';saveW();fitText()};
+ $('cp').onclick=()=>{WK[key]++;tick();upd();if(WK[key]===target()){beep();speak('Megvan mind a '+target()+' betét!')}else if(WK[key]%10===0&&voiceOn&&useFiles===false){}};
+ $('cm').onclick=()=>{if(WK[key]>0){WK[key]--;upd()}}}
+function measureW(){const b=[4,5,6,7,8,9,10];return `<div class="wg"><div class="cl"><b>Mért érték (mm)</b><span id="mv">${WK.mm??'–'}</span></div><div class="mm">${b.map(x=>`<button data-m="${x}" class="${WK.mm===x?'on':''}">${x}</button>`).join('')}</div><div id="mr" class="mr"></div></div>`}
+function verdict(m){if(m==null)return'';if(m<6)return`<span class="bad">Túl feszes → LAZÍTANI (${WK.side} oldal: ${dirTxt(WK.side,0)})</span>`;if(m>8)return`<span class="bad">Túl laza → FESZÍTENI (${WK.side} oldal: ${dirTxt(WK.side,1)})</span>`;return`<span class="good">✓ Megfelel (6–8 mm)</span>`}
+function bindMeasure(){$('mr').innerHTML=verdict(WK.mm);document.querySelectorAll('.mm button').forEach(bt=>bt.onclick=()=>{WK.mm=+bt.dataset.m;saveW();document.querySelectorAll('.mm button').forEach(x=>x.classList.toggle('on',x===bt));$('mv').textContent=WK.mm;$('mr').innerHTML=verdict(WK.mm);fitText();
+ speak(WK.mm<6?'Túl feszes. Lazítani kell.':WK.mm>8?'Túl laza. Feszíteni kell.':'Megfelel.')})}
+function toolsW(){const n=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;return `<div class="wg"><div class="cl"><b>Kipipálás</b><span>${n} / ${TOOLS_ALL.length}</span></div><div class="tch">${TOOLS_ALL.map((t,k)=>`<button data-k="${k}" class="${WK.tools[k]?'on':''}">${WK.tools[k]?'✓ ':''}${t[0]} <small>${t[1]}</small></button>`).join('')}</div></div>`}
+function bindTools(){document.querySelectorAll('.tch button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();const w=bt.closest('.wg');w.outerHTML=toolsW();bindTools();fitText()})}
+function dirW(feszit){const s=WK.side;return `<div class="wg dir"><div class="cl"><b>${s==='jobb'?'JOBB':'BAL'} oldal (menetirány szerint)</b><button class="chip" id="sw">oldalváltás</button></div><div class="arrow">${feszit?'Feszítés':'Lazítás'}: <b>${dirTxt(s,feszit)} ${dirTxt(s,feszit)==='LEFELÉ'?'↓':'↑'}</b></div></div>`}
+function bindDir(feszit){$('sw').onclick=()=>{WK.side=WK.side==='jobb'?'bal':'jobb';saveW();go(i)}}
+const WG={2:[toolsW,bindTools],6:[()=>dirW(0),()=>bindDir(0)],13:[()=>counterW('ki','Régi betét kiszedve'),()=>bindCounter('ki')],18:[()=>counterW('be','Új betét beütve'),()=>bindCounter('be')],27:[()=>dirW(1),()=>bindDir(1)],32:[measureW,bindMeasure]};
+function logView(){i=-1;hush();
+ app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Munkanapló</div><h1 class="ht">Elvégzett cserék</h1>
+ ${LOG.length?LOG.slice().reverse().map(r=>`<div class="lg"><b>${r.d}</b> · ${r.side} oldal<br>Régi ki: ${r.ki} · Új be: ${r.be} · Feszesség: ${r.mm??'–'} mm · Idő: ${r.min} perc</div>`).join(''):'<p>Még nincs bejegyzés. Az oldal befejezésekor automatikusan rögzül.</p>'}
+ <h2>Beállítás</h2><label class="chk"><input type="radio" name="tg" value="95" ${WK.tags==95?'checked':''}> 95 tagos lánc (190 betét)</label><label class="chk"><input type="radio" name="tg" value="94" ${WK.tags==94?'checked':''}> 94 tagos lánc (188 betét)</label>
+ <label class="chk"><input type="radio" name="sd" value="jobb" ${WK.side==='jobb'?'checked':''}> Jobb oldalon kezdünk</label><label class="chk"><input type="radio" name="sd" value="bal" ${WK.side==='bal'?'checked':''}> Bal oldalon kezdünk</label>
+ ${LOG.length?'<button class="sec" id="clr">Napló törlése</button>':''}</div>`;
+ $('bk').onclick=home;document.querySelectorAll('input[name=tg]').forEach(x=>x.onchange=()=>{WK.tags=+x.value;saveW()});document.querySelectorAll('input[name=sd]').forEach(x=>x.onchange=()=>{WK.side=x.value;saveW()});
+ const c=$('clr');if(c)c.onclick=()=>{c.textContent='Biztos? Koppints újra a törléshez';c.onclick=()=>{LOG=[];saveLog();logView()}};window.scrollTo(0,0);}
+function setNight(on){document.documentElement.classList.toggle('night',on);try{localStorage.setItem('pzh2night',on?'1':'0')}catch(e){}}
+try{setNight(localStorage.getItem('pzh2night')==='1')}catch(e){}
+function media(){if(!('mediaSession' in navigator))return;try{const ms=navigator.mediaSession;ms.metadata=new MediaMetadata({title:(i+1)+'. '+STEPS[i].t,artist:'PzH2000 gumibetét csere',album:PH[phOf(i)].t});
+ ms.setActionHandler('nexttrack',()=>{const b=$('dn');b&&b.click()});ms.setActionHandler('previoustrack',()=>{i>0&&go(i-1)});
+ ms.setActionHandler('play',()=>{const b=$('rp');b&&b.click()});ms.setActionHandler('pause',()=>hush())}catch(e){}}
 function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
  $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
  app.innerHTML=`<div class="step">${timeline(i)}
- <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t}</small><h1>${s.t}</h1></div><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
+ <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
  <div class="lvw" id="lvw"><p class="lv" id="lv">${split(s.v).map(x=>`<span>${x}</span>`).join(' ')}</p></div>
+ ${WG[i]?WG[i][0]():''}
  ${TL[i]?`<div class="tools"><b>Kell hozzá:</b> ${TL[i].map(k=>`<span>${TOOL[k][0]}</span>`).join('')}</div>`:''}
  ${s.w?`<div class="warn"><i>!</i><div>${s.w}</div></div>`:''}
  <div class="dock"><button class="sm" id="pv">‹</button><button class="big ${dn?'is':''}" id="dn">${dn?'✓ Kész · tovább':last?'✓ Kész':'✓ Kész – jöhet a következő'}</button><button class="sm" id="rp">↻</button></div></div>`;
- fit();
+ fit();if(WG[i])WG[i][1]();media();
  $('bk').onclick=home;$('tlb').onclick=list;
  $('pv').onclick=()=>i===0?home():go(i-1);
  const SP=()=>[...document.querySelectorAll('#lv span')];$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
@@ -529,8 +588,9 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
   const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
   setTimeout(()=>{ov.remove();last?finish():go(i+1)},900)};
  window.scrollTo(0,0);fitText();wake();speak(s.v,SP(),(i+1)+'. lépés:');}
-function finish(){app.innerHTML=`<div class="page"><h1 class="ht">Egyik oldal kész!</h1><p class="lead">A másik oldalon ugyanez, a zárókupaktól (6. lépés) kezdve.</p><div class="warn"><i>!</i><div><b>A feszítő iránya a másik oldalon fordított!</b> Menetirány szerint jobb oldalon lefelé, bal oldalon felfelé lazít.</div></div><button class="cta" id="o">Másik oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
- fit();speak(VX.finish);$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();go(5)};$('h').onclick=home;}
+function finish(){const min=WK.start?Math.round((Date.now()-WK.start)/60000):0;LOG.push({d:new Date().toLocaleString('hu-HU'),side:WK.side,ki:WK.ki,be:WK.be,mm:WK.mm,min});saveLog();const other=WK.side==='jobb'?'bal':'jobb';
+ app.innerHTML=`<div class="page"><h1 class="ht">${WK.side==='jobb'?'Jobb':'Bal'} oldal kész!</h1><div class="lg">Régi ki: <b>${WK.ki}</b> · Új be: <b>${WK.be}</b> / ${target()} · Feszesség: <b>${WK.mm??'–'} mm</b> · Idő: <b>${min} perc</b></div><p class="lead">Következik: <b>${other} oldal</b>, a zárókupaktól (6. lépés).</p><div class="warn"><i>!</i><div><b>A feszítő iránya ott fordított!</b> ${other==='jobb'?'Jobb':'Bal'} oldalon ${dirTxt(other,0).toLowerCase()} lazít.</div></div><button class="cta" id="o">${other==='jobb'?'Jobb':'Bal'} oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
+ fit();speak(VX.finish);$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();WK.side=other;WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();go(5)};$('h').onclick=home;}
 let sx=null;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});document.addEventListener('touchend',e=>{if(sx===null||i<0)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>80){dx<0?(i<STEPS.length-1&&go(i+1)):(i>0&&go(i-1))}sx=null});
 location.hash==='#nyomtat'?printView():home();
 

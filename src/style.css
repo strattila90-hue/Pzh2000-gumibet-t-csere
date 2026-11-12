@@ -96,3 +96,22 @@ button{font:inherit;cursor:pointer;color:inherit}
 .url{text-align:center;font-size:13px;color:#555;word-break:break-all;margin:0 0 8px}
 .dl{display:flex;align-items:center;justify-content:center;text-decoration:none;color:#1b1b1b}
 .hint{font-size:13px;color:#555;margin:0}.ost{font-size:14px}
+
+.wg{margin:4px 14px 6px;border:2.5px solid #1b1b1b;border-radius:16px;padding:8px 10px;background:#fff}
+.cl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:15px}.cl span{font-size:15px;font-weight:800}.cl em{font-style:normal;font-size:30px;font-weight:900}
+.cbar{height:10px;border-radius:5px;background:#e3e1da;margin:6px 0;overflow:hidden}.cbar i{display:block;height:100%;background:#1F8A3B;transition:width .2s}
+.cbt{display:grid;grid-template-columns:70px 1fr;gap:8px}.cbt .sm{height:64px;border-radius:14px;border:2.5px solid #1b1b1b;background:#fff;font-size:20px;font-weight:900}
+.plus{height:64px;border:0;border-radius:14px;background:#F07D16;color:#fff;font-size:30px;font-weight:900}.plus:active{transform:scale(.97)}
+.mm{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:6px}.mm button{height:50px;border-radius:12px;border:2.5px solid #1b1b1b;background:#fff;font-size:20px;font-weight:900}.mm button.on{background:#1b1b1b;color:#fff}
+.mr{margin-top:6px;font-size:17px;font-weight:900}.good{color:#1F8A3B}.bad{color:#D62A1E}
+.tch{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;max-height:34vh;overflow:auto}.tch button{border:2px solid #1b1b1b;border-radius:18px;background:#fff;padding:6px 10px;font-size:14px;font-weight:800;text-align:left}.tch button.on{background:#1F8A3B;color:#fff;border-color:#1F8A3B}.tch small{font-weight:600;opacity:.75}
+.dir .arrow{font-size:24px;font-weight:800;margin-top:4px}.dir .arrow b{font-size:30px;color:#F07D16}
+.chip{border:2px solid #1b1b1b;border-radius:16px;background:#fff;padding:4px 10px;font-size:13px;font-weight:800}
+.lg{border:2px solid #e3e1da;border-radius:12px;padding:10px;font-size:15px;line-height:1.45;margin:4px 0}
+html.night body,html.night #app,html.night .dock{background:#0e0e0e;color:#f2f2f2}
+html.night .sec,html.night .x,html.night .vb,html.night .dock .sm,html.night .wg,html.night .chip,html.night .tool,html.night .tch button,html.night .mm button,html.night .cbt .sm,html.night .qrbox{background:#1c1c1c;color:#f2f2f2;border-color:#f2f2f2}
+html.night .cta,html.night .dock .big{background:#F07D16;color:#000}
+html.night .warn{background:#2a2200;border-color:#FFD21F;color:#fff}
+html.night .lv span.on{background:#F07D16;color:#000;box-shadow:0 0 0 3px #F07D16}html.night .lv span.past{color:#777}
+html.night .mm button.on{background:#F07D16;color:#000}html.night .pf{background:#333}html.night .li b{background:#222}
+html.night .dock{background:linear-gradient(rgba(14,14,14,0),#0e0e0e 22%)}
