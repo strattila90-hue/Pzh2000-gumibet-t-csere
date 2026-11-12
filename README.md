@@ -2,7 +2,7 @@
 
 Lépésről lépésre vezető, **offline is működő** webes alkalmazás (PWA) a PzH2000 lánc gumibetéteinek cseréjéhez – hangbemondással, szerszámlistával, idővonallal és lépésenkénti „Kész” visszajelzéssel.
 
-Összeállította: **Strasszer szkv.**, MH 25. Klapka György Lövészdandár – tüzér harcjárművezető.
+Összeállította: **Strasszer szkv.**
 
 ## Használat
 1. Nyisd meg telefonon a GitHub Pages címet (QR-kód).
