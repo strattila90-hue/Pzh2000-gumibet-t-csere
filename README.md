@@ -22,7 +22,7 @@ Lépésről lépésre vezető, **offline is működő** webes alkalmazás (PWA) 
 | `src/` | Forrás: `app.js`, `style.css`, `steps.json` (a lépések szövege), `draw.js`, `scenes.js` (tartalék rajzok, jelenleg kikapcsolva) |
 | `build.py` | `python3 build.py` → újragenerálja az `index.html`-t |
 | `sw.js`, `manifest.webmanifest`, `icons/` | PWA / offline működés |
-| `docs/` | Lépések, alapismeretek, felolvasandó szövegek |
+| `docs/` | Lépések, alapismeretek, felolvasandó szövegek, **`oktatoanyag.pdf` (nyomtatható A4)** |
 
 ## Frissítés
 1. Szöveg javítása: `src/steps.json`.

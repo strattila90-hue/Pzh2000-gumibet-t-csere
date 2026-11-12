@@ -86,6 +86,23 @@ button{font:inherit;cursor:pointer;color:inherit}
 .dock{position:static;background:#fff}
 
 .vp{display:flex;flex-direction:column;gap:8px;border:2px solid #1b1b1b;border-radius:14px;padding:12px;margin-top:4px}.vp b{font-size:16px}.vp select{font:inherit;font-size:16px;padding:8px;border-radius:10px;border:2px solid #1b1b1b}.vp label{display:flex;flex-direction:column;font-size:14px;font-weight:700}.vp input[type=range]{width:100%;accent-color:#F07D16}
+
+.pr{padding:18px 20px 30px;font-size:15px;line-height:1.45}
+.pbar{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-bottom:14px}.pbar .sec{padding:0 16px}
+.ph1 h1{font-size:32px;font-weight:900;margin:4px 0}.ph1 p{color:#555;margin:0 0 6px}
+.pr h2{font-size:20px;font-weight:900;border-bottom:3px solid #1b1b1b;padding-bottom:3px;margin:20px 0 8px}
+.pr h3{font-size:16px;margin:0 0 2px}
+.pr table{width:100%;border-collapse:collapse}.pr table{break-inside:avoid}.pr td,.pr th{border:1px solid #999;padding:5px 8px;text-align:left;vertical-align:top}.pr th{background:#f0efea}
+.ps{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid #ddd;break-inside:avoid}
+.pn{width:30px;height:30px;border-radius:50%;background:#1b1b1b;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.ps p{margin:2px 0}.pt{font-size:14px}.pw{font-weight:700;color:#a0350c}.cb{font-size:13px;color:#555}
+.sig td:first-child{width:45%;font-weight:700}.sig td{height:30px}
+@media print{
+ @page{size:A4;margin:14mm 12mm}
+ html,body{background:#fff}#app{max-width:none}.noprint,.ov{display:none!important}
+ .pr{padding:0;font-size:11pt}.ph1 h1{font-size:22pt}.pr h2{font-size:14pt;break-after:avoid}.phs{break-before:auto}
+ .pn{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pr th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
@@ -416,10 +433,11 @@ function home(){i=-1;let last=-1;try{last=+(localStorage.getItem('pzh2step')??-1
  <button class="cta" id="b1">Eligazítás és indulás</button>
  ${last>=0&&last<STEPS.length&&done.size?`<button class="sec" id="b2">Folytatás: ${last+1}. lépés · ${done.size} kész</button>`:''}
  <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Lépések</button></div>
+ <button class="sec" id="b5">Nyomtatható oktatóanyag</button>
  <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>${voicePanel()}
  <p class="foot">Összeállította: Strasszer szkv. · Az értékeket a TM alapján ellenőrizd.</p></div>`;
  pickVoice();fit();
- $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
+ $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
 function brief(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
  <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>
@@ -439,6 +457,22 @@ function know(){i=-1;
  <ol class="nl"><li>Zárókupak (porvédő)</li><li>Feszítő csavar</li><li>Feszítő berendezés</li><li>Feszítő görgő pár</li></ol>
  <p>Láncfeszességet ellenőrizni <b>minden 1. TK-nál</b> és hosszabb igénybevételnél (gyakorlat) <b>pár naponta</b>.</p><button class="cta" id="bk2">Vissza</button></div>`;
  fit();$('bk').onclick=home;$('bk2').onclick=home;window.scrollTo(0,0);}
+
+const TOOLS_ALL=[['Munkavédelmi kesztyű','mindenkinek'],['Nagy kalapács (5 kg)','min. 2 db'],['Kis kalapács','2 db'],['Laposfejű csavarhúzó','6–8 db'],['Beütőtüske','min. 2 db'],['Pajszer','2 db'],['Lánc-összehúzó (csigamenetes)','2 db'],['Nyomatékkulcs + 32-es dugófej','1 db'],['Racsnis dugókulcs','2 db'],['Láncfeszítő/lazító kulcs toldattal','1 db'],['Kupaklazító kulcs','1 db'],['Drótkefe, csavarlazító','szükség szerint'],['Fa ék','2 db'],['Porszívó','min. 1 db'],['Kompresszor','1 db'],['Madzag + C-kapcsok, idomszer (6/8 mm)','1 klt'],['Új gumibetét','190 db/oldal (94 tagnál 188)']];
+function printView(){i=-1;const d=new Date().toLocaleDateString('hu-HU');
+ app.innerHTML=`<div class="pr"><div class="noprint pbar"><button class="sec" id="bk">‹ Vissza</button><button class="cta" id="pp">Nyomtatás / PDF mentés</button></div>
+ <header class="ph1"><div class="kick">Oktatóanyag · PzH2000 futómű</div><h1>Lánc gumibetét csere</h1><p>Teljes munkafolyamat, egy oldalra. A másik oldal a 6. lépéstől ugyanígy. · Összeállította: Strasszer szkv. · Nyomtatva: ${d}</p></header>
+ <section><h2>Biztonsági alapelvek</h2><ol><li>A biztonsági rendszabályok ismerete.</li><li>Tiszta, egyértelmű parancsok.</li><li>Hangos jelzés, egymás figyelmeztetése.</li><li><b>Munkavédelmi kesztyű kötelező.</b></li></ol></section>
+ <section><h2>Szerszámok és anyagok</h2><table><tr><th>Megnevezés</th><th>Mennyiség</th></tr>${TOOLS_ALL.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td></tr>`).join('')}</table></section>
+ <section><h2>Nyomatékok és fő adatok</h2><table><tr><th>Tétel</th><th>Érték</th></tr><tr><td>Szélső (külső/belső) összekötő csavar</td><td>32-es kulcs, 550 Nm</td></tr><tr><td>Középső összekötő csavar</td><td>550 Nm</td></tr><tr><td>Láncfeszítő kerék kerek csavarjai</td><td>30-as kulcs, 320 Nm</td></tr><tr><td>Lánctag / oldal</td><td>95 (+1 tartalék)</td></tr><tr><td>Gumibetét / oldal</td><td>190 db, 2,5 kg/db</td></tr><tr><td>Kiterített lánc tömege</td><td>kb. 1,5 t – 15–18 fő</td></tr><tr><td>Láncfeszesség</td><td>6–8 mm (7. összekötőnél)</td></tr></table></section>
+ ${PH.map((p,k)=>`<section class="phs"><h2>${k+1}. szakasz – ${p.t}</h2>${STEPS.slice(p.a,p.b+1).map((s,j)=>{const n=p.a+j;return `<div class="ps"><div class="pn">${n+1}</div><div><h3>${s.t}</h3><p>${s.v}</p>${TL[n]?`<p class="pt"><b>Kell hozzá:</b> ${TL[n].map(x=>TOOL[x][0]).join(', ')}</p>`:''}${s.w?`<p class="pw">⚠ ${s.w}</p>`:''}<span class="cb">☐ kész</span></div></div>`}).join('')}</section>`).join('')}
+ <section><h2>Alapismeretek</h2><h3>A lánctalp tag</h3><ol><li>Gumibetét</li><li>Középső összekötő elem</li><li>Szélső összekötő elem (külső/belső)</li><li>Lánctalp összekötő rész – hosszanti furat, benne csapszeg</li><li>Téli fémbetét</li></ol>
+ <h3>Cserekritériumok</h3><ul><li>30%-nál nagyobb kitörés a betéten → csere.</li><li>Kopásjelző elérése → csere.</li><li>Ha a betétek több mint 30%-a rossz → az összes cseréje.</li><li>Együttes cserénél leállás a láncról – így az összekötők csavarjai is utánhúzhatók.</li></ul>
+ <p class="pw">⚠ A lánctalp nem lehet zsíros, olajos! Tisztítás benzinnel vagy hígítóval – kenőanyag tilos.</p>
+ <h3>A feszítő görgő pár</h3><ol><li>Zárókupak (porvédő kupak)</li><li>Feszítő csavar</li><li>Feszítő berendezés</li><li>Feszítő görgő pár</li></ol><p>Láncfeszesség-ellenőrzés: minden 1. TK-nál, hosszabb igénybevételnél (gyakorlat) pár naponta.</p></section>
+ <section class="sig"><h2>Végrehajtás</h2><table><tr><td>Jármű:</td><td></td></tr><tr><td>Dátum:</td><td></td></tr><tr><td>Oldal:</td><td>☐ bal &nbsp; ☐ jobb</td></tr><tr><td>Cserélt betétek száma:</td><td></td></tr><tr><td>Mért feszesség (mm):</td><td></td></tr><tr><td>Végrehajtotta:</td><td></td></tr><tr><td>Ellenőrizte:</td><td></td></tr></table></section>
+ <p class="foot">Oktatási segédanyag. Az értékeket és eljárásokat a hatályos TM alapján ellenőrizd.</p></div>`;
+ $('bk').onclick=home;$('pp').onclick=()=>{try{window.print()}catch(e){}};window.scrollTo(0,0);}
 function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
  $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
@@ -460,7 +494,7 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
 function finish(){app.innerHTML=`<div class="page"><h1 class="ht">Egyik oldal kész!</h1><p class="lead">A másik oldalon ugyanez, a zárókupaktól (6. lépés) kezdve.</p><button class="cta" id="o">Másik oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
  fit();speak('Egyik oldal kész. A másik oldalon ugyanez, a zárókupaktól kezdve.');$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();go(5)};$('h').onclick=home;}
 let sx=null;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});document.addEventListener('touchend',e=>{if(sx===null||i<0)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>80){dx<0?(i<STEPS.length-1&&go(i+1)):(i>0&&go(i-1))}sx=null});
-home();
+location.hash==='#nyomtat'?printView():home();
 
 if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>

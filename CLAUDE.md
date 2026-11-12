@@ -8,6 +8,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 - `src/app.js` – UI-logika (kezdőlap, eligazítás, alapismeretek, lépéslista, lépés nézet, Kész gomb + pipa + hang, idővonal 5 szakasszal, localStorage-ben a haladás). `__STEPS__` helyére a build illeszti a JSON-t.
 - `src/style.css` – fehér, letisztult (IKEA-szerű) stílus.
 - `src/draw.js`, `src/scenes.js` – izometrikus SVG rajzmotor és jelenetek. **Jelenleg nincs megjelenítve** (a felhasználó kérésére csak szöveg van), de megtartva.
+- Nyomtatható nézet: `printView()` / `index.html#nyomtat`; a PDF: `google-chrome --headless --print-to-pdf=docs/oktatoanyag.pdf "file://…/index.html#nyomtat"`.
 - `build.py` → `index.html`. `sw.js` offline cache (VERSION-t növelni kiadáskor).
 
 ## Döntések / tények (a felhasználótól)
