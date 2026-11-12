@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1b1b1b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>PzH2000 gumibetét csere</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#ecebe6;color:#1b1b1b;font-family:Inter,"Helvetica Neue",Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer;color:inherit}
+#app{max-width:560px;margin:0 auto;min-height:100vh;background:#fff}
+.pic svg{display:block;width:100%;height:auto}
+.kick{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#F07D16}
+.ht{font-size:40px;line-height:1;font-weight:900;letter-spacing:-.02em;margin:6px 0 10px}
+.lead{font-size:18px;line-height:1.45;margin:0 0 14px}
+.home,.page{padding:18px 18px 28px;display:flex;flex-direction:column;gap:10px;position:relative}
+.hero{background:#f4f3ef;border-radius:20px;padding:8px;margin-bottom:6px}
+.cta{min-height:64px;border:0;border-radius:16px;background:#1b1b1b;color:#fff;font-size:20px;font-weight:800}
+.sec{min-height:54px;border:2.5px solid #1b1b1b;border-radius:14px;background:#fff;font-size:17px;font-weight:800}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;gap:10px;align-items:center;font-weight:700;font-size:17px;margin-top:6px}.chk input{width:24px;height:24px;accent-color:#F07D16}
+.vmsg{font-size:13px;color:#a0520c}.foot{font-size:12px;color:#888;margin-top:8px}
+.x{position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:50%;border:2.5px solid #1b1b1b;background:#fff;font-size:26px;font-weight:900;line-height:1}
+.page h2{font-size:22px;font-weight:900;margin:18px 0 4px}
+.page p{font-size:17px;line-height:1.45;margin:4px 0}
+.card{background:#f4f3ef;border-radius:16px;padding:6px}
+.nl{margin:6px 0;padding-left:0;list-style:none;counter-reset:n}.nl li{counter-increment:n;font-size:17px;font-weight:700;padding:5px 0 5px 40px;position:relative}.nl li:before{content:counter(n);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:#F07D16;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #1b1b1b}
+.bl{font-size:17px;line-height:1.5;padding-left:20px;margin:4px 0}
+.route{position:relative;margin:6px 0 4px}
+.route:before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:4px;background:repeating-linear-gradient(#1b1b1b 0 10px,transparent 10px 18px)}
+.stop{display:grid;grid-template-columns:42px 110px 1fr;gap:10px;align-items:center;padding:8px 0;position:relative}
+.dot{width:42px;height:42px;border-radius:50%;background:#F07D16;border:3px solid #1b1b1b;color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;z-index:1}
+.sp{background:#f4f3ef;border-radius:12px;padding:3px}
+.st b{display:block;font-size:18px;font-weight:900}.st span{display:block;font-size:14px;line-height:1.3;color:#333}.st em{font-style:normal;font-size:12px;font-weight:800;color:#F07D16}
+.warn{display:flex;gap:12px;align-items:flex-start;background:#fff5d6;border:3px solid #1b1b1b;border-radius:14px;padding:12px;font-size:17px;line-height:1.35;margin:8px 0}
+.warn i{flex:none;font-style:normal;width:32px;height:28px;background:#FFD21F;clip-path:polygon(50% 0,100% 100%,0 100%);display:flex;align-items:flex-end;justify-content:center;font-weight:900;font-size:18px}
+.step{display:flex;flex-direction:column;min-height:100vh}
+.tl{display:flex;gap:4px;padding:10px 12px 0;cursor:pointer}
+.ph{display:flex;flex-direction:column;align-items:center;gap:2px}
+.pf{width:100%;height:10px;border-radius:5px;background:#e3e1da;position:relative;overflow:visible}
+.pf i{display:block;height:100%;border-radius:5px;background:#1F8A3B}
+.pf b{position:absolute;top:-4px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:#F07D16;border:3px solid #1b1b1b}
+.ph span{font-size:11px;font-weight:800;color:#999}.ph.cur span{color:#F07D16}.ph.ok span{color:#1F8A3B}
+.top{display:flex;align-items:center;gap:10px;padding:10px 12px 4px;position:relative}
+.top .x{position:static;flex:none}
+.no{flex:none;font-size:62px;font-weight:900;line-height:.9;letter-spacing:-.04em;min-width:56px}
+.no.ok{color:#1F8A3B}
+.tt{flex:1;min-width:0}.tt small{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#F07D16}.tt h1{margin:2px 0 0;font-size:24px;line-height:1.08;font-weight:900}
+.vb{flex:none;width:46px;height:46px;border-radius:50%;border:2.5px solid #1b1b1b;background:#fff;font-size:20px}
+.stage{margin:6px 10px;background:#f4f3ef;border-radius:20px;padding:6px}
+.stage svg{max-height:52vh}
+.tools{display:flex;gap:8px;padding:6px 12px;overflow-x:auto}
+.tool{flex:none;width:92px;border:2px solid #1b1b1b;border-radius:12px;padding:4px;text-align:center;background:#fff}
+.tool svg{display:block;width:100%;height:auto}.tool span{display:block;font-size:11px;font-weight:800;line-height:1.1;margin-top:2px}
+.say{font-size:19px;line-height:1.4;font-weight:600;margin:8px 16px 14px}
+.dock{position:sticky;bottom:0;margin-top:auto;display:grid;grid-template-columns:58px 1fr 58px;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(rgba(255,255,255,0),#fff 22%)}
+.dock .sm{height:64px;border-radius:16px;border:2.5px solid #1b1b1b;background:#fff;font-size:26px;font-weight:900}
+.dock .big{height:64px;border:0;border-radius:16px;background:#1b1b1b;color:#fff;font-size:19px;font-weight:900}
+.dock .big.is{background:#1F8A3B}
+.li{display:flex;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid #e3e1da;font-size:17px;font-weight:600;cursor:pointer}
+.li b{width:34px;height:34px;flex:none;border-radius:50%;background:#f4f3ef;display:flex;align-items:center;justify-content:center;font-weight:900}
+.li em{margin-left:auto;font-style:normal;color:#1F8A3B;font-weight:900;font-size:20px}
+.ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.75);z-index:9;pointer-events:none}
+.ov svg{width:180px;height:180px;animation:pop .4s ease-out}.ov path{stroke-dasharray:120;stroke-dashoffset:120;animation:dr .35s .12s forwards}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}@keyframes dr{to{stroke-dashoffset:0}}
+
+.stop{grid-template-columns:42px 1fr}
+.lv{font-size:22px;line-height:1.45;font-weight:600;margin:14px 16px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:4px 16px;font-size:16px}
+.tools span{border:2px solid #1b1b1b;border-radius:20px;padding:5px 12px;font-weight:800;font-size:15px}
+.warn{margin:10px 16px}
+
+.step{height:100vh;height:100dvh;min-height:0;overflow:hidden}
+.lvw{flex:1;min-height:0;overflow:hidden;padding:6px 18px 4px;display:flex;align-items:flex-start}
+.lv{margin:0;font-size:30px;line-height:1.32;font-weight:700;letter-spacing:-.01em}
+.lv span{transition:background .2s,color .2s;border-radius:6px;padding:0 2px}
+.lv span.on{background:#FFE08A;color:#000;box-shadow:0 0 0 3px #FFE08A}
+.lv span.past{color:#8a8a8a}
+.step .warn{margin:6px 16px;font-size:15px;padding:8px 10px}
+.step .tools{padding:4px 16px 2px}
+.dock{position:static;background:#fff}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ===== IZOMETRIKUS RAJZMOTOR =====
+const INK='#1b1b1b',OR='#F07D16',RD='#D62A1E',GN='#1F8A3B',BL='#1F6FD1';
+const PAL={
+ steel:['#eef0f2','#cfd3d8','#b3b8bf'],
+ dsteel:['#c4c8ce','#a3a8b0','#888e97'],
+ rub:['#4d4d4d','#333','#262626'],
+ olive:['#a7b07a','#878f5c','#6c7448'],
+ hull:['#dfe2d6','#c4c8b6','#a9ae99'],
+ hl:['#ffc27a','#f59a3c','#dc7a17'],
+ wood:['#e3c08a','#cfa465','#b88c4f'],
+ mud:['#9c8463','#7e6a4d','#66563e'],
+ conc:['#f2f1ec','#dddbd2','#c8c5b9'],
+ grn:['#8fd19e','#4fb36b','#2f8a4a'],
+ red:['#ff9a92','#e5483c','#bf2d22']
+};
+let OX=0,OY=0,SC=1;
+const pj=(x,y,z)=>[OX+(x-y)*0.866*SC,OY+((x+y)*0.5-z)*SC];
+const f1=n=>Math.round(n*10)/10;
+const pts=a=>a.map(p=>f1(p[0])+','+f1(p[1])).join(' ');
+const poly=(a,fill,sw=2,st=INK,extra='')=>`<polygon points="${pts(a)}" fill="${fill}" stroke="${st}" stroke-width="${sw}" stroke-linejoin="round" ${extra}/>`;
+const poly3=(a,fill,sw=2,extra='')=>poly(a.map(p=>pj(...p)),fill,sw,INK,extra);
+const line3=(a,sw=2,c=INK,extra='')=>`<polyline points="${pts(a.map(p=>pj(...p)))}" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+function box(x,y,z,w,d,h,pal='steel',sw=2){const c=PAL[pal]||pal;
+ return poly3([[x+w,y,z],[x+w,y+d,z],[x+w,y+d,z+h],[x+w,y,z+h]],c[2],sw)+
+  poly3([[x,y+d,z],[x+w,y+d,z],[x+w,y+d,z+h],[x,y+d,z+h]],c[1],sw)+
+  poly3([[x,y,z+h],[x+w,y,z+h],[x+w,y+d,z+h],[x,y+d,z+h]],c[0],sw);}
+function hull2(P){P=P.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);const lo=[],up=[];
+ for(const p of P){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p)}
+ for(const p of P.reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p)}
+ return lo.slice(0,-1).concat(up.slice(0,-1));}
+// henger: tengely 'x'|'y'|'z', c = alap középpont, len a tengely mentén (+ irány a látható vég)
+function ring(ax,c,r,n,off=0){const o=[];for(let k=0;k<n;k++){const a=k*2*Math.PI/n+off,u=r*Math.cos(a),v=r*Math.sin(a);
+ o.push(ax==='x'?[c[0],c[1]+u,c[2]+v]:ax==='y'?[c[0]+u,c[1],c[2]+v]:[c[0]+u,c[1]+v,c[2]])}return o;}
+function cyl(ax,c,r,len,pal='steel',n=28,sw=2,off=0){const col=PAL[pal]||pal;const e=ax==='x'?[c[0]+len,c[1],c[2]]:ax==='y'?[c[0],c[1]+len,c[2]]:[c[0],c[1],c[2]+len];
+ const a=ring(ax,c,r,n,off),b=ring(ax,e,r,n,off);const side=hull2(a.concat(b).map(p=>pj(...p)));
+ return poly(side,col[1],sw)+poly3(b,col[0],sw);}
+const hex=(ax,c,r,len,pal='dsteel')=>cyl(ax,c,r,len,pal,6,2,Math.PI/6);
+// ív nyíl tetszőleges síkban (forgásirány)
+function arc3(ax,c,r,a0,a1,col=OR,sw=5){const P=[];const n=24;for(let k=0;k<=n;k++){const a=a0+(a1-a0)*k/n,u=r*Math.cos(a),v=r*Math.sin(a);
+ P.push(ax==='x'?[c[0],c[1]+u,c[2]+v]:ax==='y'?[c[0]+u,c[1],c[2]+v]:[c[0]+u,c[1]+v,c[2]])}
+ const s=P.map(p=>pj(...p));return `<polyline points="${pts(s)}" fill="none" stroke="#fff" stroke-width="${sw+5}" stroke-linecap="round"/><polyline points="${pts(s)}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linecap="round" marker-end="url(#m_${col.slice(1)})"/>`;}
+function arr3(a,b,col=OR,sw=6){const A=pj(...a),B=pj(...b);return `<line x1="${f1(A[0])}" y1="${f1(A[1])}" x2="${f1(B[0])}" y2="${f1(B[1])}" stroke="#fff" stroke-width="${sw+5}" stroke-linecap="round"/><line x1="${f1(A[0])}" y1="${f1(A[1])}" x2="${f1(B[0])}" y2="${f1(B[1])}" stroke="${col}" stroke-width="${sw}" stroke-linecap="round" marker-end="url(#m_${col.slice(1)})"/>`;}
+// 2D segédek
+const L2=(d,w=2.5,c=INK)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const R2=(x,y,w,h,f='#fff',rx=4,sw=2.5)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${f}" stroke="${INK}" stroke-width="${sw}"/>`;
+const C2=(x,y,r,f='#fff',sw=2.5)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" stroke="${INK}" stroke-width="${sw}"/>`;
+const TX=(x,y,t,s=15,a='middle',c=INK,w=800)=>`<text x="${x}" y="${y}" font-size="${s}" font-weight="${w}" text-anchor="${a}" fill="${c}" font-family="Inter,Helvetica Neue,Arial,sans-serif" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">${t}</text>`;
+const A2=(x1,y1,x2,y2,col=OR,sw=6)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#fff" stroke-width="${sw+5}" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${sw}" stroke-linecap="round" marker-end="url(#m_${col.slice(1)})"/>`;
+const G2=(tr,s)=>`<g transform="${tr}">${s}</g>`;
+const tagN=(x,y,n,col=INK)=>C2(x,y,15,col,2)+`<text x="${x}" y="${y+6}" font-size="17" font-weight="900" text-anchor="middle" fill="#fff" font-family="Arial">${n}</text>`;
+const callout=(x,y,tx,ty,t,s=14)=>L2(`M${x} ${y} L${tx} ${ty}`,1.6)+C2(x,y,3.5,INK,0)+TX(tx,ty+(ty<y?-6:16),t,s);
+const OK2=(x,y,r=20)=>C2(x,y,r,GN,2.5)+L2(`M${x-r*.45} ${y} L${x-r*.1} ${y+r*.38} L${x+r*.5} ${y-r*.35}`,r/4.5,'#fff');
+const NO2=(x,y,r=22)=>C2(x,y,r,RD,2.5)+L2(`M${x-r*.4} ${y-r*.4} L${x+r*.4} ${y+r*.4} M${x+r*.4} ${y-r*.4} L${x-r*.4} ${y+r*.4}`,r/4.5,'#fff');
+const WARN2=(x,y,s=1)=>G2(`translate(${x} ${y}) scale(${s})`,`<path d="M0 -24 L24 18 L-24 18 Z" fill="#FFD21F" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/><text x="0" y="13" font-size="24" font-weight="900" text-anchor="middle" font-family="Arial">!</text>`);
+const ZONE=(cx,cy,rx,ry)=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="rgba(214,42,30,.10)" stroke="${RD}" stroke-width="2.5" stroke-dasharray="9 6"/>`;
+const groundIso=(x0,y0,x1,y1,pal='conc')=>poly3([[x0,y0,0],[x1,y0,0],[x1,y1,0],[x0,y1,0]],PAL[pal][0],1.5);
+const DEFS=`<defs>${[OR,RD,GN,BL,INK].map(c=>`<marker id="m_${c.slice(1)}" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="${c}"/></marker>`).join('')}</defs>`;
+const SVG=(inner,vb='0 0 400 300')=>`<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${DEFS}${inner}</svg>`;
+function cam(ox,oy,sc=1){OX=ox;OY=oy;SC=sc;}
+
+// ===== EMBER (egyszerű, barátságos figura, narancs kesztyű) =====
+function man(x,y,s=1,pose='stand',flip=false){
+ const P={stand:{b:[0,0],h:[0,-58],a:[[-14,-6],[14,-6]],f:[[-8,38],[8,38]]},
+ signal:{b:[0,0],h:[0,-58],a:[[-30,-62],[30,-62]],f:[[-8,38],[8,38]]},
+ point:{b:[0,0],h:[0,-58],a:[[-14,-6],[40,-36]],f:[[-8,38],[8,38]]},
+ lift:{b:[6,8],h:[18,-40],a:[[26,22],[34,18]],f:[[-6,38],[20,38]],bend:1},
+ push:{b:[4,0],h:[8,-56],a:[[40,-24],[40,-14]],f:[[-14,38],[12,38]]},
+ hammer:{b:[0,0],h:[0,-58],a:[[22,-74],[18,-66]],f:[[-10,38],[10,38]]},
+ hold:{b:[6,10],h:[14,-38],a:[[36,8],[30,16]],f:[[-6,38],[18,38]],bend:1},
+ kneel:{b:[0,14],h:[6,-36],a:[[30,12],[26,18]],f:[[-14,38],[20,38]],bend:1}}[pose];
+ const W='#ffffff',UN='#6f7a4a';
+ const limb=(a,b,w,c)=>`<path d="M${a[0]} ${a[1]} L${b[0]} ${b[1]}" stroke="${INK}" stroke-width="${w+5}" stroke-linecap="round"/><path d="M${a[0]} ${a[1]} L${b[0]} ${b[1]}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+ const hip=[P.b[0],P.b[1]+4],sh=[ (P.h[0]+P.b[0])/2+(P.bend?6:0), P.h[1]+20];
+ let g=P.f.map(f=>limb(hip,f,12,'#55603a')).join('')+P.f.map(f=>`<ellipse cx="${f[0]+3}" cy="${f[1]+3}" rx="9" ry="5" fill="${INK}"/>`).join('');
+ g+=`<path d="M${sh[0]-15} ${sh[1]-4} Q${sh[0]} ${sh[1]-12} ${sh[0]+15} ${sh[1]-4} L${hip[0]+13} ${hip[1]} L${hip[0]-13} ${hip[1]} Z" fill="${UN}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>`;
+ g+=P.a.map(a=>limb(sh,a,9,UN)).join('');
+ g+=`<circle cx="${P.h[0]}" cy="${P.h[1]}" r="13" fill="${W}" stroke="${INK}" stroke-width="2.5"/>`;
+ g+=P.a.map(a=>`<circle cx="${a[0]}" cy="${a[1]}" r="7.5" fill="${OR}" stroke="${INK}" stroke-width="2.5"/>`).join('');
+ return G2(`translate(${x} ${y}) scale(${flip?-s:s} ${s})`,g);
+}
+
+// ===== SZERSZÁMOK (2D ikon, tiszta vonal) =====
+const TOOL={
+ kesztyu:['Kesztyű',()=>`<path d="M-20 26 L-22 -6 Q-22 -12 -16 -12 L-16 -34 Q-16 -40 -11 -40 Q-6 -40 -6 -34 L-6 -42 Q-6 -48 -1 -48 Q4 -48 4 -42 L4 -38 Q4 -44 9 -44 Q14 -44 14 -38 L14 -30 Q14 -36 19 -36 Q24 -36 24 -30 L24 6 Q24 18 14 26 Z" fill="${OR}" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`+R2(-22,22,40,14,'#d76510',3,3)],
+ nagyk:['Nagy kalapács',()=>R2(-40,-4,62,9,'#d9b27c',4)+`<path d="M18 -18 L42 -18 L46 -12 L46 12 L42 18 L18 18 Z" fill="#9aa0a8" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`],
+ kisk:['Kis kalapács',()=>R2(-36,-3,54,7,'#d9b27c',3)+`<path d="M16 -11 L34 -11 L38 -6 L38 6 L34 11 L16 11 Z" fill="#9aa0a8" stroke="${INK}" stroke-width="3"/>`],
+ csavarhuzo:['Csavarhúzó',()=>R2(-46,-8,32,16,'#2c2c2c',7)+R2(-40,-3,20,6,'#4fb36b',2,1.5)+L2('M-14 0 L34 0',5)+`<path d="M34 -3 L44 -2 L44 2 L34 3 Z" fill="#ccc" stroke="${INK}" stroke-width="2"/>`],
+ beuto:['Beütőtüske',()=>`<path d="M-44 -7 L10 -7 L10 -4 L24 -4 L46 0 L24 4 L10 4 L10 7 L-44 7 Z" fill="#c4c8ce" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`],
+ pajszer:['Pajszer',()=>`<path d="M-44 4 L34 4 Q44 4 46 -8" fill="none" stroke="${INK}" stroke-width="11" stroke-linecap="round"/><path d="M-44 4 L34 4 Q44 4 46 -8" fill="none" stroke="#7d5a45" stroke-width="6" stroke-linecap="round"/>`],
+ nyomatek:['Nyomatékkulcs',()=>C2(-36,0,12,'#b3b8bf')+R2(-26,-6,46,12,'#e3e5e8',6)+R2(20,-8,26,16,'#2c2c2c',6)+R2(-6,-4,12,8,'#4fb36b',1,1.5)+TX(4,26,'550 Nm',12)],
+ racsnis:['Racsnis 32',()=>C2(-34,0,13,'#b3b8bf')+R2(-22,-6,66,12,'#e3e5e8',6)+TX(-34,28,'32',12)],
+ osszehuzo:['Összehúzó',()=>`<path d="M-44 -10 A10 10 0 1 0 -44 10" fill="none" stroke="${INK}" stroke-width="5"/><path d="M44 -10 A10 10 0 1 1 44 10" fill="none" stroke="${INK}" stroke-width="5"/>`+R2(-40,-7,80,14,'#a7b07a',3)+L2('M-30 0 '+[...Array(12)].map((_,k)=>`L${-27+k*5} ${k%2?-4:4}`).join(' '),1.5)],
+ porszivo:['Porszívó',()=>R2(-26,-26,40,50,'#a7b07a',12)+C2(-16,28,5)+C2(4,28,5)+L2('M14 -6 C34 -6 30 24 46 24',6)],
+ kompresszor:['Kompresszor',()=>R2(-40,-4,70,26,'#a7b07a',13)+R2(-20,-26,32,22,'#555',3)+C2(-28,26,6)+L2('M30 6 C40 6 40 -14 48 -14',3,BL)],
+ feszito:['Láncfeszítő',()=>R2(-44,-5,72,10,'#6f7a4a',5)+C2(34,0,13,'#c4c8ce')+`<polygon points="${[0,1,2,3,4,5].map(k=>`${34+7*Math.cos(k*Math.PI/3)},${7*Math.sin(k*Math.PI/3)}`).join(' ')}" fill="#fff" stroke="${INK}" stroke-width="2"/>`],
+ kupak:['Kupaklazító',()=>R2(-40,-5,56,10,'#6f7a4a',5)+C2(26,0,14,'#c4c8ce')+C2(26,0,7,'#fff',2)],
+ ek:['Fa ék',()=>`<path d="M-40 18 L40 18 L40 -14 Z" fill="#e3c08a" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`],
+ madzag:['Madzag + C-kapocs',()=>L2('M-40 -10 L40 -10',3,BL)+L2('M-40 -10 l0 18 l8 0 l0 10 l-12 0',4)+L2('M40 -10 l0 18 l-8 0 l0 10 l12 0',4)],
+ idomszer:['Idomszer 6/8',()=>`<path d="M-40 -16 L-24 -16 L-24 -10 L-14 -10 L-14 -16 L14 -16 L14 -8 L24 -8 L24 -16 L40 -16 L40 16 L-40 16 Z" fill="#e3e5e8" stroke="${INK}" stroke-width="3"/>`+TX(-19,10,'6',12)+TX(19,10,'8',12)],
+ drotkefe:['Drótkefe',()=>R2(-40,-14,72,12,'#d9b27c',5)+[...Array(11)].map((_,k)=>L2(`M${-34+k*6} -2 l0 12`,1.6,'#666')).join('')],
+ benzin:['Benzin / hígító',()=>R2(-18,-24,36,46,'#e5483c',5)+R2(-6,-32,12,8,'#555',2)+TX(0,6,'B',16,'middle','#fff')]
+};
+const toolSVG=k=>`<svg viewBox="-55 -50 110 90" xmlns="http://www.w3.org/2000/svg">${TOOL[k][1]()}</svg>`;
+
+// ===== ALKATRÉSZEK IZOMETRIKUSAN =====
+// lánctag: szélesség x irányban (W), haladási irány y; z felfelé. pads: 'ok' | 'none' | 'old' | 'hl' | 'lift'
+const W=150,PIT=50;
+function link(x,y,z,o={}){const p=o.pads||'ok';let g='';
+ const pin=(yy)=>cyl('x',[x-8,yy,z+8],6.5,W+16,'dsteel',18);
+ g+=pin(y);
+ g+=box(x,y-2,z,W,34,16,o.body||'steel');
+ g+=poly3([[x+8,y+4,z+16],[x+W-8,y+4,z+16],[x+W-8,y+28,z+16],[x+8,y+28,z+16]],'#b9bdc4',1.2);
+ const pad=(px,pal,lift=0)=>box(px,y+2,z+16+lift,58,28,12,pal);
+ const nest=(px,muddy)=>poly3([[px,y+2,z+16],[px+58,y+2,z+16],[px+58,y+30,z+16],[px,y+30,z+16]],muddy?PAL.mud[1]:'#7d8188',1.5)+(muddy?[[12,8],[30,18],[44,10]].map(([a,b])=>poly3([[px+a,y+b,z+16.5],[px+a+8,y+b,z+16.5],[px+a+8,y+b+5,z+16.5],[px+a,y+b+5,z+16.5]],PAL.mud[2],1)).join(''):'')+line3([[px+8,y+15,z+16],[px+50,y+15,z+16]],1.2,'#555');
+ const L=p==='none'||p==='mud'?nest(x+8,p==='mud'):pad(x+8,p==='old'?'rub':p==='hl'?'hl':'rub');
+ const Rr=p==='none'||p==='mud'?nest(x+W-66,p==='mud'):pad(x+W-66,p==='hl'?'hl':'rub',p==='lift'?18:0);
+ g+=L+Rr;
+ g+=pin(y+PIT-16);
+ return g;}
+function endConn(x,y,z,pal='steel'){ // szélső összekötő a +x oldalon, y..y+PIT között
+ return box(x,y-12,z-2,14,PIT+8,20,pal)+cyl('x',[x+14,y+(PIT-16)/2,z+8],7,5,'dsteel',6,2,Math.PI/6);}
+function centerConn(x,y,z,pal='steel'){return box(x-12,y-10,z+14,24,PIT+4,10,pal)+hex('z',[x,y+(PIT-16)/2,z+24],8,8);}
+function trackPiece(n,o={}){ // n tag sorban, y irányban
+ let g='';for(let k=0;k<n;k++){const yy=k*PIT;g+=link(0,yy,0,{pads:(o.pads&&o.pads[k])||o.pad||'ok',body:o.body});
+  if(k<n-1&&o.conn!==false){g+=centerConn(W/2,yy+PIT-16+0,0,o.hlC===k?'hl':'steel');}}
+ if(o.endR!==false)for(let k=0;k<n-1;k++)g+=endConn(W+8,k*PIT+PIT-16-8,0,o.hlE===k?'hl':'steel');
+ return g;}
+
+// ===== JÁRMŰ IZOMETRIKUSAN (x = haladási irány előre) =====
+function trackSide(y0,near){let g='';const L0=-20,L1=380;
+ g+=box(L0,y0,4,L1-L0,40,52,'rub');
+ if(near){for(let k=0;k<7;k++)g+=cyl('y',[30+k*44,y0+40,34],21,6,'dsteel',22)+cyl('y',[30+k*44,y0+46,34],7,2,'steel',12);
+  g+=cyl('y',[-6,y0+40,40],20,6,'dsteel',22)+cyl('y',[362,y0+40,44],22,6,'olive',12);
+  for(let k=0;k<26;k++){const xx=L0+8+k*15;g+=line3([[xx,y0+40,4],[xx,y0+40,10]],1.3,'#888')}}
+ return g;}
+function vehicle(o={}){let g='';
+ g+=trackSide(-40,false);
+ g+=box(-10,0,30,370,150,40,'hull');
+ g+=poly3([[360,0,70],[400,0,40],[400,150,40],[360,150,70]],PAL.hull[0])+poly3([[360,150,30],[400,150,40],[360,150,70]],PAL.hull[1])+poly3([[360,150,30],[400,150,30],[400,150,40]],PAL.hull[1]);
+ g+=box(-10,150,30,370,10,40,'olive');
+ g+=box(10,10,70,200,130,62,'hull');
+ g+=poly3([[210,10,132],[250,20,100],[250,130,100],[210,140,132]],PAL.hull[0])+poly3([[210,140,70],[250,130,70],[250,130,100],[210,140,132]],PAL.hull[1]);
+ g+=box(40,20,132,40,40,14,'hull')+box(120,90,132,50,30,8,'hull');
+ g+=cyl('x',[250,75,104],10,60,'hull',16)+cyl('x',[310,75,104],6.5,190,'hull',14)+cyl('x',[400,75,104],10,30,'hull',14)+box(500,64,95,24,22,18,'dsteel');
+ for(let k=0;k<5;k++)g+=poly3([[20+k*38,140,82],[52+k*38,140,82],[52+k*38,140,118],[20+k*38,140,118]],PAL.hull[1],1.5);
+ g+=trackSide(160,true);
+ if(o.skirt)g+=poly3([[-10,200,90],[360,200,90],[360,240,96],[-10,240,96]],PAL.olive[0])+'';
+ return g;}
+const vehSVG=(ox,oy,sc,o)=>{cam(ox,oy,sc);return vehicle(o);};
+
+// ===== FESZÍTŐ (hátsó feszítőgörgő + feszítő berendezés), izometrikusan =====
+function tensioner(o={}){let g='';const hc=[70,0,80]; // görgő agy (x,z), y=0 a külső sík
+ g+=poly3([[150,-60,60],[330,-60,60],[330,-60,170],[150,-60,170]],'#e7e9e2',1.5);
+ // lánc az ív mögött
+ const R0=62,TH=14;const tPts=[];
+ const slack=o.slack?18:0;
+ // felső ág
+ for(let k=0;k<9;k++){const xx=hc[0]+k*30;g+=box(xx,-14,hc[2]+R0-2+(o.slack&&k>2?-(k-2)*1.2:0),28,44,TH,'rub',1.5);}
+ // ív (hátsó félkör) szegmensek
+ for(let k=1;k<12;k++){const a=Math.PI/2+k*Math.PI/12;const cx=hc[0]+(R0+7)*Math.cos(a),cz=hc[2]+(R0+7)*Math.sin(a);
+  const t=[-Math.sin(a),Math.cos(a)],nn=[Math.cos(a),Math.sin(a)];const hw=9,ht=7;
+  const c4=[[cx-t[0]*hw-nn[0]*ht,cz-t[1]*hw-nn[1]*ht],[cx+t[0]*hw-nn[0]*ht,cz+t[1]*hw-nn[1]*ht],[cx+t[0]*hw+nn[0]*ht,cz+t[1]*hw+nn[1]*ht],[cx-t[0]*hw+nn[0]*ht,cz-t[1]*hw+nn[1]*ht]];
+  g+=poly3(c4.map(p=>[p[0],30,p[1]]),PAL.rub[1],1.5)+poly3([[c4[2][0],-14,c4[2][1]],[c4[3][0],-14,c4[3][1]],[c4[3][0],30,c4[3][1]],[c4[2][0],30,c4[2][1]]],PAL.rub[0],1.2);}
+ // alsó ág
+ for(let k=0;k<9;k++){const xx=hc[0]+k*30;g+=box(xx,-14,hc[2]-R0-TH+2-(o.slack?Math.min(k,5)*3:0),28,44,TH,'rub',1.5);}
+ // görgő
+ g+=cyl('y',[hc[0],-6,hc[2]],R0-4,30,'dsteel',36)+cyl('y',[hc[0],24,hc[2]],R0-16,3,'steel',36)+cyl('y',[hc[0],27,hc[2]],16,6,'dsteel',20);
+ // kar a feszítőhöz
+ g+=poly3([[hc[0],30,hc[2]+6],[hc[0]+90,30,hc[2]+40],[hc[0]+96,30,hc[2]+26],[hc[0]+4,30,hc[2]-8]],PAL.olive[1]);
+ // feszítő berendezés (a test mellett, kicsit kint)
+ const tx=hc[0]+96+(o.slack?-16:0),tz=hc[2]+34;
+ g+=box(tx,0,tz-18,70,34,36,o.hlBody?'hl':'olive');
+ g+=cyl('x',[tx+70,17,tz],10,40,o.hlScrew?'hl':'steel',20);
+ for(let k=0;k<5;k++)g+=line3(ring('x',[tx+76+k*7,17,tz],10.5,10).concat([ring('x',[tx+76+k*7,17,tz],10.5,10)[0]]).slice(0,6),1.2,'#666');
+ g+=hex('x',[tx+82,17,tz],14,12,o.hlScrew?'hl':'dsteel');
+ const capX=o.capOff?tx+150:tx+110;
+ if(o.capOff)g+=cyl('x',[tx+110,17,tz],9,6,'steel',16);
+ g+=cyl('x',[capX,17,tz],13,24,o.hlCap?'hl':'olive',24);
+ g+=box(tx+40,-60,tz-14,40,60,10,'olive');
+ return {g,cap:[capX+24,17,tz],nut:[tx+94,17,tz],hub:[hc[0],30,hc[2]]};}
+
+// ===== JELENETEK =====
+const tool=(k,x,y,rot=0,s=1)=>G2(`translate(${x} ${y}) rotate(${rot}) scale(${s})`,TOOL[k][1]());
+const at=(p)=>pj(...p);
+const bubble=(x,y,t,w=120)=>`<path d="M${x-w/2} ${y-22} h${w} a8 8 0 0 1 8 8 v26 a8 8 0 0 1 -8 8 h-${w/2-12} l-12 14 l0 -14 h-${w/2} a8 8 0 0 1 -8 -8 v-26 a8 8 0 0 1 8 -8 Z" fill="#fff" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`+TX(x,y+6,t,18);
+const badge=(x,y,t,col=INK,fs=22)=>{const w=t.length*fs*0.62+24;return R2(x-w/2,y-fs,w,fs*1.6,col,8,2.5)+`<text x="${x}" y="${y+fs*0.32}" font-size="${fs}" font-weight="900" text-anchor="middle" fill="#fff" font-family="Arial">${t}</text>`};
+function sprocket3(c,r){const P=[];for(let k=0;k<26;k++){const a=k*Math.PI/13,rr=k%2?r:r+10;P.push([c[0]+rr*Math.cos(a),c[1],c[2]+rr*Math.sin(a)])}
+ const back=P.map(p=>[p[0],p[1]-20,p[2]]);return poly(hull2(P.concat(back).map(at)),PAL.dsteel[1],2)+poly3(P,PAL.steel[0],2)+cyl('y',[c[0],c[1],c[2]],r*0.45,4,'dsteel',24)+cyl('y',[c[0],c[1]+4,c[2]],10,4,'steel',12);}
+function trackStrip(x0,x1,y,z=0,pal='rub'){let g='';for(let x=x1;x>=x0;x-=26)g+=box(x,y,z,24,90,10,pal,1.5);return g;}
+function vehTop2D(x,y,s=1,rot=0){return G2(`translate(${x} ${y}) rotate(${rot}) scale(${s})`,R2(-40,-90,80,180,'#dfe2d6',6)+R2(-54,-92,14,184,'#333',3)+R2(40,-92,14,184,'#333',3)+R2(-32,-10,64,80,'#c4c8b6',6)+L2('M0 -10 L0 -140',8)+L2('M0 -10 L0 -140',4,'#dfe2d6')+R2(-7,-150,14,14,'#999',2));}
+
+const S=[];
+// 0 Biztonság
+S[0]=()=>man(110,200,1.45,'stand')+man(240,200,1.45,'signal')+bubble(250,46,'VIGYÁZZ!',130)+L2('M30 262 L370 262',3)+G2('translate(340 150) scale(1.25)',TOOL.kesztyu[1]())+OK2(370,96,18)+TX(200,292,'KESZTYŰ · HANGOS FIGYELMEZTETÉS',15);
+// 1 Terület
+S[1]=()=>{const mini=(cx,cy,rot)=>{cam(0,0,0.2);return G2(`translate(${cx} ${cy}) rotate(${rot})`,vehicle())};
+ return mini(30,170,0)+L2('M10 202 L120 202',4)+OK2(66,80,24)+TX(66,240,'VÍZSZINTES',15)+
+ mini(150,176,-16)+L2('M140 214 L254 178',4)+NO2(200,80,24)+TX(200,240,'LEJTŐS',15)+
+ mini(282,162,10)+L2('M272 200 Q288 180 304 200 Q318 214 332 192 Q346 162 362 194 Q374 208 390 198',4)+NO2(334,80,24)+TX(334,240,'GÖRÖNGYÖS',15)+
+ L2('M134 60 L134 250 M266 60 L266 250',1.5,'#bbb')+TX(200,290,'BETON, VÍZSZINTES',17);};
+// 2 Szerszámok
+S[2]=()=>{const it=[['nagyk','2'],['kisk','2'],['csavarhuzo','6-8'],['beuto','2+'],['pajszer','2'],['osszehuzo','2'],['nyomatek','1'],['racsnis','2'],['feszito','1'],['kupak','1'],['porszivo','1'],['kompresszor','1']];
+ return it.map(([k,q],i)=>{const x=55+(i%4)*97,y=48+Math.floor(i/4)*98;return R2(x-44,y-38,88,84,'#f6f6f4',10,1.5)+G2(`translate(${x} ${y-2}) scale(.72)`,TOOL[k][1]())+TX(x,y+36,TOOL[k][0],11)+C2(x+38,y-34,13,OR,2)+`<text x="${x+38}" y="${y-29}" font-size="${q.length>2?10:13}" font-weight="900" text-anchor="middle" fill="#fff" font-family="Arial">${q}</text>`}).join('');};
+// 3 Jármű elhelyezése
+S[3]=()=>{cam(150,120,0.5);let g=poly3([[-60,-150,0],[460,-150,0],[460,-40,0],[-60,-40,0]],'rgba(240,125,22,.18)',2,'stroke-dasharray="8 6"')+poly3([[-60,200,0],[460,200,0],[460,320,0],[-60,320,0]],'rgba(240,125,22,.18)',2,'stroke-dasharray="8 6"');
+ g+=vehicle();const a=at([200,260,0]),b=at([200,-100,0]);g+=man(a[0],a[1]-40,0.75,'stand')+man(b[0],b[1]-40,0.75,'stand');g+=arr3([-80,75,0],[-80,75,0])+arr3([480,75,0],[600,75,0],INK,6);
+ const t1=at([150,320,0]),t2=at([150,-150,0]);return g+TX(t1[0]-30,t1[1]+24,'SZABAD HELY',14)+TX(t2[0]+10,t2[1]-10,'SZABAD HELY',14)+TX(330,286,'ELŐRE ↘',14);};
+// 4 Kézifék
+S[4]=()=>R2(90,214,220,40,'#d9dccf',8)+`<path d="M170 232 L246 84" stroke="${INK}" stroke-width="20" stroke-linecap="round"/><path d="M170 232 L246 84" stroke="#b3b8bf" stroke-width="13" stroke-linecap="round"/>`+R2(226,52,46,46,'#2c2c2c',12)+C2(170,232,14,'#888')+NO2(300,90,40)+TX(200,292,'KÉZIFÉKET NE HÚZD BE!',19);
+// 5 Zárókupak ki
+S[5]=()=>{cam(60,210,0.74);const t=tensioner({hlCap:1});const c=at(t.cap);return t.g+arc3('x',[t.cap[0]+4,17,t.cap[2]],26,-0.3,4.4,RD,5)+G2(`translate(${c[0]+20} ${c[1]-44}) rotate(-60) scale(.9)`,TOOL.kupak[1]())+callout(c[0]-8,c[1]+10,c[0]-30,c[1]+70,'ZÁRÓKUPAK')+TX(200,24,'BALRA (LE) – KITEKERNI',17,'middle',RD);};
+// 6 Feszítő összehúzása
+S[6]=()=>{cam(60,210,0.74);const t=tensioner({capOff:1,slack:1,hlScrew:1});const n=at(t.nut),h=at(t.hub);return t.g+arc3('x',[t.nut[0],17,t.nut[2]],28,0.3,4.6,OR,5)+G2(`translate(${n[0]+10} ${n[1]-60}) rotate(-75) scale(.9)`,TOOL.feszito[1]())+A2(h[0]+30,h[1]-120,h[0]+90,h[1]-90,OR,7)+TX(h[0]+40,h[1]-140,'GÖRGŐ ELŐRE',14)+TX(200,292,'ÖSSZEHÚZNI VÉGÁLLÁSIG → LÁNC LAZA',16);};
+// 7 Szélső összekötő csavarjai ki
+S[7]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlE:0});const b=at([W+22,PIT-16+(PIT-16)/2-8,8]);return g+arc3('x',[W+26,PIT-16+(PIT-16)/2-8,8],22,0.2,4.5,RD,5)+G2(`translate(${b[0]+52} ${b[1]-6}) rotate(-20) scale(.85)`,TOOL.racsnis[1]())+callout(b[0]-6,b[1]+18,b[0]-40,b[1]+70,'SZÉLSŐ ÖSSZEKÖTŐ')+badge(70,40,'32')+TX(200,292,'KÍVÜL ÉS BELÜL IS',17);};
+// 8 Szélső összekötő leütése
+S[8]=()=>{cam(150,80,1.0);let g=trackPiece(2,{endR:false});g+=endConn(W+60,PIT-24,0,'hl');const a=at([W+14,PIT+10,8]),b=at([W+56,PIT+10,8]);
+ return g+A2(a[0],a[1]+40,b[0]+30,b[1]+40,OR,7)+G2(`translate(${a[0]-6} ${a[1]-30}) rotate(30)`,TOOL.pajszer[1]())+G2(`translate(${a[0]-58} ${a[1]-70}) rotate(-35) scale(.9)`,TOOL.nagyk[1]())+man(60,250,0.75,'hold')+WARN2(40,46)+TX(200,292,'BELÜLRŐL KIFELÉ LEÜTNI',17);};
+// 9 Középső összekötő csavarja ki
+S[9]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlC:0,endR:false});const c=at([W/2,(PIT-16)/2+PIT-16,24]);return ZONE(c[0],c[1]+10,150,95)+g+arc3('z',[W/2,PIT-16+(PIT-16)/2,34],20,0,4.5,RD,5)+arr3([W/2,-20,10],[W/2,-80,10],RD,7)+arr3([W/2,2*PIT+10,10],[W/2,2*PIT+70,10],RD,7)+WARN2(40,46,1.1)+man(370,240,0.7,'stand')+OK2(386,150,13)+TX(200,292,'FESZÜLHET! SENKI NE ÁLLJON ITT',16,'middle',RD);};
+// 10 Leállás előre
+S[10]=()=>{cam(130,170,0.42);let g=trackStrip(-520,380,150,0);g+=vehicle();const a=at([460,75,0]),b=at([620,75,0]);return g+A2(a[0],a[1]-40,b[0],b[1]-40,OR,8)+TX(b[0]-30,b[1]-70,'ELŐRE, LASSAN',16)+man(60,200,0.75,'signal');};
+// 11 1,5 t
+S[11]=()=>{cam(40,150,0.62);let g='';for(let x=420;x>=-40;x-=26)g+=box(x,0,0,24,150,12,'rub',1.5);let m='';for(let k=0;k<5;k++){const p=at([20+k*92,150,0]);m+=man(p[0]+8,p[1]-40,0.8,'lift')}
+ return g+m+badge(110,46,'1,5 t',INK,28)+badge(300,46,'15–18 fő',OR,20);};
+// 12 Kiékelés
+S[12]=()=>{cam(130,110,1.05);const w=(x)=>poly3([[x,-10,-24],[x+30,-10,-24],[x+30,40,-24],[x,40,-24]],PAL.wood[0])+poly3([[x,40,-24],[x+30,40,-24],[x+30,40,0],[x,40,-24]],PAL.wood[1]);
+ return w(-10)+w(W-20)+link(0,0,0)+callout(at([-8,40,-12])[0],at([-8,40,-12])[1],60,250,'FA ÉK')+callout(at([W+5,40,-12])[0],at([W+5,40,-12])[1],330,250,'FA ÉK')+TX(200,30,'BETÉT FELÜL',18);};
+// 13 Régi betét kiemelése
+S[13]=()=>{cam(120,120,1.15);const g=link(0,0,0,{pads:'lift'});const gap=at([W-66,30,20]),o=at([W-8,14,38]);return g+G2(`translate(${gap[0]-36} ${gap[1]+12}) rotate(-28) scale(.8)`,TOOL.beuto[1]())+G2(`translate(${gap[0]-80} ${gap[1]+36}) rotate(-60) scale(.7)`,TOOL.kisk[1]())+
+ arr3([W-40,16,60],[W+60,16,60],OR,7)+G2(`translate(${at([W-80,16,40])[0]-40} ${at([W-80,16,40])[1]-30}) rotate(25) scale(.8)`,TOOL.pajszer[1]())+callout(gap[0],gap[1],80,250,'TÜSKE A RÉSBE')+TX(300,40,'KI A SÍNBŐL',17);};
+// 14 Fészek tisztítása
+S[14]=()=>{cam(110,110,1.25);const g=link(0,0,0,{pads:'mud'});const n=at([40,16,16]);return g+G2(`translate(${n[0]+40} ${n[1]-40}) rotate(-55) scale(.9)`,TOOL.csavarhuzo[1]())+callout(at([10,4,16])[0],at([10,4,16])[1],60,40,'OLDALSÓ SÍN')+callout(at([40,20,16])[0],at([40,20,16])[1],120,250,'FÉSZEK ALJA')+callout(at([66,4,16])[0],at([66,4,16])[1],260,40,'KÖRMÖK')+TX(330,270,'ELLENŐRIZD!',16,'middle',RD);};
+// 15 Porszívó + kompresszor
+S[15]=()=>{cam(150,120,1.15);const g=link(0,0,0,{pads:'none'});const n=at([40,16,16]);return g+G2(`translate(60 230) scale(1.1)`,TOOL.porszivo[1]())+L2(`M110 254 C150 254 ${n[0]-20} ${n[1]+40} ${n[0]} ${n[1]+6}`,7)+G2('translate(330 230)',TOOL.kompresszor[1]())+L2(`M370 216 C370 160 ${n[0]+120} ${n[1]-20} ${n[0]+90} ${n[1]}`,3,BL)+[0,1,2].map(k=>L2(`M${n[0]+84-k*10} ${n[1]+4+k*6} l-16 6`,3,BL)).join('')+TX(200,30,'POR ÉS SÁR KI',18);};
+// 16 Új betétek odakészítése
+S[16]=()=>{cam(150,160,1.0);let g='';for(let r=0;r<3;r++)for(let c=2;c>=0;c--)for(let z=0;z<4;z++)g+=box(c*64,r*34,z*12,58,28,12,'rub',1.5);return g+badge(320,60,'190 db',OR,22)+TX(320,100,'oldalanként',15)+TX(320,124,'2,5 kg / db',15);};
+// 17 Új betét behelyezése
+S[17]=()=>{cam(110,140,1.2);const g=link(0,0,0,{pads:'ok'}).replace(box(W-66,2,16,58,28,12,'rub'),'');return link(0,0,0,{pads:'none'})+box(8,2,16,58,28,12,'rub')+box(W-66,2,56,58,28,12,'rub')+arr3([W-37,16,52],[W-37,16,32],OR,7)+TX(200,30,'A HELYÉRE ILLESZTVE',17);};
+// 18 Beütés KLIKK
+S[18]=()=>{cam(110,150,1.2);const g=link(0,0,0);const p=at([W-37,16,28]);return g+G2(`translate(${p[0]} ${p[1]-70}) rotate(90) scale(1.4)`,TOOL.nagyk[1]())+L2(`M${p[0]-40} ${p[1]-14} l-14 -10 M${p[0]+40} ${p[1]-14} l14 -10`,3)+bubble(320,60,'KLIKK!',110)+
+ G2('translate(70 210)',C2(0,0,52,'#fff',3)+R2(-40,6,80,22,'#cfd3d8',2,2)+`<path d="M-10 6 L10 6 L4 -10 L-4 -10 Z" fill="#8a9099" stroke="${INK}" stroke-width="2"/>`+R2(-40,-26,80,16,'#333',3,2)+OK2(34,-34,12))+TX(70,282,'nyelv a horonyban',13);};
+// 19 Betétek bent
+S[19]=()=>{cam(150,70,0.95);return trackPiece(3)+OK2(330,60,26)+TX(330,110,'MIND KATTANT',15);};
+// 20 Szélső 550 Nm
+S[20]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlE:0});const b=at([W+22,PIT-16+(PIT-16)/2-8,8]);return g+arc3('x',[W+26,PIT-16+(PIT-16)/2-8,8],22,4.5,0.2,GN,5)+G2(`translate(${b[0]+58} ${b[1]-4}) rotate(-15) scale(.9)`,TOOL.nyomatek[1]())+badge(320,250,'550 Nm',INK,24)+badge(70,40,'32');};
+// 21 Visszafordítás
+S[21]=()=>{cam(60,130,0.75);const a=link(0,0,0);cam(250,130,0.75);const b=box(0,-2,0,W,34,16,'steel')+cyl('x',[-8,0,8],6.5,W+16,'dsteel',18)+cyl('x',[-8,PIT-16,8],6.5,W+16,'dsteel',18);
+ return a+b+`<path d="M120 60 Q200 0 280 60" fill="none" stroke="${OR}" stroke-width="6" marker-end="url(#m_${OR.slice(1)})"/>`+TX(110,240,'BETÉT FELÜL',15)+TX(300,240,'BETÉT ALUL',15)+man(200,250,0.6,'lift');};
+// 22 Középső 550 Nm
+S[22]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlC:0});const c=at([W/2,PIT-16+(PIT-16)/2,34]);return g+arc3('z',[W/2,PIT-16+(PIT-16)/2,34],20,4.5,0,GN,5)+G2(`translate(${c[0]+10} ${c[1]-60}) rotate(-80) scale(.9)`,TOOL.nyomatek[1]())+badge(320,250,'550 Nm',INK,24);};
+// 23 Visszaállás tolatva
+S[23]=()=>{cam(170,170,0.42);let g=trackStrip(-300,600,150,0);g+=vehicle();const a=at([-60,75,0]),b=at([-220,75,0]);return g+A2(a[0],a[1]-40,b[0],b[1]-40,OR,8)+TX(b[0]+40,b[1]-70,'TOLATVA, LASSAN',16)+man(330,240,0.75,'signal');};
+// 24 Csillagkerék
+S[24]=()=>{cam(140,150,1.0);let g=sprocket3([0,0,60],56);for(let k=0;k<6;k++)g+=box(40+k*30,-16,-4-k*3,28,36,12,'rub',1.5);const p=at([120,0,10]);return g+G2(`translate(${p[0]+20} ${p[1]+20}) rotate(-40)`,TOOL.pajszer[1]())+arr3([140,10,30],[80,10,60],OR,7)+callout(at([0,0,120])[0],at([0,0,120])[1],80,30,'CSILLAGKERÉK')+man(330,250,0.75,'push');};
+// 25 Összehúzó
+S[25]=()=>{cam(150,70,0.95);let g=link(0,0,0)+link(0,PIT+40,0);const p1=at([W+12,PIT-16,8]),p2=at([W+12,PIT+40,8]);const c1=at([W/2,PIT-16,24]),c2=at([W/2,PIT+40,24]);
+ const pull=(a,b)=>{const ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI,len=Math.hypot(b[0]-a[0],b[1]-a[1]);return G2(`translate(${a[0]} ${a[1]}) rotate(${ang})`,R2(0,-8,len,16,'#a7b07a',3,2)+L2(`M8 0 ${[...Array(Math.floor(len/6))].map((_,k)=>`L${10+k*6} ${k%2?-5:5}`).join(' ')}`,1.4)+C2(0,0,9,'none',4)+C2(len,0,9,'none',4))};
+ return g+pull(c1,c2)+pull(p1,p2)+tagN(c1[0]-30,(c1[1]+c2[1])/2,1,OR)+tagN(p1[0]+30,(p1[1]+p2[1])/2,2)+TX(200,286,'1. KÖZÉPSŐ → 2. SZÉLSŐK',17);};
+// 26 Csavarok nyomatékra
+S[26]=()=>{cam(150,70,0.95);return trackPiece(3,{hlC:0,hlE:0})+OK2(330,50,22)+badge(320,250,'550 Nm',INK,24)+badge(70,40,'32');};
+// 27 Lánc visszafeszítése
+S[27]=()=>{cam(60,210,0.74);const t=tensioner({capOff:1,hlScrew:1});const n=at(t.nut),h=at(t.hub);return t.g+arc3('x',[t.nut[0],17,t.nut[2]],28,4.6,0.3,GN,5)+G2(`translate(${n[0]+10} ${n[1]-60}) rotate(-75) scale(.9)`,TOOL.feszito[1]())+A2(h[0]+60,h[1]-90,h[0]+10,h[1]-120,GN,7)+TX(200,292,'FESZÍTÉS → LÁNC FESZES',17);};
+// 28 Zárókupak vissza
+S[28]=()=>{cam(60,210,0.74);const t=tensioner({hlCap:1});const c=at(t.cap);return t.g+arc3('x',[t.cap[0]+4,17,t.cap[2]],26,4.4,-0.3,GN,5)+G2(`translate(${c[0]+10} ${c[1]-56}) scale(.9)`,TOOL.kesztyu[1]())+TX(200,292,'KÉZZEL VISSZA – VÉDI A MENETET',16);};
+// 29 Gyorsítás, satufék
+S[29]=()=>{cam(120,190,0.42);const g=vehicle();return g+[0,1,2].map(k=>L2(`M${20+k*8} ${110+k*22} l-50 25`,4,'#999')).join('')+badge(100,40,'30–40 km/h',INK,20)+bubble(310,50,'SATUFÉK!',130);};
+// 30 Kígyózás hátramenetben
+S[30]=()=>vehTop2D(200,100,0.5,0)+`<path d="M200 150 C130 175 270 200 200 225 S130 255 200 280" fill="none" stroke="${OR}" stroke-width="6" stroke-dasharray="14 9" marker-end="url(#m_${OR.slice(1)})"/>`+`<path d="M340 40 L340 280" stroke="${INK}" stroke-width="2.5" marker-start="url(#m_1b1b1b)" marker-end="url(#m_1b1b1b)"/>`+TX(346,166,'~100 m',15,'start')+TX(70,200,'HÁTRA',17)+TX(70,224,'jobbra–balra',13);
+// 31 Kigurítás üresben
+S[31]=()=>{const p=(x,t,body)=>R2(x,30,118,220,'#f6f6f4',10,1.5)+TX(x+59,58,t,14)+body;
+ return p(8,'1. ELŐRE',A2(30,150,100,150,OR,8))+p(141,'2. MEGÁLL',`<polygon points="${[...Array(8)].map((_,k)=>`${200+34*Math.cos(k*Math.PI/4+Math.PI/8)},${150+34*Math.sin(k*Math.PI/4+Math.PI/8)}`).join(' ')}" fill="${RD}" stroke="${INK}" stroke-width="3"/>`+TX(200,157,'STOP',14,'middle','#fff'))+
+ p(274,'3. HÁTRA 1-ES',A2(366,120,300,120,OR,8)+R2(304,160,64,64,'#fff',8,3)+`<text x="336" y="207" font-size="38" font-weight="900" text-anchor="middle" font-family="Arial">N</text>`)+TX(200,290,'ÜRESBE → KIGURUL → LÁNC TEHERMENTES',14);};
+// 32 Feszességmérés
+S[32]=()=>{let g=C2(30,120,26,'#cfd3d8')+`<path d="M30 94 Q200 116 380 94" fill="none" stroke="${INK}" stroke-width="3"/>`;for(let k=0;k<13;k++){const x=40+k*27,tt=k/12,y=96+44*tt*(1-tt);g+=R2(x-9,y-7,18,14,k===6?OR:'#d9dccf',3,2)}
+ g+=L2('M31 90 L381 90',2.5,BL)+L2('M31 90 l0 26 l10 0 l0 12 l-14 0',4)+L2('M381 90 l0 26 l-10 0 l0 12 l14 0',4)+TX(202,80,'7.',16)+TX(206,150,'13 külső összekötő',13);
+ g+=G2('translate(270 220)',C2(0,0,62,'#fff',3)+R2(-50,8,100,50,'#d9dccf',4,2)+R2(-14,-8,28,16,'#b3b8bf',2,2)+L2('M-60 -34 L60 -34',3,BL)+`<path d="M30 -30 L30 -10" stroke="${INK}" stroke-width="2.5" marker-start="url(#m_1b1b1b)" marker-end="url(#m_1b1b1b)"/>`)+L2('M202 112 L240 166',1.5);
+ return g+badge(100,230,'6–8 mm',GN,24)+TX(100,276,'6 alatt lazíts · 8 felett feszíts',12);};
+// 33 Kész
+S[33]=()=>{cam(80,210,0.4);return vehicle()+OK2(300,90,60)+TX(200,286,'EGYIK OLDAL KÉSZ – JÖHET A MÁSIK',16);};
+
+// ===== ISMERTETŐ RAJZOK =====
+const KN_LINK=()=>{cam(150,90,1.0);const g=trackPiece(2,{endR:true});const p=(a,n,tx,ty)=>{const q=at(a);return L2(`M${q[0]} ${q[1]} L${tx} ${ty}`,1.6)+tagN(tx,ty,n,OR)};
+ return g+p([30,16,28],1,40,40)+p([W/2,PIT-8,26],2,200,24)+p([W+16,PIT-14,10],3,370,150)+p([60,PIT-16,8],4,60,250)+'';};
+const KN_TENS=()=>{cam(60,210,0.74);const t=tensioner({});const p=(a,n,tx,ty)=>{const q=at(a);return L2(`M${q[0]} ${q[1]} L${tx} ${ty}`,1.6)+tagN(tx,ty,n,OR)};
+ return t.g+p([t.cap[0]-10,17,t.cap[2]+10],1,370,60)+p([t.nut[0]-6,17,t.nut[2]+12],2,300,40)+p([t.nut[0]-50,17,t.nut[2]+16],3,220,40)+p([70,30,150],4,60,40);};
+
+// ===== ALKALMAZÁS =====
+const STEPS=[{"t": "Biztonság", "v": "Kezdjük a legfontosabbal: a biztonsággal. Mindenki vegyen fel munkavédelmi kesztyűt, ez kötelező. A parancsok legyenek rövidek és egyértelműek. Ha veszélyt látsz, szólj hangosan, azonnal. Csak az dolgozzon, aki tudja, mi a feladata.", "n": "Ismerd a biztonsági rendszabályokat. Tiszta, egyértelmű parancsok. Hangosan figyelmeztessétek egymást.", "w": "Munkavédelmi kesztyű KÖTELEZŐ!"}, {"t": "Terület kijelölése", "v": "Válaszd ki a munkaterületet. A legjobb a vízszintes betonplacc. Ne dolgozz lejtőn, mert a jármű oldalra dőlhet. Göröngyös, púpos talajon a lánc nem fekszik szépen, és nehéz lesz összeszerelni.", "n": "Vízszintes betonfelület. NEM jó: lejtős (oldaldőlés), göröngyös, púpos talaj.", "w": ""}, {"t": "Szerszámok előkészítése", "v": "Készítsd elő a szerszámokat, mielőtt nekikezdesz. Két nagy kalapács, két kisebb kalapács, hat-nyolc laposfejű csavarhúzó, beütőtüske, két pajszer, két lánc-összehúzó. Kell a nyomatékkulcs a harminckettes dugófejjel, két racsnis kulcs, a láncfeszítő kulcs toldattal, a kupaklazító, egy porszívó és egy kompresszor. Úgy rakd le őket, hogy kéznél legyenek.", "n": "Minél hatékonyabban elhelyezve, kéznél.", "w": ""}, {"t": "Jármű elhelyezése", "v": "Állítsd a járművet a helyére. Mindkét oldalon maradjon annyi hely, hogy a felnyitott oldalsó szoknya elférjen, és senkit ne üssön meg. Gondolj a segítőkre is: a láncról leálláskor és visszaálláskor ők is ott állnak.", "n": "A felnyitott oldalsó szoknyák mindkét oldalon elférjenek. Maradjon hely a segítőknek leálláskor és visszavezetéskor.", "w": "Lassabb, kevés emberes módszer: a lánc a helyén marad, hátul egyesével kiütitek a betétet, és a géppel előregurulva haladtok végig."}, {"t": "Kéziféket NEM behúzni", "v": "A harcjárművezető állítsa meg a járművet, de a kéziféket ne húzza be. Erre azért van szükség, mert a lánc mozgatásához a járműnek gördülnie kell.", "n": "A harcjárművezető úgy állítsa meg az eszközt, hogy NE húzza be a kéziféket.", "w": ""}, {"t": "Zárókupak kitekerése", "v": "Most jön a lánc lazítása. Menj a jármű hátuljához, a feszítő görgőhöz. A feszítő berendezés végén van a zárókupak. Tekerd ki a kupaklazítóval balra, vagyis lefelé. Ez a kupak védi a menetet a szennyeződéstől.", "n": "Kupaklazítóval balra (lefelé), hogy a menet szabadon mozogjon.", "w": ""}, {"t": "Feszítő összehúzása", "v": "A láncfeszítő kulccsal és a toldattal tekerd a feszítő csavart. Húzd össze a feszítőt egészen végállásig. Ilyenkor a feszítő görgő előre mozdul, és a lánc meglazul. Laza lánc nélkül nem lehet szétnyitni.", "n": "Feszítő csavar: láncfeszítő/lazító kulcs + toldat, végállásig. A lánc lazul, nyitható.", "w": ""}, {"t": "Oldalsó összekötők csavarjai ki", "v": "Tekerd ki a szélső összekötő elemek csavarjait. Harminckettes dugókulccsal dolgozz, kívül és belül is. Ha a csavar beállt, egy kalapácsütés vagy csavarlazító segít. A menetet drótkefével tisztítsd meg.", "n": "Kívül és belül is. Ha szorul: kalapács vagy csavarlazító + drótkefe.", "w": ""}, {"t": "Külső összekötő leütése", "v": "Üsd le a külső szélső összekötőt, belülről kifelé. Az egyik ember tartja a rövid pajszert, a másik kalapáccsal üt rá. Aki a pajszert tartja, legyen kesztyűben, és figyeljen a félreütésre.", "n": "Belülről kifelé, kalapács + rövid pajszer.", "w": "A pajszert tartó segítő kesztyűben legyen, vigyázzon a félreütésre!"}, {"t": "Középső összekötő csavarja ki", "v": "Figyelem, ez a legveszélyesebb lépés! Tekerd ki a középső összekötő csavarját. Ez tartja még össze a két lánctagot, és nagy feszültség lehet rajta. Amikor a két tag szétválik, nagy erővel csapódhat. A közelben ne álljon senki és ne legyen semmi. Szóljatok egymásnak!", "n": "Ez tartja még össze a két lánctagot, nagy lehet rajta a feszültség.", "w": "VESZÉLY! Elváláskor nagy energia szabadul fel. A hatósugárban ne álljon senki és semmi! Szóljatok egymásnak!"}, {"t": "Lánc nyitva: leállás előre", "v": "A lánc nyitva van. A harcjárművezető lassan, előremenetben gördüljön le a láncról. Egy ember irányítsa, és mindenki álljon félre.", "n": "Előremenetben, LASSAN!", "w": ""}, {"t": "1,5 tonna! Lánc megfordítása", "v": "A kiterített lánc körülbelül másfél tonna. Meg kell fordítani, hogy a gumibetétek felül legyenek. Ehhez pajszerek és legalább tizenöt-tizennyolc ember kell. Csak vezényszóra emeljetek, egyszerre.", "n": "Pajszerek + legalább 15–18 erős katona. Egy oldal: 95 lánctag + 190 betét × 2,5 kg.", "w": "A lánc 1,5 tonna! Csak megfelelő létszámmal, vezényszóra."}, {"t": "Lánctag fordítása, kiékelés", "v": "Fordítsd a lánctagot úgy, hogy a gumibetét felül legyen. A tag alját ékeld ki fával vagy valami hasonlóval, hogy véletlenül se billenjen át.", "n": "Gumibetét felül. Fával kiékelni, hogy ne billenjen át!", "w": ""}, {"t": "Régi betét kiemelése", "v": "Most vedd ki a régi betétet. A kis beütőtüskét üsd be a gumibetét és a lánctag közötti résbe. Ettől a betét megemelkedik. Az ellenkező oldalról pajszerrel told ki a sínből.", "n": "Beütőtüske a résbe → a betét megemelkedik → pajszerrel kitolni a sínből.", "w": ""}, {"t": "Fészek tisztítása csavarhúzóval", "v": "Tisztítsd ki a felszabadult fészket csavarhúzóval. Először az oldalsó sínt, aztán a fészek alját, a hátulját és a kis körmöket. Az új betét csak tiszta fészekben ül fel rendesen, ezért ellenőrizd! Kenőanyagot tilos használni.", "n": "Prioritás: oldalsó sín, fészek alja, hátulja, kis körmök. Teljes tisztaság, ELLENŐRIZD!", "w": "Tisztításhoz TILOS kenőanyag! A lánctalp nem lehet zsíros, olajos. Szennyeződés: benzin vagy hígító."}, {"t": "Porszívó és kompresszor", "v": "Porszívózd ki a fészket, majd fújd ki sűrített levegővel. A port és a sarat teljesen távolítsd el.", "n": "Porszívózás, utána sűrített levegő.", "w": ""}, {"t": "Új betétek odakészítése", "v": "Készítsd oda az új gumibetéteket. Egy oldalra százkilencven darab kell, kilencvenöt tagos láncnál. Egy betét két és fél kilogramm.", "n": "95 tagos lánc: 190 db / oldal (94 tagnál 188 db). Darabja 2,5 kg.", "w": ""}, {"t": "Új betét behelyezése", "v": "Tedd az új betétet a helyére. Illeszd a fészekbe úgy, hogy készen álljon a beütésre.", "n": "A helyére illesztve, beütésre előkészítve.", "w": ""}, {"t": "Beütés nagy kalapáccsal – KLIKK", "v": "Üsd be az új betétet a nagy kalapáccsal. Figyeld a hangot! Akkor van jól beütve, amikor hallasz egy kattanást. Ilyenkor a fém kiesésgátló nyelv a lánctag hornyába pattan.", "n": "Akkor jó, ha KATTAN: a fém kiesésgátló nyelv a helyére pattan.", "w": ""}, {"t": "Betétek bent vannak", "v": "A betétek bent vannak. Nézd végig mindegyiket: mind kattant, és mind síkban ül.", "n": "Ellenőrizd szemmel, mindegyik kattant és síkban ül.", "w": ""}, {"t": "Külső összekötő csavarok: 550 Nm", "v": "A nyomatékkulccsal és a harminckettes dugófejjel húzd meg a külső összekötő csavarokat, ötszázötven newtonméterre. A kulcs kattanásáig húzd, ne tovább.", "n": "Nyomatékkulcs, 32-es dugófej, 550 Nm.", "w": ""}, {"t": "Lánctag visszafordítása", "v": "Fordítsátok vissza a lánctagot. Most is vezényszóra, egyszerre emeljetek.", "n": "Vezényszóra, egyszerre.", "w": ""}, {"t": "Középső összekötő csavar: 550 Nm", "v": "Húzd meg a középső összekötő csavarját nyomatékkulccsal, ötszázötven newtonméterre.", "n": "550 Nm.", "w": ""}, {"t": "Visszaállás a láncra tolatva", "v": "A jármű tolatva, lassan álljon vissza a láncra. Egy ember irányítsa, mindenki más álljon félre.", "n": "Tolatva, lassan, irányítóval.", "w": ""}, {"t": "Ráemelés a csillagkerékre", "v": "Pajszerrel emeld rá a lánctagot a csillagkerék fogaira. Vigyázz az ujjadra, a kesztyűt ne vedd le.", "n": "Pajszerrel ráemelni a fogakra.", "w": ""}, {"t": "Lánc egyesítése összehúzóval", "v": "A lánc-összehúzóval húzd össze a két láncvéget. A sorrend fontos: először a középső összekötő elem kerül a helyére, utána a két szélső.", "n": "Sorrend: 1. középső összekötő, 2–3. a két szélső.", "w": ""}, {"t": "Csavarok nyomatékra", "v": "Húzd meg az összes csavart nyomatékra: középső és szélső összekötők, ötszázötven newtonméter.", "n": "Középső és szélső összekötők: 550 Nm.", "w": ""}, {"t": "Lánc visszafeszítése", "v": "Most feszítsd vissza a láncot. A láncfeszítő kulccsal és a toldattal tekerd a feszítő csavart, amíg a lánc feszes nem lesz.", "n": "Láncfeszítő/lazító kulcs + toldat.", "w": ""}, {"t": "Zárókupak visszatekerése", "v": "Tekerd vissza a zárókupakot. Kézzel is elég meghúzni. Ne hagyd ki, mert ez védi a menetet a portól és a sártól.", "n": "Kézzel is elég. A menetet védi a szennyeződéstől.", "w": ""}, {"t": "Gyorsítás, satufék", "v": "Most a lánc beül a helyére. Sík betonplaccon gyorsíts legalább harminc-negyven kilométer per órára, majd fékezz satufékkel. A pálya legyen szabad, senki ne álljon a jármű útjában!", "n": "Sík betonplacc. Gyorsítás legalább 30–40 km/h-ra, majd SATUFÉK.", "w": "A pálya legyen szabad, senki ne álljon a jármű útjában!"}, {"t": "Hátramenet kígyózva", "v": "Hátramenetben kígyózz: kormányozz jobbra-balra, körülbelül száz méteren keresztül.", "n": "Hátramenetben jobbra–balra kormányozva, kb. 100 m.", "w": ""}, {"t": "Kigurítás üresben", "v": "Menj előre egyenesen, és állj meg. Tolass, majd egyes fokozatból tedd a váltót üresbe, és hagyd kigurulni a járművet. Várd meg, amíg magától megáll. Így a láncok tehermentesülnek.", "n": "Előre egyenesen → megállás → hátramenet 1-esben → váltó ÜRESBE, kigurulni hagyni, míg megáll. A láncok tehermentesülnek.", "w": ""}, {"t": "Feszességmérés", "v": "Most mérd meg a lánc feszességét. Minden betétcsere után kötelező. A lövegcső gázelvezetőjének magasságában lévő láncvezető görgőtől számolj hátrafelé tizenhárom külső összekötőt. Feszítsd rájuk a madzagot a C-kapcsokkal. A hetedik összekötő csavarjának teteje és a madzag között mérd meg a távolságot az idomszerrel. Hat és nyolc milliméter között jó. Hat alatt lazíts, nyolc felett feszíts.", "n": "Minden betétcsere után KÖTELEZŐ! 13 külső összekötő, madzag + C-kapcsok, mérés idomszerrel a 7.-nél. 6–8 mm megfelel. 6 alatt lazíts, 8 felett feszíts (kupak ki, utána vissza), és ismételd a menetet és a mérést.", "w": ""}, {"t": "Egyik oldal kész!", "v": "Szép munka, az egyik oldal kész! A másik oldalon ugyanígy dolgozzatok, a zárókupak kitekerésétől kezdve.", "n": "Másik oldal: ugyanez, a zárókupaktól (6. lépés) kezdve.", "w": ""}];
+const TL={0:['kesztyu'],5:['kupak'],6:['feszito'],7:['racsnis','kisk','drotkefe'],8:['nagyk','pajszer','kesztyu'],9:['racsnis'],11:['pajszer'],12:['ek','pajszer'],13:['beuto','kisk','pajszer'],14:['csavarhuzo','benzin'],15:['porszivo','kompresszor'],18:['nagyk'],20:['nyomatek'],21:['pajszer'],22:['nyomatek'],24:['pajszer'],25:['osszehuzo'],26:['nyomatek'],27:['feszito'],32:['madzag','idomszer']};
+const PH=[{t:'Előkészítés',a:0,b:4,d:'Biztonság, terület, szerszámok, a jármű elhelyezése.',sc:0},{t:'Lánc lazítása, nyitása',a:5,b:10,d:'Zárókupak, feszítő összehúzása, összekötők bontása, leállás a láncról.',sc:6},{t:'Betétcsere',a:11,b:19,d:'Lánc megfordítása, régi betét ki, fészek tisztítása, új betét be.',sc:18},{t:'Visszaszerelés',a:20,b:26,d:'Nyomatékolás, visszafordítás, visszaállás, lánc egyesítése.',sc:25},{t:'Feszítés, ellenőrzés',a:27,b:33,d:'Feszítés, zárókupak vissza, menetpróba, feszességmérés.',sc:32}];
+const phOf=k=>PH.findIndex(p=>k>=p.a&&k<=p.b);
+let i=-1,voiceOn=true,hu=null,done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem('pzh2done')||'[]'))}catch(e){}
+const saveDone=()=>{try{localStorage.setItem('pzh2done',JSON.stringify([...done]));localStorage.setItem('pzh2step',i)}catch(e){}};
+function pickVoice(){try{const v=speechSynthesis.getVoices();hu=bestVoice();const m=document.getElementById('vmsg');if(m)m.textContent=hu?'':'Nincs magyar felolvasó hang ezen a telefonon: Beállítások → Szövegfelolvasás → Google → Magyar. Addig olvasd a szöveget.'}catch(e){}}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+const split=t=>t.match(/[^.!?]+[.!?]+|[^.!?]+$/g).map(x=>x.trim()).filter(Boolean);
+let spk=0;
+function speak(t,spans){if(!voiceOn||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();const my=++spk;const ss=split(t);
+ ss.forEach((x,k)=>{const u=new SpeechSynthesisUtterance(x);u.lang='hu-HU';if(hu)u.voice=hu;u.rate=0.9;u.pitch=0.95;u.volume=1;
+  u.onstart=()=>{if(my!==spk||!spans)return;spans.forEach((e,j)=>{if(e){e.classList.toggle('on',j===k);e.classList.toggle('past',j<k)}})};
+  u.onend=()=>{if(my!==spk||!spans)return;if(k===ss.length-1)spans.forEach(e=>{if(e){e.classList.remove('on');e.classList.remove('past')}})};
+  speechSynthesis.speak(u)})}catch(e){}}
+function bestVoice(){try{const v=speechSynthesis.getVoices().filter(x=>/^hu/i.test(x.lang));const rank=x=>(/natural|neural|online/i.test(x.name)?4:0)+(/google/i.test(x.name)?3:0)+(/tamás|tamas/i.test(x.name)?1:0)+(x.localService?0:1);v.sort((a,b)=>rank(b)-rank(a));return v[0]||null}catch(e){return null}}
+function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;let lo=16,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px'}
+addEventListener('resize',fitText);
+let ac=null;function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[[523,0],[784,0.11]].forEach(([f,t])=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(0.35,ac.currentTime+t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+t+0.2);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.22)})}catch(e){}try{navigator.vibrate&&navigator.vibrate(70)}catch(e){}}
+const app=document.getElementById('app');
+const $=id=>document.getElementById(id);
+function fit(){document.querySelectorAll('.pic svg').forEach(sv=>{try{const b=sv.getBBox(),p=14;let w=b.width+p*2,h=b.height+p*2,x=b.x-p,y=b.y-p;const r=4/3;if(w/h<r){x-=(h*r-w)/2;w=h*r}else{y-=(w/r-h)/2;h=w/r}sv.setAttribute('viewBox',`${x} ${y} ${w} ${h}`)}catch(e){}})}
+function timeline(cur){return `<div class="tl" id="tlb">${PH.map((p,k)=>{let n=0;for(let j=p.a;j<=p.b;j++)if(done.has(j))n++;const tot=p.b-p.a+1,c=k===phOf(cur)?'cur':n===tot?'ok':'';
+ return `<div class="ph ${c}" style="flex:${tot}"><div class="pf"><i style="width:${n/tot*100}%"></i>${k===phOf(cur)?`<b style="left:${(cur-p.a+0.5)/tot*100}%"></b>`:''}</div><span>${k+1}</span></div>`}).join('')}</div>`}
+function home(){i=-1;let last=-1;try{last=+(localStorage.getItem('pzh2step')??-1)}catch(e){}
+ app.innerHTML=`<div class="home"> <div class="kick">PzH2000 · futómű</div><h1 class="ht">Gumibetét csere</h1>
+ <p class="lead">${STEPS.length} lépés · hang · szerszámlista. Egyik oldal, majd a másik ugyanígy.</p>
+ <button class="cta" id="b1">Eligazítás és indulás</button>
+ ${last>=0&&last<STEPS.length&&done.size?`<button class="sec" id="b2">Folytatás: ${last+1}. lépés · ${done.size} kész</button>`:''}
+ <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Lépések</button></div>
+ <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>
+ <p class="foot">Összeállította: Strasszer szkv. · Az értékeket a TM alapján ellenőrizd.</p></div>`;
+ pickVoice();fit();
+ $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('vc').onchange=e=>voiceOn=e.target.checked;}
+function brief(){i=-1;
+ app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
+ <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>
+ <div class="route">${PH.map((p,k)=>`<div class="stop"><div class="dot">${k+1}</div><div class="st"><b>${p.t}</b><span>${p.d}</span><em>${p.a+1}–${p.b+1}. lépés</em></div></div>`).join('')}</div>
+ <div class="warn"><i>!</i><div><b>Kesztyű kötelező.</b> Tiszta, egyértelmű parancsok. Hangosan szóljatok egymásnak. A lánc fordításához 15–18 fő kell.</div></div>
+ <button class="cta" id="go">Indulás</button></div>`;
+ fit();$('bk').onclick=home;$('go').onclick=()=>{done.clear();saveDone();go(0)};window.scrollTo(0,0);
+ speak('Üdvözlöm az állományt! A mai feladat a PzH kétezer lánc gumibetéteinek cseréje, mindkét oldalon. Oldalanként százkilencven gumibetét. Öt szakasz: előkészítés, a lánc lazítása és nyitása, betétcsere, visszaszerelés, végül feszítés és ellenőrzés. Kesztyű kötelező, figyeljetek egymásra.');}
+function know(){i=-1;
+ app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Alapismeretek</div><h1 class="ht">Lánctalp és feszítő</h1>
+ <h2>A lánctalp tag</h2>
+ <ol class="nl"><li>Gumibetét</li><li>Középső összekötő elem</li><li>Szélső összekötő elem (külső/belső)</li><li>Lánctalp összekötő rész – hosszanti furat, benne csapszeg</li><li>Téli fémbetét (télen a gumi helyett)</li></ol>
+ <p>Oldalanként <b>95 tag</b> (+1 tartalék a páncéltesten), <b>190 gumibetét</b>, darabja <b>2,5 kg</b>. A betét védi az utat, csökkenti a kopást, a zajt és a rezonanciát.</p>
+ <h2>Mikor kell cserélni?</h2><ul class="bl"><li>30%-nál nagyobb darab kitört a betétből</li><li>elérte a kopásjelzőt</li><li>ha a betétek több mint 30%-a rossz → <b>mind</b></li><li>együttes cserénél állj le a láncról: így az összekötők csavarjai is utánhúzhatók</li></ul>
+ <div class="warn"><i>!</i><div><b>A lánctalp nem lehet zsíros, olajos!</b> Tisztításhoz tilos a kenőanyag – benzin vagy hígító. Inkább rozsdás, mint olajos.</div></div>
+ <h2>A feszítő görgő pár</h2>
+ <ol class="nl"><li>Zárókupak (porvédő)</li><li>Feszítő csavar</li><li>Feszítő berendezés</li><li>Feszítő görgő pár</li></ol>
+ <p>Láncfeszességet ellenőrizni <b>minden 1. TK-nál</b> és hosszabb igénybevételnél (gyakorlat) <b>pár naponta</b>.</p><button class="cta" id="bk2">Vissza</button></div>`;
+ fit();$('bk').onclick=home;$('bk2').onclick=home;window.scrollTo(0,0);}
+function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
+ $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
+function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
+ app.innerHTML=`<div class="step">${timeline(i)}
+ <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t}</small><h1>${s.t}</h1></div><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
+ <div class="lvw" id="lvw"><p class="lv" id="lv">${split(s.v).map(x=>`<span>${x}</span>`).join(' ')}</p></div>
+ ${TL[i]?`<div class="tools"><b>Kell hozzá:</b> ${TL[i].map(k=>`<span>${TOOL[k][0]}</span>`).join('')}</div>`:''}
+ ${s.w?`<div class="warn"><i>!</i><div>${s.w}</div></div>`:''}
+ <div class="dock"><button class="sm" id="pv">‹</button><button class="big ${dn?'is':''}" id="dn">${dn?'✓ Kész · tovább':last?'✓ Kész':'✓ Kész – jöhet a következő'}</button><button class="sm" id="rp">↻</button></div></div>`;
+ fit();
+ $('bk').onclick=home;$('tlb').onclick=list;
+ $('pv').onclick=()=>i===0?home():go(i-1);
+ const SP=()=>[...document.querySelectorAll('#lv span')];$('rp').onclick=()=>speak(s.v,SP());
+ $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)try{speechSynthesis.cancel()}catch(x){}};
+ $('dn').onclick=()=>{if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
+  const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
+  setTimeout(()=>{ov.remove();last?finish():go(i+1)},900)};
+ window.scrollTo(0,0);fitText();speak((i+1)+'. lépés. '+s.v,[null].concat(SP()));}
+function finish(){app.innerHTML=`<div class="page"><h1 class="ht">Egyik oldal kész!</h1><p class="lead">A másik oldalon ugyanez, a zárókupaktól (6. lépés) kezdve.</p><button class="cta" id="o">Másik oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
+ fit();speak('Egyik oldal kész. A másik oldalon ugyanez, a zárókupaktól kezdve.');$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();go(5)};$('h').onclick=home;}
+let sx=null;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});document.addEventListener('touchend',e=>{if(sx===null||i<0)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>80){dx<0?(i<STEPS.length-1&&go(i+1)):(i>0&&go(i-1))}sx=null});
+home();
+
+if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+</script>
+</body>
+</html>
