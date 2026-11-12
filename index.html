@@ -88,7 +88,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .vp{display:flex;flex-direction:column;gap:8px;border:2px solid #1b1b1b;border-radius:14px;padding:12px;margin-top:4px}.vp b{font-size:16px}.vp select{font:inherit;font-size:16px;padding:8px;border-radius:10px;border:2px solid #1b1b1b}.vp label{display:flex;flex-direction:column;font-size:14px;font-weight:700}.vp input[type=range]{width:100%;accent-color:#F07D16}
 
 .pr{padding:18px 20px 30px;font-size:15px;line-height:1.45}
-.pbar{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-bottom:14px}.pbar .sec{padding:0 16px}
+.pbar{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-bottom:14px}.pbar .dl{grid-column:1/-1;display:flex;align-items:center;justify-content:center;text-decoration:none;color:#1b1b1b}.pbar .sec{padding:0 16px}
 .ph1 h1{font-size:32px;font-weight:900;margin:4px 0}.ph1 p{color:#555;margin:0 0 6px}
 .pr h2{font-size:20px;font-weight:900;border-bottom:3px solid #1b1b1b;padding-bottom:3px;margin:20px 0 8px}
 .pr h3{font-size:16px;margin:0 0 2px}
@@ -460,7 +460,7 @@ function know(){i=-1;
 
 const TOOLS_ALL=[['Munkavédelmi kesztyű','mindenkinek'],['Nagy kalapács (5 kg)','min. 2 db'],['Kis kalapács','2 db'],['Laposfejű csavarhúzó','6–8 db'],['Beütőtüske','min. 2 db'],['Pajszer','2 db'],['Lánc-összehúzó (csigamenetes)','2 db'],['Nyomatékkulcs + 32-es dugófej','1 db'],['Racsnis dugókulcs','2 db'],['Láncfeszítő/lazító kulcs toldattal','1 db'],['Kupaklazító kulcs','1 db'],['Drótkefe, csavarlazító','szükség szerint'],['Fa ék','2 db'],['Porszívó','min. 1 db'],['Kompresszor','1 db'],['Madzag + C-kapcsok, idomszer (6/8 mm)','1 klt'],['Új gumibetét','190 db/oldal (94 tagnál 188)']];
 function printView(){i=-1;const d=new Date().toLocaleDateString('hu-HU');
- app.innerHTML=`<div class="pr"><div class="noprint pbar"><button class="sec" id="bk">‹ Vissza</button><button class="cta" id="pp">Nyomtatás / PDF mentés</button></div>
+ app.innerHTML=`<div class="pr"><div class="noprint pbar"><button class="sec" id="bk">‹ Vissza</button><button class="cta" id="pp">Nyomtatás / PDF mentés</button><a class="sec dl" href="docs/oktatoanyag.pdf" download="PzH2000-gumibetet-csere-oktatoanyag.pdf">Kész PDF letöltése (A4)</a></div>
  <header class="ph1"><div class="kick">Oktatóanyag · PzH2000 futómű</div><h1>Lánc gumibetét csere</h1><p>Teljes munkafolyamat, egy oldalra. A másik oldal a 6. lépéstől ugyanígy. · Összeállította: Strasszer szkv. · Nyomtatva: ${d}</p></header>
  <section><h2>Biztonsági alapelvek</h2><ol><li>A biztonsági rendszabályok ismerete.</li><li>Tiszta, egyértelmű parancsok.</li><li>Hangos jelzés, egymás figyelmeztetése.</li><li><b>Munkavédelmi kesztyű kötelező.</b></li></ol></section>
  <section><h2>Szerszámok és anyagok</h2><table><tr><th>Megnevezés</th><th>Mennyiség</th></tr>${TOOLS_ALL.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td></tr>`).join('')}</table></section>

@@ -76,7 +76,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .vp{display:flex;flex-direction:column;gap:8px;border:2px solid #1b1b1b;border-radius:14px;padding:12px;margin-top:4px}.vp b{font-size:16px}.vp select{font:inherit;font-size:16px;padding:8px;border-radius:10px;border:2px solid #1b1b1b}.vp label{display:flex;flex-direction:column;font-size:14px;font-weight:700}.vp input[type=range]{width:100%;accent-color:#F07D16}
 
 .pr{padding:18px 20px 30px;font-size:15px;line-height:1.45}
-.pbar{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-bottom:14px}.pbar .sec{padding:0 16px}
+.pbar{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-bottom:14px}.pbar .dl{grid-column:1/-1;display:flex;align-items:center;justify-content:center;text-decoration:none;color:#1b1b1b}.pbar .sec{padding:0 16px}
 .ph1 h1{font-size:32px;font-weight:900;margin:4px 0}.ph1 p{color:#555;margin:0 0 6px}
 .pr h2{font-size:20px;font-weight:900;border-bottom:3px solid #1b1b1b;padding-bottom:3px;margin:20px 0 8px}
 .pr h3{font-size:16px;margin:0 0 2px}
