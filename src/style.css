@@ -115,3 +115,5 @@ html.night .warn{background:#2a2200;border-color:#FFD21F;color:#fff}
 html.night .lv span.on{background:#F07D16;color:#000;box-shadow:0 0 0 3px #F07D16}html.night .lv span.past{color:#777}
 html.night .mm button.on{background:#F07D16;color:#000}html.night .pf{background:#333}html.night .li b{background:#222}
 html.night .dock{background:linear-gradient(rgba(14,14,14,0),#0e0e0e 22%)}
+
+.mzb{width:auto;min-width:46px;padding:0 8px;font-size:15px;font-weight:900;border-radius:23px}.mzb.on{background:#F07D16;color:#fff;border-color:#F07D16}

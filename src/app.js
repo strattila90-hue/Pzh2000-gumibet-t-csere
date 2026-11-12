@@ -49,17 +49,17 @@ function home(){i=-1;hush();let last=-1;try{last=+(localStorage.getItem('pzh2ste
  <button class="sec" id="b5">Nyomtatható oktatóanyag</button>
  <div class="two"><button class="sec" id="b7">Munkanapló</button><button class="sec" id="b8">${document.documentElement.classList.contains('night')?'Nappali mód':'Éjszakai mód'}</button></div>
  <button class="sec" id="b6">QR-kód · Megosztás · Offline</button><div class="ost" id="ost0"></div>
- <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>${voicePanel()}
+ <label class="chk"><input type="checkbox" id="vc" ${voiceOn?'checked':''}> Hangbemondás</label><div class="vmsg" id="vmsg"></div>${musicPanel()}${voicePanel()}
  <p class="foot">Összeállította: Strasszer szkv. · Az értékeket a TM alapján ellenőrizd.</p></div>`;
  pickVoice();fit();
- $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('b6').onclick=shareView;$('b7').onclick=logView;$('b8').onclick=()=>{setNight(!document.documentElement.classList.contains('night'));home()};offlineStatus($('ost0'));$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();}
+ $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('b6').onclick=shareView;$('b7').onclick=logView;$('b8').onclick=()=>{setNight(!document.documentElement.classList.contains('night'));home()};offlineStatus($('ost0'));$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();bindMusic();}
 function brief(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
  <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>
  <div class="route">${PH.map((p,k)=>`<div class="stop"><div class="dot">${k+1}</div><div class="st"><b>${p.t}</b><span>${p.d}</span><em>${p.a+1}–${p.b+1}. lépés</em></div></div>`).join('')}</div>
  <div class="warn"><i>!</i><div><b>Kesztyű kötelező.</b> Tiszta, egyértelmű parancsok. Hangosan szóljatok egymásnak. A lánc fordításához 15–18 fő kell.</div></div>
- <button class="cta" id="go">Indulás</button></div>`;
- fit();$('bk').onclick=home;$('go').onclick=()=>{done.clear();saveDone();WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();go(0)};window.scrollTo(0,0);
+ <button class="cta" id="go2m">Indulás munkazenével ♪</button><button class="sec" id="go">Indulás zene nélkül</button></div>`;
+ fit();$('bk').onclick=home;const startWork=m=>{done.clear();saveDone();WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();if(m){MZ.end=0;mzStart()}go(0)};$('go').onclick=()=>startWork(false);$('go2m').onclick=()=>startWork(true);window.scrollTo(0,0);
  speak(VX.brief);}
 function know(){i=-1;
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Alapismeretek</div><h1 class="ht">Lánctalp és feszítő</h1>
@@ -152,14 +152,14 @@ function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">
  $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
  app.innerHTML=`<div class="step">${timeline(i)}
- <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
+ <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div><button class="vb mzb" data-mz id="mzb">♪</button><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
  <div class="lvw" id="lvw"><p class="lv" id="lv">${split(s.v).map(x=>`<span>${x}</span>`).join(' ')}</p></div>
  ${WG[i]?WG[i][0]():''}
  ${TL[i]?`<div class="tools"><b>Kell hozzá:</b> ${TL[i].map(k=>`<span>${TOOL[k][0]}</span>`).join('')}</div>`:''}
  ${s.w?`<div class="warn"><i>!</i><div>${s.w}</div></div>`:''}
  <div class="dock"><button class="sm" id="pv">‹</button><button class="big ${dn?'is':''}" id="dn">${dn?'✓ Kész · tovább':last?'✓ Kész':'✓ Kész – jöhet a következő'}</button><button class="sm" id="rp">↻</button></div></div>`;
  fit();if(WG[i])WG[i][1]();media();
- $('bk').onclick=home;$('tlb').onclick=list;
+ $('bk').onclick=home;$('tlb').onclick=list;$('mzb').onclick=()=>{MZ.on?mzStop():mzStart()};mzUI();
  $('pv').onclick=()=>i===0?home():go(i-1);
  const SP=()=>[...document.querySelectorAll('#lv span')];$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
  $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)hush()};

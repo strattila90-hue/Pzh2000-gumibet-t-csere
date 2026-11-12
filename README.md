@@ -36,6 +36,7 @@ Az app alapból a telefon gépi hangját használja. Élethű, katonás férfiha
 - **Szerszám-kipipálás** (3. lépés), **forgásirány-jelző** oldal szerint (7. és 28. lépés), **feszességmérő** (33. lépés: mm gomb → megfelel / lazíts / feszíts, hanggal).
 - **Munkanapló**: oldalanként automatikusan rögzül (dátum, oldal, kiszedett/beütött betét, mért mm, idő); a nyomtatható anyagba is bekerül.
 - **Bluetooth fülhallgató gombjai**: következő szám = Kész → következő lépés, előző = vissza, lejátszás = ismétlés (élethű hangnál).
+- **Munkazene**: saját, valós időben generált induló jellegű ösztönző zene (nincs hangfájl, nincs szerzői jog). A feladat becsült idejéig szól (alap: 4,5 óra / oldal, állítható), szakaszonként erősödik, beszédnél automatikusan lehalkul. Indítás: Eligazítás → *Indulás munkazenével*, vagy a lépésnél a ♪ gomb.
 - **Éjszakai mód**, a kijelző nem alszik el.
 
 ## Fájlok

@@ -1,5 +1,5 @@
 // Offline gyorsítótár. Új verzió kiadásakor növeld a VERSION számot!
-const VERSION='v10';
+const VERSION='v11';
 const FILES=['./','./index.html','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png','./docs/oktatoanyag.pdf','./audio/manifest.json'];
 self.addEventListener('install',e=>{e.waitUntil((async()=>{const c=await caches.open(VERSION);await c.addAll(FILES);
  try{const m=await (await fetch('./audio/manifest.json',{cache:'no-store'})).json();const fs=[];for(const k in m){if(k==='_')continue;for(let n=0;n<m[k];n++)fs.push('./audio/'+k+'-'+n+'.mp3')}
