@@ -4,6 +4,9 @@ Lépésről lépésre vezető, **offline is működő** webes alkalmazás (PWA) 
 
 Összeállította: **Strasszer szkv.**
 
+## QR-kód
+Nyomtatható plakát: `qr/qr-plakat.pdf` (A4, leírással). Kép: `qr/qr.png`. Cím: https://strattila90-hue.github.io/Pzh2000-gumibet-t-csere/
+
 ## Használat
 1. Nyisd meg telefonon a GitHub Pages címet (QR-kód).
 2. **Android / Chrome:** menü → *Hozzáadás a kezdőképernyőhöz*. **iPhone / Safari:** Megosztás → *Főképernyőhöz adás*.
