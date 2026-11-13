@@ -104,7 +104,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .plus{height:64px;border:0;border-radius:14px;background:#F07D16;color:#fff;font-size:30px;font-weight:900}.plus:active{transform:scale(.97)}
 .mm{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:6px}.mm button{height:50px;border-radius:12px;border:2.5px solid #1b1b1b;background:#fff;font-size:20px;font-weight:900}.mm button.on{background:#1b1b1b;color:#fff}
 .mr{margin-top:6px;font-size:17px;font-weight:900}.good{color:#1F8A3B}.bad{color:#D62A1E}
-.tch{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;max-height:34vh;overflow:auto}.tch button{border:2px solid #1b1b1b;border-radius:18px;background:#fff;padding:6px 10px;font-size:14px;font-weight:800;text-align:left}.tch button.on{background:#1F8A3B;color:#fff;border-color:#1F8A3B}.tch small{font-weight:600;opacity:.75}
+.tch{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;max-height:30vh;overflow:auto}.tch button{border:2px solid #1b1b1b;border-radius:18px;background:#fff;padding:6px 10px;font-size:14px;font-weight:800;text-align:left}.tch button.on{background:#1F8A3B;color:#fff;border-color:#1F8A3B}.tch small{font-weight:600;opacity:.75}
 .dir .arrow{font-size:24px;font-weight:800;margin-top:4px}.dir .arrow b{font-size:30px;color:#F07D16}
 .chip{border:2px solid #1b1b1b;border-radius:16px;background:#fff;padding:4px 10px;font-size:13px;font-weight:800}
 .lg{border:2px solid #e3e1da;border-radius:12px;padding:10px;font-size:15px;line-height:1.45;margin:4px 0}

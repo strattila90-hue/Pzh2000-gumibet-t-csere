@@ -16,6 +16,6 @@ head='''<!DOCTYPE html>
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>PzH2000 gumibetét csere</title>
 '''
-sw="\nif('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}\n"
+sw="\n"+r"if('serviceWorker' in navigator&&(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))){navigator.serviceWorker.register('sw.js').catch(()=>{})}"+"\n"
 html=head+'<style>\n'+r('src/style.css')+'</style>\n</head>\n<body>\n<div id="app"></div>\n<script>\n'+r('src/draw.js')+'\n'+r('src/scenes.js')+'\n'+r('src/music.js')+'\n'+app+sw+'</script>\n</body>\n</html>\n'
 open(os.path.join(d,'index.html'),'w',encoding='utf-8').write(html);print('index.html kész')
