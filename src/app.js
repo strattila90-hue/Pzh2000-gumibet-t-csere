@@ -102,11 +102,11 @@ function shareView(){i=-1;hush();
  <div class="vmsg" id="smsg"></div>
  <h2>Offline állapot</h2><p id="ost">Ellenőrzés…</p></div>`;
  $('bk').onclick=home;
- $('sl').onclick=async()=>{try{if(navigator.share){await navigator.share({title:'PzH2000 gumibetét csere',text:'Lépésről lépésre, hangbemondással',url:APPURL});return}}catch(e){if(e.name==='AbortError')return}try{await navigator.clipboard.writeText(APPURL);$('smsg').textContent='A link a vágólapon.'}catch(e){$('smsg').textContent=APPURL}};
+ $('sl').onclick=async()=>{try{if(navigator.share){await navigator.share({title:'PzH2000 gumibetét csere',text:'Lépésről lépésre, hangbemondással',url:APPURL});return}}catch(e){if(e.name==='AbortError')return}try{await navigator.clipboard.writeText(APPURL);($('smsg')||{textContent:{}}).textContent='A link a vágólapon.'}catch(e){($('smsg')||{textContent:{}}).textContent=APPURL}};
  $('sf').onclick=async()=>{try{let html;try{html=await (await fetch('index.html')).text()}catch(x){html='<!DOCTYPE html>\n'+document.documentElement.outerHTML}
   const f=new File([html],'PzH2000-gumibetet-csere.html',{type:'text/html'});
   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'PzH2000 gumibetét csere'});return}
-  $('smsg').textContent='Ez a böngésző nem tud fájlt megosztani. Használd a Letöltés gombot, majd a Fájlkezelőből küldd el Bluetooth-on.'}catch(e){if(e.name!=='AbortError')$('smsg').textContent='Nem sikerült: '+e.message}};
+  ($('smsg')||{textContent:{}}).textContent='Ez a böngésző nem tud fájlt megosztani. Használd a Letöltés gombot, majd a Fájlkezelőből küldd el Bluetooth-on.'}catch(e){if(e.name!=='AbortError')($('smsg')||{textContent:{}}).textContent='Nem sikerült: '+e.message}};
  offlineStatus($('ost'));window.scrollTo(0,0);}
 async function offlineStatus(el){if(!el)return;try{const ctl=navigator.serviceWorker&&navigator.serviceWorker.controller;let n=0;if(ctl&&window.caches){for(const k of await caches.keys()){const c=await caches.open(k);n+=(await c.keys()).filter(r=>/\.mp3$/.test(r.url)).length}}
  el.innerHTML=ctl?`<b style="color:#1F8A3B">✓ Offline használatra kész.</b>${n?` Hangfájlok tárolva: ${n} db.`:''}`:'Offline használathoz: nyisd meg egyszer interneten a QR-kód címét, és tedd ki a kezdőképernyőre.'}catch(e){el.textContent=''}}
@@ -124,16 +124,16 @@ function tick(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)(
 function counterW(key,label){const v=WK[key],t=target(),pc=Math.min(100,v/t*100);
  return `<div class="wg cnt"><div class="cl"><b>${label}</b><span><em id="cv">${v}</em> / ${t}</span></div><div class="cbar"><i id="cb" style="width:${pc}%"></i></div>
  <div class="cbt"><button class="sm" id="cm">−1</button><button class="plus" id="cp">+1</button></div></div>`}
-function bindCounter(key){const upd=()=>{$('cv').textContent=WK[key];$('cb').style.width=Math.min(100,WK[key]/target()*100)+'%';saveW();fitText()};
+function bindCounter(key){const upd=()=>{($('cv')||{textContent:{}}).textContent=WK[key];($('cb')||{style:{}}).style.width=Math.min(100,WK[key]/target()*100)+'%';saveW();fitText()};
  $('cp').onclick=()=>{WK[key]++;tick();upd();if(WK[key]===target()){beep();speak('Megvan mind a '+target()+' betét!')}else if(WK[key]%10===0&&voiceOn&&useFiles===false){}};
  $('cm').onclick=()=>{if(WK[key]>0){WK[key]--;upd()}}}
 function measureW(){const b=[4,5,6,7,8,9,10];return `<div class="wg"><div class="cl"><b>Mért érték (mm)</b><span id="mv">${WK.mm??'–'}</span></div><div class="mm">${b.map(x=>`<button data-m="${x}" class="${WK.mm===x?'on':''}">${x}</button>`).join('')}</div><div id="mr" class="mr"></div></div>`}
 function verdict(m){if(m==null)return'';if(m<6)return`<span class="bad">Túl feszes → LAZÍTANI (${WK.side} oldal: ${dirTxt(WK.side,0)})</span>`;if(m>8)return`<span class="bad">Túl laza → FESZÍTENI (${WK.side} oldal: ${dirTxt(WK.side,1)})</span>`;return`<span class="good">✓ Megfelel (6–8 mm)</span>`}
-function bindMeasure(){$('mr').innerHTML=verdict(WK.mm);document.querySelectorAll('.mm button').forEach(bt=>bt.onclick=()=>{WK.mm=+bt.dataset.m;saveW();document.querySelectorAll('.mm button').forEach(x=>x.classList.toggle('on',x===bt));$('mv').textContent=WK.mm;$('mr').innerHTML=verdict(WK.mm);fitText();
+function bindMeasure(){$('mr').innerHTML=verdict(WK.mm);document.querySelectorAll('.mm button').forEach(bt=>bt.onclick=()=>{WK.mm=+bt.dataset.m;saveW();document.querySelectorAll('.mm button').forEach(x=>x.classList.toggle('on',x===bt));($('mv')||{textContent:{}}).textContent=WK.mm;$('mr').innerHTML=verdict(WK.mm);fitText();
  speak(WK.mm<6?'Túl feszes. Lazítani kell.':WK.mm>8?'Túl laza. Feszíteni kell.':'Megfelel.')})}
 function toolsList(){const ss=split(STEPS[2].v),n0=2,nT=TOOLS_ALL.length;const done_=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;
  return `<div class="chkpage" id="lv"><p class="ci">${ss.slice(0,n0).map(x=>`<span data-sp>${x}</span>`).join(' ')} <b class="cc" id="cc">${done_}/${nT}</b></p><div class="tgrid">${TOOLS_ALL.map((t,k)=>`<button data-sp data-k="${k}" class="${WK.tools[k]?'ck':''}"><i>${WK.tools[k]?'✓':''}</i><span class="tn">${t[0]}</span><small>${t[1]}</small></button>`).join('')}</div><p class="ci"><span data-sp>${ss.slice(n0+nT).join(' ')}</span></p></div>`}
-function bindToolsList(){document.querySelectorAll('.tgrid button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();bt.classList.toggle('ck',!!WK.tools[k]);bt.querySelector('i').textContent=WK.tools[k]?'✓':'';$('cc').textContent=TOOLS_ALL.filter((t,x)=>WK.tools[x]).length+'/'+TOOLS_ALL.length})}
+function bindToolsList(){document.querySelectorAll('.tgrid button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();bt.classList.toggle('ck',!!WK.tools[k]);bt.querySelector('i').textContent=WK.tools[k]?'✓':'';($('cc')||{textContent:{}}).textContent=TOOLS_ALL.filter((t,x)=>WK.tools[x]).length+'/'+TOOLS_ALL.length})}
 function fitGrid(){const g=document.querySelector('.chkpage');if(!g)return;const w=$('lvw');let lo=10,hi=22;while(hi-lo>0.5){const m=(lo+hi)/2;g.style.fontSize=m+'px';if(w.scrollHeight<=w.clientHeight)lo=m;else hi=m}g.style.fontSize=lo+'px';w.style.overflowY=w.scrollHeight>w.clientHeight+2?'auto':'hidden'}
 function toolsW(){const n=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;return `<div class="wg"><div class="cl"><b>Kipipálás</b><span>${n} / ${TOOLS_ALL.length}</span></div><div class="tch">${TOOLS_ALL.map((t,k)=>`<button data-k="${k}" class="${WK.tools[k]?'on':''}">${WK.tools[k]?'✓ ':''}${t[0]} <small>${t[1]}</small></button>`).join('')}</div></div>`}
 function bindTools(){document.querySelectorAll('.tch button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();const w=bt.closest('.wg');w.outerHTML=toolsW();bindTools();fitText()})}
@@ -178,7 +178,7 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
  const SP=()=>[...document.querySelectorAll('#lv [data-sp]')];if(i===2)bindToolsList();$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
  $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)hush()};
  $('dn').onclick=e=>{const bt=e.currentTarget;if(bt.dataset.busy)return;bt.dataset.busy=1;if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
-  const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
+  document.querySelectorAll('.ov').forEach(x=>x.remove());const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
   setTimeout(()=>{ov.remove();if(!bt.isConnected)return;last?finish():go(i+1)},900)};
  window.scrollTo(0,0);i===2?fitGrid():fitText();wake();speak(s.v,SP(),(i+1)+'. lépés:');}
 function finish(){i=-1;const min=WK.start?Math.round((Date.now()-WK.start)/60000):0;LOG.push({d:new Date().toLocaleString('hu-HU'),side:WK.side,ki:WK.ki,be:WK.be,mm:WK.mm,min});saveLog();const other=WK.side==='jobb'?'bal':'jobb';

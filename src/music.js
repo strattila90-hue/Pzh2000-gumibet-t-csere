@@ -50,5 +50,5 @@ function musicPanel(){const h=Math.floor(MZ.mins/60),m=MZ.mins%60;return `<div c
  <label>Becsült idő / oldal: <span id="mzt">${h} óra ${m} perc</span><input type="range" id="mzm" min="60" max="600" step="15" value="${MZ.mins}"></label>
  <label>Hangerő <input type="range" id="mzv" min="0" max="1" step="0.05" value="${MZ.vol}"></label>
  <div class="two"><button class="sec" id="mzgo">${MZ.on?'Szünet':'Indítás'}</button><button class="sec" id="mzrs">Újrakezd</button></div><div class="hint" id="mzst"></div></div>`}
-function bindMusic(){$('mzm').oninput=e=>{MZ.mins=+e.target.value;mzSave();$('mzt').textContent=Math.floor(MZ.mins/60)+' óra '+MZ.mins%60+' perc';if(MZ.on){MZ.end=MZ.start+MZ.mins*60000}};
- $('mzv').oninput=e=>mzVol(+e.target.value);$('mzgo').onclick=e=>{MZ.on?mzStop():mzStart();e.target.textContent=MZ.on?'Szünet':'Indítás'};$('mzrs').onclick=()=>{MZ.end=0;mzStart();$('mzgo').textContent='Szünet'};mzUI()}
+function bindMusic(){$('mzm').oninput=e=>{MZ.mins=+e.target.value;mzSave();($('mzt')||{}).textContent=Math.floor(MZ.mins/60)+' óra '+MZ.mins%60+' perc';if(MZ.on){MZ.end=MZ.start+MZ.mins*60000}};
+ $('mzv').oninput=e=>mzVol(+e.target.value);$('mzgo').onclick=e=>{MZ.on?mzStop():mzStart();e.target.textContent=MZ.on?'Szünet':'Indítás'};$('mzrs').onclick=()=>{MZ.end=0;mzStart();($('mzgo')||{}).textContent='Szünet'};mzUI()}
