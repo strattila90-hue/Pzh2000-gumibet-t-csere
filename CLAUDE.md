@@ -14,6 +14,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 - Munkazene: `src/music.js` (WebAudio generatív induló, Dm-progresszió, dob/basszus/pad/rézfúvós; intenzitás a szakasz szerint; ducking beszédnél; időtartam `MZ.mins`, becslés `PHASE_MIN` = 30/40/120/45/35 perc/oldal). A build az app.js elé fűzi.
 - Fix felolvasott szövegek (eligazítás, befejezés, próba): `src/voice.json`.
 - Nyomtatható nézet: `printView()` / `index.html#nyomtat`; a PDF: `google-chrome --headless --print-to-pdf=docs/oktatoanyag.pdf "file://…/index.html#nyomtat"`.
+- Navigáció: minden alnézet tetején `NAV` (⌂ Főmenü, sticky, `id=bk`); lépés nézetben felső sáv `.bar` (Főmenü | ♪ | 🔊), alatta idővonal, majd szám + cím. Alsó dokk ‹ = előző lépés. A Kész gomb `data-busy`-val védett a dupla koppintás ellen, és nem lép tovább, ha közben elnavigáltak.
 - `build.py` → `index.html`. `sw.js` offline cache (VERSION-t növelni kiadáskor).
 
 ## Döntések / tények (a felhasználótól)

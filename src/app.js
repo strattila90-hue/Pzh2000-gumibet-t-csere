@@ -2,6 +2,7 @@
 const STEPS=__STEPS__;
 const TL={0:['kesztyu'],5:['kupak'],6:['feszito'],7:['racsnis','kisk','drotkefe'],8:['nagyk','pajszer','kesztyu'],9:['racsnis'],11:['pajszer'],12:['ek','pajszer'],13:['beuto','kisk','pajszer'],14:['csavarhuzo','benzin'],15:['porszivo','kompresszor'],18:['nagyk'],20:['nyomatek'],21:['pajszer'],22:['nyomatek'],24:['pajszer'],25:['osszehuzo'],26:['nyomatek'],27:['feszito'],32:['madzag','idomszer']};
 const PH=[{t:'Előkészítés',a:0,b:4,d:'Biztonság, terület, szerszámok, a jármű elhelyezése.',sc:0},{t:'Lánc lazítása, nyitása',a:5,b:10,d:'Zárókupak, feszítő összehúzása, összekötők bontása, leállás a láncról.',sc:6},{t:'Betétcsere',a:11,b:19,d:'Lánc megfordítása, régi betét ki, fészek tisztítása, új betét be.',sc:18},{t:'Visszaszerelés',a:20,b:26,d:'Nyomatékolás, visszafordítás, visszaállás, lánc egyesítése.',sc:25},{t:'Feszítés, ellenőrzés',a:27,b:33,d:'Feszítés, zárókupak vissza, menetpróba, feszességmérés.',sc:32}];
+const NAV='<div class="nav"><button class="mb" id="bk">⌂ Főmenü</button></div>';
 const phOf=k=>PH.findIndex(p=>k>=p.a&&k<=p.b);
 let i=-1,voiceOn=true,hu=null,done=new Set();
 try{done=new Set(JSON.parse(localStorage.getItem('pzh2done')||'[]'))}catch(e){}
@@ -54,7 +55,7 @@ function home(){i=-1;hush();let last=-1;try{last=+(localStorage.getItem('pzh2ste
  pickVoice();fit();
  $('b1').onclick=brief;const b2=$('b2');if(b2)b2.onclick=()=>go(last);$('b3').onclick=know;$('b4').onclick=list;$('b5').onclick=printView;$('b6').onclick=shareView;$('b7').onclick=logView;$('b8').onclick=()=>{setNight(!document.documentElement.classList.contains('night'));home()};offlineStatus($('ost0'));$('vc').onchange=e=>voiceOn=e.target.checked;bindVoice();bindMusic();}
 function brief(){i=-1;
- app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
+ app.innerHTML=`<div class="page">${NAV}<div class="kick">Eligazítás</div><h1 class="ht">Üdvözlöm az állományt!</h1>
  <p class="lead">Mai feladat: a <b>PzH2000 lánc gumibetéteinek cseréje</b> mindkét oldalon. Oldalanként <b>95 lánctag</b>, <b>190 betét</b> (2,5 kg/db).</p>
  <div class="route">${PH.map((p,k)=>`<div class="stop"><div class="dot">${k+1}</div><div class="st"><b>${p.t}</b><span>${p.d}</span><em>${p.a+1}–${p.b+1}. lépés</em></div></div>`).join('')}</div>
  <div class="warn"><i>!</i><div><b>Kesztyű kötelező.</b> Tiszta, egyértelmű parancsok. Hangosan szóljatok egymásnak. A lánc fordításához 15–18 fő kell.</div></div>
@@ -62,7 +63,7 @@ function brief(){i=-1;
  fit();$('bk').onclick=home;const startWork=m=>{done.clear();saveDone();WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();if(m){MZ.end=0;mzStart()}go(0)};$('go').onclick=()=>startWork(false);$('go2m').onclick=()=>startWork(true);window.scrollTo(0,0);
  speak(VX.brief);}
 function know(){i=-1;
- app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Alapismeretek</div><h1 class="ht">Lánctalp és feszítő</h1>
+ app.innerHTML=`<div class="page">${NAV}<div class="kick">Alapismeretek</div><h1 class="ht">Lánctalp és feszítő</h1>
  <h2>A lánctalp tag</h2>
  <ol class="nl"><li>Gumibetét</li><li>Középső összekötő elem</li><li>Szélső összekötő elem (külső/belső)</li><li>Lánctalp összekötő rész – hosszanti furat, benne csapszeg</li><li>Téli fémbetét (télen a gumi helyett)</li></ol>
  <p>Oldalanként <b>95 tag</b> (+1 tartalék a páncéltesten), <b>190 gumibetét</b>, darabja <b>2,5 kg</b>. A betét védi az utat, csökkenti a kopást, a zajt és a rezonanciát.</p>
@@ -70,12 +71,12 @@ function know(){i=-1;
  <div class="warn"><i>!</i><div><b>A lánctalp nem lehet zsíros, olajos!</b> Tisztításhoz tilos a kenőanyag – benzin vagy hígító. Inkább rozsdás, mint olajos.</div></div>
  <h2>A feszítő görgő pár</h2>
  <ol class="nl"><li>Zárókupak (porvédő)</li><li>Feszítő csavar</li><li>Feszítő berendezés</li><li>Feszítő görgő pár</li></ol>
- <p>Láncfeszességet ellenőrizni <b>minden 1. TK-nál</b> és hosszabb igénybevételnél (gyakorlat) <b>pár naponta</b>.</p><button class="cta" id="bk2">Vissza</button></div>`;
+ <p>Láncfeszességet ellenőrizni <b>minden 1. TK-nál</b> és hosszabb igénybevételnél (gyakorlat) <b>pár naponta</b>.</p><button class="cta" id="bk2">⌂ Főmenü</button></div>`;
  fit();$('bk').onclick=home;$('bk2').onclick=home;window.scrollTo(0,0);}
 
 const TOOLS_ALL=[['Munkavédelmi kesztyű','mindenkinek'],['Nagy kalapács (5 kg)','min. 2 db'],['Kis kalapács','2 db'],['Laposfejű csavarhúzó','6–8 db'],['Beütőtüske','min. 2 db'],['Pajszer','2 db'],['Lánc-összehúzó (csigamenetes)','2 db'],['Nyomatékkulcs + 32-es dugófej','1 db'],['Racsnis dugókulcs','2 db'],['Láncfeszítő/lazító kulcs toldattal','1 db'],['Kupaklazító kulcs','1 db'],['Drótkefe, csavarlazító','szükség szerint'],['Fa ék','2 db'],['Porszívó','min. 1 db'],['Kompresszor','1 db'],['Madzag + C-kapcsok, idomszer (6/8 mm)','1 klt'],['Új gumibetét','190 db/oldal (94 tagnál 188)']];
 function printView(){i=-1;const d=new Date().toLocaleDateString('hu-HU');
- app.innerHTML=`<div class="pr"><div class="noprint pbar"><button class="sec" id="bk">‹ Vissza</button><button class="cta" id="pp">Nyomtatás / PDF mentés</button><a class="sec dl" href="docs/oktatoanyag.pdf" download="PzH2000-gumibetet-csere-oktatoanyag.pdf">Kész PDF letöltése (A4)</a></div>
+ app.innerHTML=`<div class="pr"><div class="noprint pbar"><button class="sec" id="bk">⌂ Főmenü</button><button class="cta" id="pp">Nyomtatás / PDF mentés</button><a class="sec dl" href="docs/oktatoanyag.pdf" download="PzH2000-gumibetet-csere-oktatoanyag.pdf">Kész PDF letöltése (A4)</a></div>
  <header class="ph1"><div class="kick">Oktatóanyag · PzH2000 futómű</div><h1>Lánc gumibetét csere</h1><p>Teljes munkafolyamat, egy oldalra. A másik oldal a 6. lépéstől ugyanígy. · Összeállította: Strasszer szkv. · Nyomtatva: ${d}</p></header>
  <section><h2>Biztonsági alapelvek</h2><ol><li>A biztonsági rendszabályok ismerete.</li><li>Tiszta, egyértelmű parancsok.</li><li>Hangos jelzés, egymás figyelmeztetése.</li><li><b>Munkavédelmi kesztyű kötelező.</b></li></ol></section>
  <section><h2>Szerszámok és anyagok</h2><table><tr><th>Megnevezés</th><th>Mennyiség</th></tr>${TOOLS_ALL.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td></tr>`).join('')}</table></section>
@@ -93,7 +94,7 @@ function printView(){i=-1;const d=new Date().toLocaleDateString('hu-HU');
 const QR=`__QR__`;
 const APPURL='https://strattila90-hue.github.io/Pzh2000-gumibet-t-csere/';
 function shareView(){i=-1;hush();
- app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Megosztás</div><h1 class="ht">Add tovább!</h1>
+ app.innerHTML=`<div class="page">${NAV}<div class="kick">Megosztás</div><h1 class="ht">Add tovább!</h1>
  <p class="lead">Olvastasd be a kódot a másik telefon kamerájával.</p><div class="qrbox">${QR}</div><p class="url">${APPURL}</p>
  <button class="cta" id="sl">Link megosztása</button>
  <h2>Internet nélkül – Bluetooth</h2><p>Az egész app egyetlen fájl. Elküldheted Bluetooth-on vagy Quick Share-rel a másik telefonra; ott Chrome-mal megnyitva internet nélkül is működik (a gépi hanggal).</p>
@@ -140,7 +141,7 @@ function dirW(feszit){const s=WK.side;return `<div class="wg dir"><div class="cl
 function bindDir(feszit){$('sw').onclick=()=>{WK.side=WK.side==='jobb'?'bal':'jobb';saveW();go(i)}}
 const WG={6:[()=>dirW(0),()=>bindDir(0)],13:[()=>counterW('ki','Régi betét kiszedve'),()=>bindCounter('ki')],18:[()=>counterW('be','Új betét beütve'),()=>bindCounter('be')],27:[()=>dirW(1),()=>bindDir(1)],32:[measureW,bindMeasure]};
 function logView(){i=-1;hush();
- app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Munkanapló</div><h1 class="ht">Elvégzett cserék</h1>
+ app.innerHTML=`<div class="page">${NAV}<div class="kick">Munkanapló</div><h1 class="ht">Elvégzett cserék</h1>
  ${LOG.length?LOG.slice().reverse().map(r=>`<div class="lg"><b>${r.d}</b> · ${r.side} oldal<br>Régi ki: ${r.ki} · Új be: ${r.be} · Feszesség: ${r.mm??'–'} mm · Idő: ${r.min} perc</div>`).join(''):'<p>Még nincs bejegyzés. Az oldal befejezésekor automatikusan rögzül.</p>'}
  <h2>Beállítás</h2><label class="chk"><input type="radio" name="tg" value="95" ${WK.tags==95?'checked':''}> 95 tagos lánc (190 betét)</label><label class="chk"><input type="radio" name="tg" value="94" ${WK.tags==94?'checked':''}> 94 tagos lánc (188 betét)</label>
  <label class="chk"><input type="radio" name="sd" value="jobb" ${WK.side==='jobb'?'checked':''}> Jobb oldalon kezdünk</label><label class="chk"><input type="radio" name="sd" value="bal" ${WK.side==='bal'?'checked':''}> Bal oldalon kezdünk</label>
@@ -152,11 +153,11 @@ try{setNight(localStorage.getItem('pzh2night')==='1')}catch(e){}
 function media(){if(!('mediaSession' in navigator))return;try{const ms=navigator.mediaSession;ms.metadata=new MediaMetadata({title:(i+1)+'. '+STEPS[i].t,artist:'PzH2000 gumibetét csere',album:PH[phOf(i)].t});
  ms.setActionHandler('nexttrack',()=>{const b=$('dn');b&&b.click()});ms.setActionHandler('previoustrack',()=>{i>0&&go(i-1)});
  ms.setActionHandler('play',()=>{const b=$('rp');b&&b.click()});ms.setActionHandler('pause',()=>hush())}catch(e){}}
-function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
+function list(){i=-1;app.innerHTML=`<div class="page">${NAV}<div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
  $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
- app.innerHTML=`<div class="step">${timeline(i)}
- <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div><button class="vb mzb" data-mz id="mzb">♪</button><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
+ app.innerHTML=`<div class="step"><div class="bar"><button class="mb" id="bk">⌂ Főmenü</button><span class="sp1"></span><button class="vb mzb" data-mz id="mzb">♪</button><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>${timeline(i)}
+ <div class="top"><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div></div>
  <div class="lvw" id="lvw">${i===2?toolsList():`<p class="lv" id="lv">${split(s.v).map(x=>`<span data-sp>${x}</span>`).join(' ')}</p>`}</div>
  ${WG[i]?WG[i][0]():''}
  ${TL[i]?`<div class="tools"><b>Kell hozzá:</b> ${TL[i].map(k=>`<span>${TOOL[k][0]}</span>`).join('')}</div>`:''}
@@ -167,12 +168,12 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
  $('pv').onclick=()=>i===0?home():go(i-1);
  const SP=()=>[...document.querySelectorAll('#lv [data-sp]')];if(i===2)bindToolsList();$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
  $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)hush()};
- $('dn').onclick=()=>{if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
+ $('dn').onclick=e=>{const bt=e.currentTarget;if(bt.dataset.busy)return;bt.dataset.busy=1;if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
   const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
-  setTimeout(()=>{ov.remove();last?finish():go(i+1)},900)};
+  setTimeout(()=>{ov.remove();if(!bt.isConnected)return;last?finish():go(i+1)},900)};
  window.scrollTo(0,0);i===2?fitGrid():fitText();wake();speak(s.v,SP(),(i+1)+'. lépés:');}
-function finish(){const min=WK.start?Math.round((Date.now()-WK.start)/60000):0;LOG.push({d:new Date().toLocaleString('hu-HU'),side:WK.side,ki:WK.ki,be:WK.be,mm:WK.mm,min});saveLog();const other=WK.side==='jobb'?'bal':'jobb';
- app.innerHTML=`<div class="page"><h1 class="ht">${WK.side==='jobb'?'Jobb':'Bal'} oldal kész!</h1><div class="lg">Régi ki: <b>${WK.ki}</b> · Új be: <b>${WK.be}</b> / ${target()} · Feszesség: <b>${WK.mm??'–'} mm</b> · Idő: <b>${min} perc</b></div><p class="lead">Következik: <b>${other} oldal</b>, a zárókupaktól (6. lépés).</p><div class="warn"><i>!</i><div><b>A feszítő iránya ott fordított!</b> ${other==='jobb'?'Jobb':'Bal'} oldalon ${dirTxt(other,0).toLowerCase()} lazít.</div></div><button class="cta" id="o">${other==='jobb'?'Jobb':'Bal'} oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
- fit();speak(VX.finish);$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();WK.side=other;WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();go(5)};$('h').onclick=home;}
+function finish(){i=-1;const min=WK.start?Math.round((Date.now()-WK.start)/60000):0;LOG.push({d:new Date().toLocaleString('hu-HU'),side:WK.side,ki:WK.ki,be:WK.be,mm:WK.mm,min});saveLog();const other=WK.side==='jobb'?'bal':'jobb';
+ app.innerHTML=`<div class="page">${NAV}<h1 class="ht">${WK.side==='jobb'?'Jobb':'Bal'} oldal kész!</h1><div class="lg">Régi ki: <b>${WK.ki}</b> · Új be: <b>${WK.be}</b> / ${target()} · Feszesség: <b>${WK.mm??'–'} mm</b> · Idő: <b>${min} perc</b></div><p class="lead">Következik: <b>${other} oldal</b>, a zárókupaktól (6. lépés).</p><div class="warn"><i>!</i><div><b>A feszítő iránya ott fordított!</b> ${other==='jobb'?'Jobb':'Bal'} oldalon ${dirTxt(other,0).toLowerCase()} lazít.</div></div><button class="cta" id="o">${other==='jobb'?'Jobb':'Bal'} oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
+ fit();speak(VX.finish);$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();WK.side=other;WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();go(5)};$('h').onclick=home;$('bk').onclick=home;}
 let sx=null;document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});document.addEventListener('touchend',e=>{if(sx===null||i<0)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>80){dx<0?(i<STEPS.length-1&&go(i+1)):(i>0&&go(i-1))}sx=null});
 location.hash==='#nyomtat'?printView():home();
