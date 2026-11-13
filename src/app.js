@@ -32,7 +32,7 @@ function voicePanel(){const v=huVoices();return `<div class="vp"><b>Hang beáll�
 <label>Hangmagasság <input type="range" id="vpi" min="0.5" max="1.2" step="0.05" value="${VS.pitch}"></label><label>Tempó <input type="range" id="vra" min="0.7" max="1.3" step="0.05" value="${VS.rate}"></label><label class="chk"><input type="checkbox" id="vfile" ${useFiles?'checked':''}> Élethű hang (hangfájlok, ha vannak)</label><div class="vmsg" id="vfs"></div><button class="sec" id="vtest">Próba</button><p class="hint">Bluetooth hangszóró vagy fülhallgató: párosítsd a telefonnal, és az app hangja automatikusan azon szól.</p></div>`}
 function bindVoice(){const sv=()=>{try{localStorage.setItem('pzh2voice',JSON.stringify(VS))}catch(e){}};const s=$('vsel');if(s)s.onchange=e=>{VS.name=e.target.value;hu=bestVoice();sv()};
  $('vpi').oninput=e=>{VS.pitch=+e.target.value;sv()};$('vra').oninput=e=>{VS.rate=+e.target.value;sv()};const vf=$('vfile');if(vf)vf.onchange=e=>{useFiles=e.target.checked;try{localStorage.setItem('pzh2files',useFiles?'1':'0')}catch(x){}};const vfs=$('vfs');if(vfs)vfs.textContent=AUD&&Object.keys(AUD).filter(k=>k!=='_').length?'Élethű hangfájlok elérhetők.':'Hangfájlok még nincsenek – a telefon gépi hangja szól.';$('vtest').onclick=()=>{voiceOn=true;speak(VX.test)}}
-function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;let lo=14,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px';w.style.overflowY=p.scrollHeight>w.clientHeight+2?'auto':'hidden'}
+function fitText(){const w=document.getElementById('lvw'),p=document.getElementById('lv');if(!w||!p)return;if(p.classList.contains('chkpage'))return fitGrid();let lo=14,hi=40;while(hi-lo>1){const m=(lo+hi)>>1;p.style.fontSize=m+'px';if(p.scrollHeight<=w.clientHeight)lo=m;else hi=m}p.style.fontSize=lo+'px';w.style.overflowY=p.scrollHeight>w.clientHeight+2?'auto':'hidden'}
 addEventListener('resize',fitText);
 let ac=null;function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[[523,0],[784,0.11]].forEach(([f,t])=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(0.35,ac.currentTime+t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+t+0.2);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+0.22)})}catch(e){}try{navigator.vibrate&&navigator.vibrate(70)}catch(e){}}
 const app=document.getElementById('app');
@@ -130,11 +130,15 @@ function measureW(){const b=[4,5,6,7,8,9,10];return `<div class="wg"><div class=
 function verdict(m){if(m==null)return'';if(m<6)return`<span class="bad">Túl feszes → LAZÍTANI (${WK.side} oldal: ${dirTxt(WK.side,0)})</span>`;if(m>8)return`<span class="bad">Túl laza → FESZÍTENI (${WK.side} oldal: ${dirTxt(WK.side,1)})</span>`;return`<span class="good">✓ Megfelel (6–8 mm)</span>`}
 function bindMeasure(){$('mr').innerHTML=verdict(WK.mm);document.querySelectorAll('.mm button').forEach(bt=>bt.onclick=()=>{WK.mm=+bt.dataset.m;saveW();document.querySelectorAll('.mm button').forEach(x=>x.classList.toggle('on',x===bt));$('mv').textContent=WK.mm;$('mr').innerHTML=verdict(WK.mm);fitText();
  speak(WK.mm<6?'Túl feszes. Lazítani kell.':WK.mm>8?'Túl laza. Feszíteni kell.':'Megfelel.')})}
+function toolsList(){const ss=split(STEPS[2].v),n0=2,nT=TOOLS_ALL.length;const done_=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;
+ return `<div class="chkpage" id="lv"><p class="ci">${ss.slice(0,n0).map(x=>`<span data-sp>${x}</span>`).join(' ')} <b class="cc" id="cc">${done_}/${nT}</b></p><div class="tgrid">${TOOLS_ALL.map((t,k)=>`<button data-sp data-k="${k}" class="${WK.tools[k]?'ck':''}"><i>${WK.tools[k]?'✓':''}</i><span class="tn">${t[0]}</span><small>${t[1]}</small></button>`).join('')}</div><p class="ci"><span data-sp>${ss.slice(n0+nT).join(' ')}</span></p></div>`}
+function bindToolsList(){document.querySelectorAll('.tgrid button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();bt.classList.toggle('ck',!!WK.tools[k]);bt.querySelector('i').textContent=WK.tools[k]?'✓':'';$('cc').textContent=TOOLS_ALL.filter((t,x)=>WK.tools[x]).length+'/'+TOOLS_ALL.length})}
+function fitGrid(){const g=document.querySelector('.chkpage');if(!g)return;const w=$('lvw');let lo=10,hi=22;while(hi-lo>0.5){const m=(lo+hi)/2;g.style.fontSize=m+'px';if(w.scrollHeight<=w.clientHeight)lo=m;else hi=m}g.style.fontSize=lo+'px'}
 function toolsW(){const n=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;return `<div class="wg"><div class="cl"><b>Kipipálás</b><span>${n} / ${TOOLS_ALL.length}</span></div><div class="tch">${TOOLS_ALL.map((t,k)=>`<button data-k="${k}" class="${WK.tools[k]?'on':''}">${WK.tools[k]?'✓ ':''}${t[0]} <small>${t[1]}</small></button>`).join('')}</div></div>`}
 function bindTools(){document.querySelectorAll('.tch button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();const w=bt.closest('.wg');w.outerHTML=toolsW();bindTools();fitText()})}
 function dirW(feszit){const s=WK.side;return `<div class="wg dir"><div class="cl"><b>${s==='jobb'?'JOBB':'BAL'} oldal (menetirány szerint)</b><button class="chip" id="sw">oldalváltás</button></div><div class="arrow">${feszit?'Feszítés':'Lazítás'}: <b>${dirTxt(s,feszit)} ${dirTxt(s,feszit)==='LEFELÉ'?'↓':'↑'}</b></div></div>`}
 function bindDir(feszit){$('sw').onclick=()=>{WK.side=WK.side==='jobb'?'bal':'jobb';saveW();go(i)}}
-const WG={2:[toolsW,bindTools],6:[()=>dirW(0),()=>bindDir(0)],13:[()=>counterW('ki','Régi betét kiszedve'),()=>bindCounter('ki')],18:[()=>counterW('be','Új betét beütve'),()=>bindCounter('be')],27:[()=>dirW(1),()=>bindDir(1)],32:[measureW,bindMeasure]};
+const WG={6:[()=>dirW(0),()=>bindDir(0)],13:[()=>counterW('ki','Régi betét kiszedve'),()=>bindCounter('ki')],18:[()=>counterW('be','Új betét beütve'),()=>bindCounter('be')],27:[()=>dirW(1),()=>bindDir(1)],32:[measureW,bindMeasure]};
 function logView(){i=-1;hush();
  app.innerHTML=`<div class="page"><button class="x" id="bk">‹</button><div class="kick">Munkanapló</div><h1 class="ht">Elvégzett cserék</h1>
  ${LOG.length?LOG.slice().reverse().map(r=>`<div class="lg"><b>${r.d}</b> · ${r.side} oldal<br>Régi ki: ${r.ki} · Új be: ${r.be} · Feszesség: ${r.mm??'–'} mm · Idő: ${r.min} perc</div>`).join(''):'<p>Még nincs bejegyzés. Az oldal befejezésekor automatikusan rögzül.</p>'}
@@ -153,7 +157,7 @@ function list(){i=-1;app.innerHTML=`<div class="page"><button class="x" id="bk">
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
  app.innerHTML=`<div class="step">${timeline(i)}
  <div class="top"><button class="x" id="bk">‹</button><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div><button class="vb mzb" data-mz id="mzb">♪</button><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>
- <div class="lvw" id="lvw"><p class="lv" id="lv">${split(s.v).map(x=>`<span>${x}</span>`).join(' ')}</p></div>
+ <div class="lvw" id="lvw">${i===2?toolsList():`<p class="lv" id="lv">${split(s.v).map(x=>`<span data-sp>${x}</span>`).join(' ')}</p>`}</div>
  ${WG[i]?WG[i][0]():''}
  ${TL[i]?`<div class="tools"><b>Kell hozzá:</b> ${TL[i].map(k=>`<span>${TOOL[k][0]}</span>`).join('')}</div>`:''}
  ${s.w?`<div class="warn"><i>!</i><div>${s.w}</div></div>`:''}
@@ -161,12 +165,12 @@ function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS
  fit();if(WG[i])WG[i][1]();media();
  $('bk').onclick=home;$('tlb').onclick=list;$('mzb').onclick=()=>{MZ.on?mzStop():mzStart()};mzUI();
  $('pv').onclick=()=>i===0?home():go(i-1);
- const SP=()=>[...document.querySelectorAll('#lv span')];$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
+ const SP=()=>[...document.querySelectorAll('#lv [data-sp]')];if(i===2)bindToolsList();$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
  $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)hush()};
  $('dn').onclick=()=>{if(dn){last?finish():go(i+1);return}done.add(i);saveDone();beep();try{speechSynthesis.cancel()}catch(e){}
   const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#1F8A3B"/><path d="M28 52 L44 67 L73 36" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';document.body.appendChild(ov);
   setTimeout(()=>{ov.remove();last?finish():go(i+1)},900)};
- window.scrollTo(0,0);fitText();wake();speak(s.v,SP(),(i+1)+'. lépés:');}
+ window.scrollTo(0,0);i===2?fitGrid():fitText();wake();speak(s.v,SP(),(i+1)+'. lépés:');}
 function finish(){const min=WK.start?Math.round((Date.now()-WK.start)/60000):0;LOG.push({d:new Date().toLocaleString('hu-HU'),side:WK.side,ki:WK.ki,be:WK.be,mm:WK.mm,min});saveLog();const other=WK.side==='jobb'?'bal':'jobb';
  app.innerHTML=`<div class="page"><h1 class="ht">${WK.side==='jobb'?'Jobb':'Bal'} oldal kész!</h1><div class="lg">Régi ki: <b>${WK.ki}</b> · Új be: <b>${WK.be}</b> / ${target()} · Feszesség: <b>${WK.mm??'–'} mm</b> · Idő: <b>${min} perc</b></div><p class="lead">Következik: <b>${other} oldal</b>, a zárókupaktól (6. lépés).</p><div class="warn"><i>!</i><div><b>A feszítő iránya ott fordított!</b> ${other==='jobb'?'Jobb':'Bal'} oldalon ${dirTxt(other,0).toLowerCase()} lazít.</div></div><button class="cta" id="o">${other==='jobb'?'Jobb':'Bal'} oldal indítása</button><button class="sec" id="h">Kezdőlap</button></div>`;
  fit();speak(VX.finish);$('o').onclick=()=>{[...done].forEach(k=>{if(k>=5)done.delete(k)});saveDone();WK.side=other;WK.ki=0;WK.be=0;WK.mm=null;WK.start=Date.now();saveW();go(5)};$('h').onclick=home;}
