@@ -120,9 +120,9 @@
   "w": ""
  },
  {
-  "t": "Külső összekötő csavarok: 550 Nm",
-  "v": "Külső összekötő csavarok meghúzása. Nyomatékkulcs, harminckettes dugófej, ötszázötven newtonméter. A kulcs kattanásáig. Nem tovább.",
-  "n": "Nyomatékkulcs, 32-es dugófej, 550 Nm.",
+  "t": "Külső összekötő csavarok: 520–550 Nm",
+  "v": "Külső összekötő csavarok meghúzása. Nyomatékkulcs, harminckettes dugófej. Ötszázhúsz-ötszázötven newtonméter. Nyúlt láncnál, ha már ki lett véve belőle egy tag: ötszázötven. A kulcs kattanásáig. Nem tovább.",
+  "n": "Nyomatékkulcs, 32-es dugófej: 520–550 Nm. Nyúlt (94 tagos) láncnál 550 Nm.",
   "w": ""
  },
  {
@@ -132,9 +132,9 @@
   "w": ""
  },
  {
-  "t": "Középső összekötő csavar: 550 Nm",
-  "v": "Középső összekötő csavarja: meghúzni. Nyomatékkulccsal, ötszázötven newtonméterre.",
-  "n": "550 Nm.",
+  "t": "Középső összekötő csavar: 520–550 Nm",
+  "v": "Középső összekötő csavarja: meghúzni. Nyomatékkulccsal, ötszázhúsz-ötszázötven newtonméterre. Nyúlt láncnál, ha már ki lett véve belőle egy tag: ötszázötven.",
+  "n": "520–550 Nm. Nyúlt (94 tagos) láncnál 550 Nm.",
   "w": ""
  },
  {
@@ -157,8 +157,8 @@
  },
  {
   "t": "Csavarok nyomatékra",
-  "v": "Csavarok nyomatékra. Középső és szélső összekötők: ötszázötven newtonméter. Mindegyik. Kihagyni tilos.",
-  "n": "Középső és szélső összekötők: 550 Nm.",
+  "v": "Csavarok nyomatékra. Középső és szélső összekötők: ötszázhúsz-ötszázötven newtonméter. Nyúlt láncnál, ha már ki lett véve belőle egy tag: ötszázötven. Mindegyik. Kihagyni tilos.",
+  "n": "Középső és szélső összekötők: 520–550 Nm (nyúlt, 94 tagos láncnál 550 Nm).",
   "w": ""
  },
  {

@@ -1,7 +1,7 @@
 # Felolvasandó szövegek (hangfájlokhoz)
 
 Hangnem: katonás, határozott, oktató. Rövid mondatok, a pontoknál rövid szünet.
-Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
+Fájlnév: automatikusan (tools/gen_audio.py).
 
 ## 01. Biztonság
 
@@ -83,17 +83,17 @@ Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
 
 20. lépés: Betétek: bent. Szemrevételezés! Mind kattant, mind síkban ül. Ha igen: tovább.
 
-## 21. Külső összekötő csavarok: 550 Nm
+## 21. Külső összekötő csavarok: 520–550 Nm
 
-21. lépés: Külső összekötő csavarok meghúzása. Nyomatékkulcs, harminckettes dugófej, ötszázötven newtonméter. A kulcs kattanásáig. Nem tovább.
+21. lépés: Külső összekötő csavarok meghúzása. Nyomatékkulcs, harminckettes dugófej. Ötszázhúsz-ötszázötven newtonméter. Nyúlt láncnál, ha már ki lett véve belőle egy tag: ötszázötven. A kulcs kattanásáig. Nem tovább.
 
 ## 22. Lánctag visszafordítása
 
 22. lépés: Lánctag visszafordítása. Vezényszóra, egyszerre. Vezényszó: Emelj!
 
-## 23. Középső összekötő csavar: 550 Nm
+## 23. Középső összekötő csavar: 520–550 Nm
 
-23. lépés: Középső összekötő csavarja: meghúzni. Nyomatékkulccsal, ötszázötven newtonméterre.
+23. lépés: Középső összekötő csavarja: meghúzni. Nyomatékkulccsal, ötszázhúsz-ötszázötven newtonméterre. Nyúlt láncnál, ha már ki lett véve belőle egy tag: ötszázötven.
 
 ## 24. Visszaállás a láncra tolatva
 
@@ -109,7 +109,7 @@ Fájlnév: `audio/lepes-01.mp3` … `audio/lepes-34.mp3`.
 
 ## 27. Csavarok nyomatékra
 
-27. lépés: Csavarok nyomatékra. Középső és szélső összekötők: ötszázötven newtonméter. Mindegyik. Kihagyni tilos.
+27. lépés: Csavarok nyomatékra. Középső és szélső összekötők: ötszázhúsz-ötszázötven newtonméter. Nyúlt láncnál, ha már ki lett véve belőle egy tag: ötszázötven. Mindegyik. Kihagyni tilos.
 
 ## 28. Lánc visszafeszítése
 

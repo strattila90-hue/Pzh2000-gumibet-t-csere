@@ -30,13 +30,13 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 20. Betétek bent, ellenőrzés.
 
 ## 4. Visszaszerelés
-21. Külső összekötő csavarok: 550 Nm (32-es dugófej).
+21. Külső összekötő csavarok: 520–550 Nm (32-es dugófej); nyúlt láncnál (már kivettek egy tagot, 94 tag) 550 Nm.
 22. Lánctag visszafordítása.
-23. Középső összekötő csavar: 550 Nm.
+23. Középső összekötő csavar: 520–550 Nm (nyúlt láncnál 550 Nm).
 24. Visszaállás a láncra tolatva, lassan.
 25. Lánctag ráemelése a csillagkerékre pajszerrel.
 26. Lánc egyesítése lánc-összehúzóval: először a középső, majd a két szélső összekötő.
-27. Csavarok nyomatékra (550 Nm).
+27. Csavarok nyomatékra (520–550 Nm; nyúlt láncnál 550 Nm).
 
 ## 5. Feszítés, ellenőrzés (betétcsere után minden esetben kötelező)
 28. Lánc visszafeszítése a láncfeszítő kulccsal: jobb oldalon felfelé, bal oldalon lefelé.
@@ -50,8 +50,8 @@ Strasszer szkv. leírása alapján (2026-11-12). Egy oldalra; a másik oldal a 6
 ## Nyomatékok
 | Csavar | Kulcs | Nyomaték |
 |---|---|---|
-| Külső/belső (szélső) összekötő | 32-es | 550 Nm |
-| Középső összekötő | ⚠ tisztázandó | 550 Nm |
+| Külső/belső (szélső) összekötő | 32-es | 520–550 Nm (nyúlt, 94 tagos láncnál 550) |
+| Középső összekötő | ⚠ tisztázandó | 520–550 Nm (nyúlt láncnál 550) |
 | Láncfeszítő kerék kerek csavarjai | 30-as | 320 Nm (nagyobb gyakorlat előtt és közben ellenőrizni) |
 
-⚠ Az oktatási anyagban az összekötők utánhúzására 52 Nm szerepel – TM alapján tisztázandó.
+⚠ Az oktatási dián „52 Nm” áll – valószínűleg 52 daNm (= 520 Nm), a „da” előtag lemaradt. A gyakorlat: 520–550 Nm.

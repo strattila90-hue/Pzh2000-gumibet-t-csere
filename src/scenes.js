@@ -62,12 +62,12 @@ S[18]=()=>{cam(110,150,1.2);const g=link(0,0,0);const p=at([W-37,16,28]);return 
 // 19 Betétek bent
 S[19]=()=>{cam(150,70,0.95);return trackPiece(3)+OK2(330,60,26)+TX(330,110,'MIND KATTANT',15);};
 // 20 Szélső 550 Nm
-S[20]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlE:0});const b=at([W+22,PIT-16+(PIT-16)/2-8,8]);return g+arc3('x',[W+26,PIT-16+(PIT-16)/2-8,8],22,4.5,0.2,GN,5)+G2(`translate(${b[0]+58} ${b[1]-4}) rotate(-15) scale(.9)`,TOOL.nyomatek[1]())+badge(320,250,'550 Nm',INK,24)+badge(70,40,'32');};
+S[20]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlE:0});const b=at([W+22,PIT-16+(PIT-16)/2-8,8]);return g+arc3('x',[W+26,PIT-16+(PIT-16)/2-8,8],22,4.5,0.2,GN,5)+G2(`translate(${b[0]+58} ${b[1]-4}) rotate(-15) scale(.9)`,TOOL.nyomatek[1]())+badge(320,250,'520–550 Nm',INK,24)+badge(70,40,'32');};
 // 21 Visszafordítás
 S[21]=()=>{cam(60,130,0.75);const a=link(0,0,0);cam(250,130,0.75);const b=box(0,-2,0,W,34,16,'steel')+cyl('x',[-8,0,8],6.5,W+16,'dsteel',18)+cyl('x',[-8,PIT-16,8],6.5,W+16,'dsteel',18);
  return a+b+`<path d="M120 60 Q200 0 280 60" fill="none" stroke="${OR}" stroke-width="6" marker-end="url(#m_${OR.slice(1)})"/>`+TX(110,240,'BETÉT FELÜL',15)+TX(300,240,'BETÉT ALUL',15)+man(200,250,0.6,'lift');};
 // 22 Középső 550 Nm
-S[22]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlC:0});const c=at([W/2,PIT-16+(PIT-16)/2,34]);return g+arc3('z',[W/2,PIT-16+(PIT-16)/2,34],20,4.5,0,GN,5)+G2(`translate(${c[0]+10} ${c[1]-60}) rotate(-80) scale(.9)`,TOOL.nyomatek[1]())+badge(320,250,'550 Nm',INK,24);};
+S[22]=()=>{cam(150,80,1.0);const g=trackPiece(2,{hlC:0});const c=at([W/2,PIT-16+(PIT-16)/2,34]);return g+arc3('z',[W/2,PIT-16+(PIT-16)/2,34],20,4.5,0,GN,5)+G2(`translate(${c[0]+10} ${c[1]-60}) rotate(-80) scale(.9)`,TOOL.nyomatek[1]())+badge(320,250,'520–550 Nm',INK,24);};
 // 23 Visszaállás tolatva
 S[23]=()=>{cam(170,170,0.42);let g=trackStrip(-300,600,150,0);g+=vehicle();const a=at([-60,75,0]),b=at([-220,75,0]);return g+A2(a[0],a[1]-40,b[0],b[1]-40,OR,8)+TX(b[0]+40,b[1]-70,'TOLATVA, LASSAN',16)+man(330,240,0.75,'signal');};
 // 24 Csillagkerék
@@ -77,7 +77,7 @@ S[25]=()=>{cam(150,70,0.95);let g=link(0,0,0)+link(0,PIT+40,0);const p1=at([W+12
  const pull=(a,b)=>{const ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI,len=Math.hypot(b[0]-a[0],b[1]-a[1]);return G2(`translate(${a[0]} ${a[1]}) rotate(${ang})`,R2(0,-8,len,16,'#a7b07a',3,2)+L2(`M8 0 ${[...Array(Math.floor(len/6))].map((_,k)=>`L${10+k*6} ${k%2?-5:5}`).join(' ')}`,1.4)+C2(0,0,9,'none',4)+C2(len,0,9,'none',4))};
  return g+pull(c1,c2)+pull(p1,p2)+tagN(c1[0]-30,(c1[1]+c2[1])/2,1,OR)+tagN(p1[0]+30,(p1[1]+p2[1])/2,2)+TX(200,286,'1. KÖZÉPSŐ → 2. SZÉLSŐK',17);};
 // 26 Csavarok nyomatékra
-S[26]=()=>{cam(150,70,0.95);return trackPiece(3,{hlC:0,hlE:0})+OK2(330,50,22)+badge(320,250,'550 Nm',INK,24)+badge(70,40,'32');};
+S[26]=()=>{cam(150,70,0.95);return trackPiece(3,{hlC:0,hlE:0})+OK2(330,50,22)+badge(320,250,'520–550 Nm',INK,24)+badge(70,40,'32');};
 // 27 Lánc visszafeszítése
 S[27]=()=>{cam(60,210,0.74);const t=tensioner({capOff:1,hlScrew:1});const n=at(t.nut),h=at(t.hub);return t.g+arc3('x',[t.nut[0],17,t.nut[2]],28,4.6,0.3,GN,5)+G2(`translate(${n[0]+10} ${n[1]-60}) rotate(-75) scale(.9)`,TOOL.feszito[1]())+A2(h[0]+60,h[1]-90,h[0]+10,h[1]-120,GN,7)+TX(200,292,'FESZÍTÉS → LÁNC FESZES',17);};
 // 28 Zárókupak vissza

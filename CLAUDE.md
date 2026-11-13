@@ -17,7 +17,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 
 ## Döntések / tények (a felhasználótól)
 - Csak kesztyű kötelező, sisakot NE rajzolj/írj.
-- Szélső (külső/belső) összekötő csavar: 32-es dugókulcs, 550 Nm. Láncfeszítő kerék kerek csavarjai: 30-as, 320 Nm.
+- Összekötő csavarok nyomatéka: 520–550 Nm (szélső: 32-es dugókulcs). Ha a lánc nyúlt és már kivettek belőle egy tagot (94 tag): 550 Nm. Láncfeszítő kerék kerek csavarjai: 30-as, 320 Nm.
 - Sorrend: zárókupak ki → feszítő összehúzása → … → lánc fent, feszítés → zárókupak vissza (kézzel) → menetpróba (30–40 km/h + satufék, hátramenet kígyózva ~100 m, kigurítás üresben) → feszességmérés (13 külső összekötő, 7.-nél, 6–8 mm). Az „ülepítés” szót NE használd.
 - Oldalanként 95 tag, 190 betét (94 tagnál 188), 2,5 kg/db. Lánc megfordításához 15–18 fő.
 - Zárókupak: jobbra szorít, balra lazít (normál menet).
@@ -26,7 +26,7 @@ PzH2000 lánc **gumibetét csere** (helyes írásmód: „gumibetét csere”) o
 - Kéziféket nem húzzuk be: azért, hogy lazításkor/bontáskor a lánc tehermentesüljön, ne feszüljön.
 
 ## Nyitott kérdések
-- Oktatási dián 52 Nm áll az összekötőkre, a felhasználó 550 Nm-et mond → TM-ből tisztázni.
+- Oktatási dián „52 Nm” áll – valószínűleg 52 daNm = 520 Nm (elírás). A felhasználó gyakorlata 520–550 Nm; ezt használjuk. NEM kNm!
 - Középső összekötő csavar kulcsmérete (24?).
 - Hangfájlok: `tools/gen_audio.py` (edge-tts, hu-HU-TamasNeural) → `audio/<fnv-hash>-<n>.mp3` + `audio/manifest.json`; GitHub Action `hang.yml` gyártja. Az app `speak()` először ezt játssza (mondatonként, kiemeléssel), különben gépi hang (pitch 0.78, rate 0.97). A `split()` és `fnv()` a Pythonban és JS-ben azonos kell maradjon! Ellenőrizni, hogy az Action lefutott-e.
 

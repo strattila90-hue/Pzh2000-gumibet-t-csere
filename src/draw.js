@@ -87,7 +87,7 @@ const TOOL={
  csavarhuzo:['Csavarhúzó',()=>R2(-46,-8,32,16,'#2c2c2c',7)+R2(-40,-3,20,6,'#4fb36b',2,1.5)+L2('M-14 0 L34 0',5)+`<path d="M34 -3 L44 -2 L44 2 L34 3 Z" fill="#ccc" stroke="${INK}" stroke-width="2"/>`],
  beuto:['Beütőtüske',()=>`<path d="M-44 -7 L10 -7 L10 -4 L24 -4 L46 0 L24 4 L10 4 L10 7 L-44 7 Z" fill="#c4c8ce" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`],
  pajszer:['Pajszer',()=>`<path d="M-44 4 L34 4 Q44 4 46 -8" fill="none" stroke="${INK}" stroke-width="11" stroke-linecap="round"/><path d="M-44 4 L34 4 Q44 4 46 -8" fill="none" stroke="#7d5a45" stroke-width="6" stroke-linecap="round"/>`],
- nyomatek:['Nyomatékkulcs',()=>C2(-36,0,12,'#b3b8bf')+R2(-26,-6,46,12,'#e3e5e8',6)+R2(20,-8,26,16,'#2c2c2c',6)+R2(-6,-4,12,8,'#4fb36b',1,1.5)+TX(4,26,'550 Nm',12)],
+ nyomatek:['Nyomatékkulcs',()=>C2(-36,0,12,'#b3b8bf')+R2(-26,-6,46,12,'#e3e5e8',6)+R2(20,-8,26,16,'#2c2c2c',6)+R2(-6,-4,12,8,'#4fb36b',1,1.5)+TX(4,26,'520–550 Nm',12)],
  racsnis:['Racsnis 32',()=>C2(-34,0,13,'#b3b8bf')+R2(-22,-6,66,12,'#e3e5e8',6)+TX(-34,28,'32',12)],
  osszehuzo:['Összehúzó',()=>`<path d="M-44 -10 A10 10 0 1 0 -44 10" fill="none" stroke="${INK}" stroke-width="5"/><path d="M44 -10 A10 10 0 1 1 44 10" fill="none" stroke="${INK}" stroke-width="5"/>`+R2(-40,-7,80,14,'#a7b07a',3)+L2('M-30 0 '+[...Array(12)].map((_,k)=>`L${-27+k*5} ${k%2?-4:4}`).join(' '),1.5)],
  porszivo:['Porszívó',()=>R2(-26,-26,40,50,'#a7b07a',12)+C2(-16,28,5)+C2(4,28,5)+L2('M14 -6 C34 -6 30 24 46 24',6)],
