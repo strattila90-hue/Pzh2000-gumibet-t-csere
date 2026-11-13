@@ -46,7 +46,7 @@ function home(){i=-1;hush();let last=-1;try{last=+(localStorage.getItem('pzh2ste
  <p class="lead">${STEPS.length} lépés · hang · szerszámlista. Egyik oldal, majd a másik ugyanígy.</p>
  <button class="cta" id="b1">Eligazítás és indulás</button>
  ${last>=0&&last<STEPS.length&&done.size?`<button class="sec" id="b2">Folytatás: ${last+1}. lépés · ${done.size} kész</button>`:''}
- <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Lépések</button></div>
+ <div class="two"><button class="sec" id="b3">Alapismeretek</button><button class="sec" id="b4">Hol járunk?</button></div>
  <button class="sec" id="b5">Nyomtatható oktatóanyag</button>
  <div class="two"><button class="sec" id="b7">Munkanapló</button><button class="sec" id="b8">${document.documentElement.classList.contains('night')?'Nappali mód':'Éjszakai mód'}</button></div>
  <button class="sec" id="b6">QR-kód · Megosztás · Offline</button><div class="ost" id="ost0"></div>
@@ -134,7 +134,7 @@ function bindMeasure(){$('mr').innerHTML=verdict(WK.mm);document.querySelectorAl
 function toolsList(){const ss=split(STEPS[2].v),n0=2,nT=TOOLS_ALL.length;const done_=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;
  return `<div class="chkpage" id="lv"><p class="ci">${ss.slice(0,n0).map(x=>`<span data-sp>${x}</span>`).join(' ')} <b class="cc" id="cc">${done_}/${nT}</b></p><div class="tgrid">${TOOLS_ALL.map((t,k)=>`<button data-sp data-k="${k}" class="${WK.tools[k]?'ck':''}"><i>${WK.tools[k]?'✓':''}</i><span class="tn">${t[0]}</span><small>${t[1]}</small></button>`).join('')}</div><p class="ci"><span data-sp>${ss.slice(n0+nT).join(' ')}</span></p></div>`}
 function bindToolsList(){document.querySelectorAll('.tgrid button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();bt.classList.toggle('ck',!!WK.tools[k]);bt.querySelector('i').textContent=WK.tools[k]?'✓':'';$('cc').textContent=TOOLS_ALL.filter((t,x)=>WK.tools[x]).length+'/'+TOOLS_ALL.length})}
-function fitGrid(){const g=document.querySelector('.chkpage');if(!g)return;const w=$('lvw');let lo=10,hi=22;while(hi-lo>0.5){const m=(lo+hi)/2;g.style.fontSize=m+'px';if(w.scrollHeight<=w.clientHeight)lo=m;else hi=m}g.style.fontSize=lo+'px'}
+function fitGrid(){const g=document.querySelector('.chkpage');if(!g)return;const w=$('lvw');let lo=10,hi=22;while(hi-lo>0.5){const m=(lo+hi)/2;g.style.fontSize=m+'px';if(w.scrollHeight<=w.clientHeight)lo=m;else hi=m}g.style.fontSize=lo+'px';w.style.overflowY=w.scrollHeight>w.clientHeight+2?'auto':'hidden'}
 function toolsW(){const n=TOOLS_ALL.filter((t,k)=>WK.tools[k]).length;return `<div class="wg"><div class="cl"><b>Kipipálás</b><span>${n} / ${TOOLS_ALL.length}</span></div><div class="tch">${TOOLS_ALL.map((t,k)=>`<button data-k="${k}" class="${WK.tools[k]?'on':''}">${WK.tools[k]?'✓ ':''}${t[0]} <small>${t[1]}</small></button>`).join('')}</div></div>`}
 function bindTools(){document.querySelectorAll('.tch button').forEach(bt=>bt.onclick=()=>{const k=bt.dataset.k;WK.tools[k]=!WK.tools[k];saveW();tick();const w=bt.closest('.wg');w.outerHTML=toolsW();bindTools();fitText()})}
 function dirW(feszit){const s=WK.side;return `<div class="wg dir"><div class="cl"><b>${s==='jobb'?'JOBB':'BAL'} oldal (menetirány szerint)</b><button class="chip" id="sw">oldalváltás</button></div><div class="arrow">${feszit?'Feszítés':'Lazítás'}: <b>${dirTxt(s,feszit)} ${dirTxt(s,feszit)==='LEFELÉ'?'↓':'↑'}</b></div></div>`}
@@ -153,18 +153,27 @@ try{setNight(localStorage.getItem('pzh2night')==='1')}catch(e){}
 function media(){if(!('mediaSession' in navigator))return;try{const ms=navigator.mediaSession;ms.metadata=new MediaMetadata({title:(i+1)+'. '+STEPS[i].t,artist:'PzH2000 gumibetét csere',album:PH[phOf(i)].t});
  ms.setActionHandler('nexttrack',()=>{const b=$('dn');b&&b.click()});ms.setActionHandler('previoustrack',()=>{i>0&&go(i-1)});
  ms.setActionHandler('play',()=>{const b=$('rp');b&&b.click()});ms.setActionHandler('pause',()=>hush())}catch(e){}}
-function list(){i=-1;app.innerHTML=`<div class="page">${NAV}<div class="kick">Lépések</div><h1 class="ht">Mind a ${STEPS.length}</h1>${PH.map((p,k)=>`<h2>${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>`<a class="li" data-k="${p.a+j}"><b>${p.a+j+1}</b>${s.t}${done.has(p.a+j)?'<em>✓</em>':''}</a>`).join('')).join('')}</div>`;
- $('bk').onclick=home;app.querySelectorAll('.li').forEach(a=>a.onclick=()=>go(+a.dataset.k));window.scrollTo(0,0);}
+function list(){i=-1;hush();let cur=-1;try{cur=+(localStorage.getItem('pzh2step')??-1)}catch(e){}let mk=true;
+ app.innerHTML=`<div class="page wh">${NAV}<div class="kick">Hol járunk?</div><h1 class="ht">Válaszd ki a lépést</h1>
+ <div class="two sd"><button class="sec ${WK.side==='jobb'?'on':''}" data-s="jobb">Jobb oldal</button><button class="sec ${WK.side==='bal'?'on':''}" data-s="bal">Bal oldal</button></div>
+ <div class="phj">${PH.map((p,k)=>`<button data-p="${k}" class="${phOf(cur)===k?'on':''}"><b>${k+1}</b>${p.t}</button>`).join('')}</div>
+ <label class="chk"><input type="checkbox" id="mk" checked> Az előző lépéseket jelölje késznek</label>
+ ${PH.map((p,k)=>`<h2 id="ph${k}">${k+1}. ${p.t}</h2>`+STEPS.slice(p.a,p.b+1).map((s,j)=>{const n=p.a+j;return `<a class="li${n===cur?' cur':''}" data-k="${n}"><b>${n+1}</b>${s.t}${n===cur?'<em class="here">itt tartunk</em>':done.has(n)?'<em>✓</em>':''}</a>`}).join('')).join('')}</div>`;
+ $('bk').onclick=home;$('mk').onchange=e=>mk=e.target.checked;
+ app.querySelectorAll('.sd button').forEach(b=>b.onclick=()=>{WK.side=b.dataset.s;saveW();app.querySelectorAll('.sd button').forEach(x=>x.classList.toggle('on',x===b))});
+ app.querySelectorAll('.phj button').forEach(b=>b.onclick=()=>{const h=$('ph'+b.dataset.p);h&&h.scrollIntoView({behavior:'smooth',block:'start'})});
+ app.querySelectorAll('.li').forEach(a=>a.onclick=()=>{const k=+a.dataset.k;if(mk){for(let j=0;j<STEPS.length;j++){j<k?done.add(j):done.delete(j)}}if(!WK.start)WK.start=Date.now();saveW();go(k)});
+ const c=app.querySelector('.li.cur');c?c.scrollIntoView({block:'center'}):window.scrollTo(0,0);}
 function go(n){i=Math.max(0,Math.min(STEPS.length-1,n));saveDone();const s=STEPS[i],last=i===STEPS.length-1,dn=done.has(i);
  app.innerHTML=`<div class="step"><div class="bar"><button class="mb" id="bk">⌂ Főmenü</button><span class="sp1"></span><button class="vb mzb" data-mz id="mzb">♪</button><button class="vb" id="vt">${voiceOn?'🔊':'🔇'}</button></div>${timeline(i)}
- <div class="top"><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal</small><h1>${s.t}</h1></div></div>
+ <div class="top" id="tp"><div class="no${dn?' ok':''}">${i+1}</div><div class="tt"><small>${PH[phOf(i)].t} · ${WK.side==="jobb"?"jobb":"bal"} oldal <span class="chg">▾ hol járunk?</span></small><h1>${s.t}</h1></div></div>
  <div class="lvw" id="lvw">${i===2?toolsList():`<p class="lv" id="lv">${split(s.v).map(x=>`<span data-sp>${x}</span>`).join(' ')}</p>`}</div>
  ${WG[i]?WG[i][0]():''}
  ${TL[i]?`<div class="tools"><b>Kell hozzá:</b> ${TL[i].map(k=>`<span>${TOOL[k][0]}</span>`).join('')}</div>`:''}
  ${s.w?`<div class="warn"><i>!</i><div>${s.w}</div></div>`:''}
  <div class="dock"><button class="sm" id="pv">‹</button><button class="big ${dn?'is':''}" id="dn">${dn?'✓ Kész · tovább':last?'✓ Kész':'✓ Kész – jöhet a következő'}</button><button class="sm" id="rp">↻</button></div></div>`;
  fit();if(WG[i])WG[i][1]();media();
- $('bk').onclick=home;$('tlb').onclick=list;$('mzb').onclick=()=>{MZ.on?mzStop():mzStart()};mzUI();
+ $('bk').onclick=home;$('tlb').onclick=list;$('tp').onclick=list;$('mzb').onclick=()=>{MZ.on?mzStop():mzStart()};mzUI();
  $('pv').onclick=()=>i===0?home():go(i-1);
  const SP=()=>[...document.querySelectorAll('#lv [data-sp]')];if(i===2)bindToolsList();$('rp').onclick=()=>speak(s.v,SP(),(i+1)+'. lépés:');
  $('vt').onclick=e=>{voiceOn=!voiceOn;e.target.textContent=voiceOn?'🔊':'🔇';if(!voiceOn)hush()};

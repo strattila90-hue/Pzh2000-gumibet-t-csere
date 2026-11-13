@@ -140,3 +140,16 @@ html.night .tgrid button.ck{background:#123b20;border-color:#3ddc6e}html.night .
 .top{padding:8px 12px 4px}
 .mzb{white-space:nowrap}
 html.night .mb{background:#1c1c1c;color:#f2f2f2;border-color:#f2f2f2}html.night .nav{background:#0e0e0e;border-color:#333}
+
+/* Hol járunk? */
+.sd .sec.on{background:#1b1b1b;color:#fff}
+.phj{display:grid;grid-template-columns:1fr 1fr;gap:6px}.phj button{display:flex;gap:8px;align-items:center;text-align:left;min-height:46px;border:2px solid #1b1b1b;border-radius:12px;background:#fff;padding:6px 10px;font-size:15px;font-weight:800}
+.phj button b{flex:none;width:26px;height:26px;border-radius:50%;background:#F07D16;color:#fff;display:flex;align-items:center;justify-content:center}.phj button.on{background:#fff1e3;border-color:#F07D16}
+.li.cur{background:#fff1e3;border-radius:12px;padding-left:8px}.li.cur b{background:#F07D16;color:#fff}.li em.here{font-size:13px;color:#F07D16;font-weight:900}
+.wh h2{scroll-margin-top:72px}
+.top{cursor:pointer}.chg{display:inline-block;margin-left:4px;padding:0 6px;border:1.5px solid #F07D16;border-radius:8px;letter-spacing:.04em;white-space:nowrap}
+html.night .sd .sec.on{background:#F07D16;color:#000}html.night .phj button{background:#1c1c1c;color:#f2f2f2;border-color:#f2f2f2}html.night .phj button.on,html.night .li.cur{background:#3a2410}
+.phj{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.phj button{min-width:0;line-height:1.15}
+.phj button{font-size:14px;gap:6px;padding:6px 8px;overflow-wrap:anywhere;hyphens:auto}
+.phj button{overflow-wrap:normal;hyphens:manual}@media(max-width:380px){.phj{grid-template-columns:1fr}.phj button{min-height:40px}}
+@media(max-height:700px){.bar{padding-top:6px}.bar .mb{height:40px;font-size:15px}.bar .vb{width:40px;height:40px;font-size:17px}.bar .mzb{width:auto}.no{font-size:48px;min-width:44px}.tt h1{font-size:20px}.dock{padding-top:6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}.dock .sm,.dock .big{height:54px}.tgrid button{min-height:2.1em;padding:.2em .35em}}
